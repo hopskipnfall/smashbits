@@ -18,7 +18,6 @@ describe('reducer logic: ', () => {
         content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.',
       });
       const action = {type: 'ADD_BIT', data: bit};
-      debugger;
       const newState = reducer(undefined, action);
       expect(newState).to.equal(fromJS({bits: [bit]}));
     });
