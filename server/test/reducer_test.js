@@ -1,11 +1,11 @@
 import {expect} from 'chai';
 import {Map, fromJS} from 'immutable';
 
-import {addBit} from '../src/bits_control';
+import reducer from '../src/reducer';
 
-describe('bits control logic', () => {
+describe('reducer logic ', () => {
   describe('add bit', () => {
-    it('adds a bit to an empty initial state', () => {
+    it('should add a bit to an empty initial state', () => {
       const bit = fromJS({
         id: 'L3WDO8EL3LEKS',
         author: {
@@ -17,11 +17,12 @@ describe('bits control logic', () => {
         title: 'Fox is unedgeguardable',
         content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.',
       });
-      const newState = addBit(Map(), bit);
+      const action = {type: 'ADD_BIT', data: bit};
+      const newState = reducer(undefined, action);
       expect(newState).to.equal(fromJS({bits: [bit]}));
     });
 
-    it('adds a bit to a state with existing bits', () => {
+    it('should add a bit to a state with existing bits', () => {
       const initialBit = fromJS({
           id: 'ME8DU23MNO0S',
           author: {
@@ -49,7 +50,8 @@ describe('bits control logic', () => {
         title: 'Fox is unedgeguardable',
         content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.',
       });
-      const newState = addBit(initialState, newBit);
+      const action = {type: 'ADD_BIT', data: newBit};
+      const newState = reducer(initialState, action);
       expect(newState).to.equal(fromJS({bits: [initialBit, newBit]}));
     });
   });
