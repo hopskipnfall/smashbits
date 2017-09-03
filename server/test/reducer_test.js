@@ -3,9 +3,9 @@ import {Map, fromJS} from 'immutable';
 
 import reducer from '../src/reducer';
 
-describe('reducer logic: ', () => {
+describe('reducer logic ', () => {
   describe('add bit', () => {
-    it('adds a bit to an empty initial state', () => {
+    it('should add a bit to an empty initial state', () => {
       const bit = fromJS({
         id: 'L3WDO8EL3LEKS',
         author: {
@@ -22,7 +22,7 @@ describe('reducer logic: ', () => {
       expect(newState).to.equal(fromJS({bits: [bit]}));
     });
 
-    it('adds a bit to a state with existing bits', () => {
+    it('should add a bit to a state with existing bits', () => {
       const initialBit = fromJS({
           id: 'ME8DU23MNO0S',
           author: {
