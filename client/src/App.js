@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {List, fromJS} from 'immutable';
+import { List, fromJS } from 'immutable';
 import Bit from './Bit.js'
 
 // TODO(thenuge): Get this from a Redux store.
@@ -45,7 +45,7 @@ class App extends Component {
         <div className="col-md-4" />
         <div className="col-md-8">
           {bits.map(entry => 
-            <Bit bit={entry}/>
+            <Bit bit={entry} key={entry}/>
           )}
         </div>
       </div>
