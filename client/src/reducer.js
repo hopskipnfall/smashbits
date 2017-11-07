@@ -5,9 +5,9 @@ export const ACTION_DOWNVOTE = Symbol('ACTION_DOWNVOTE');
 export const ACTION_RESET_VOTE = Symbol('ACTION_RESET_VOTE');
 export const ACTION_ADD_BIT = Symbol('ACTION_ADD_BIT');
 
-export const USER_UPVOTE = Symbol('USER_UPVOTE');
-export const USER_DOWNVOTE = Symbol('USER_DOWNVOTE');
-export const USER_DEFAULT_VOTE = Symbol('USER_DEFAULT_VOTE');
+export const USER_UPVOTE = 1;
+export const USER_DOWNVOTE = -1;
+export const USER_DEFAULT_VOTE = 0;
 
 export default function(state = Map(), action) {
   switch (action.type) {
@@ -32,23 +32,11 @@ const addBit = (state = Map(), bit) => state.setIn(['bits', bit.get('id')], bit)
 
 const upvote = (state = Map(), bitId) => 
     resetVote(state, bitId)
-        .updateIn(['bits', bitId, 'upvotes'], 0, count => count + 1)
         .setIn(['bits', bitId, 'userVote'], USER_UPVOTE);
 
 const downvote = (state = Map(), bitId) => 
     resetVote(state, bitId)
-        .updateIn(['bits', bitId, 'downvotes'], 0, count => count + 1)
         .setIn(['bits', bitId, 'userVote'], USER_DOWNVOTE);
 
 const resetVote = (state = Map(), bitId) => state
-    .updateIn(['bits', bitId, 'upvotes'], 
-        0, 
-        count => state.getIn(['bits', bitId, 'userVote']) === USER_UPVOTE 
-            ? count - 1 
-            : count)
-    .updateIn(['bits', bitId, 'downvotes'],
-        0, 
-        count => state.getIn(['bits', bitId, 'userVote']) === USER_DOWNVOTE 
-            ? count - 1 
-            : count)
     .setIn(['bits', bitId, 'userVote'], USER_DEFAULT_VOTE);

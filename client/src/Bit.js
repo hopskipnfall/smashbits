@@ -11,7 +11,7 @@ export default function Bit(props) {
           <button type="button" className={'btn thumbs-down-button-margin ' + getDownvoteButtonStyle(bit)} onClick={() => downvote(bit.get('id'))}>
             <span className="glyphicon glyphicon-thumbs-down" />
           </button>
-          {bit.get('upvotes') - bit.get('downvotes')}
+          {bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0)}
           <button type="button" className={'btn thumbs-up-button-margin ' + getUpvoteButtonStyle(bit)} onClick={() => upvote(bit.get('id'))}>
             <span className="glyphicon glyphicon-thumbs-up" />
           </button>
