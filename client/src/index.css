@@ -11,3 +11,20 @@ body {
 .thumbs-up-button-margin {
   margin: 0 5px;
 }
+
+.sort-menu-caret-margin {
+  margin: 0 5px 0 0;
+}
+
+.dropdown-option {
+  padding: 5px 10px;
+  color: black;
+}
+
+.dropdown-option:hover {
+  background-color: grey;
+  cursor: pointer;
+  color: white;
+}
+
+ /*READ ABOUT SCSS / SASS*/

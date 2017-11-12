@@ -1,5 +1,6 @@
 import * as actionCreators from './action_creators';
 import Bit from './Bit';
+import { Map } from 'immutable';
 import {connect} from 'react-redux';
 import React from 'react';
 
@@ -12,7 +13,7 @@ const BitsContainer = props => (
 );
 
 const mapStateToProps = state => ({
-  bits: state.get('bits')
+  bits: state.get('bits', Map())
 });
 
 export default connect(mapStateToProps, actionCreators)(BitsContainer);

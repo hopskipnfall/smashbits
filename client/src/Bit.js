@@ -3,7 +3,7 @@ import { Map } from 'immutable';
 import { USER_UPVOTE, USER_DOWNVOTE } from './reducer';
 
 export default function Bit(props) {
-  const { bit = new Map(), upvote, downvote, resetVote } = props;
+  const { bit = new Map(), upvote, downvote } = props;
   return (
     <div className="panel panel-default">
       <div className = "panel-heading">

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import BitsContainer from './BitsContainer.js'
+import BitsContainer from './BitsContainer';
+import SortingMenu from './SortingMenu';
 
 class App extends Component {
   render() {
@@ -16,6 +17,7 @@ class App extends Component {
         </div>
         <div className="col-md-4" />
         <div className="col-md-8">
+          <SortingMenu />
           <BitsContainer />
         </div>
       </div>
