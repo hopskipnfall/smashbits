@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+}
+
+.thumbs-down-button-margin {
+  margin: 0 5px 0 0;
+}
+
+.thumbs-up-button-margin {
+  margin: 0 5px;
+}
