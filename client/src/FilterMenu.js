@@ -1,29 +1,22 @@
 import React from 'react';
+import { DropdownButton, MenuItem, Label } from 'react-bootstrap';
 
 export default function render(props) {
   const { title, bootstrapStyle, allFilters, currentFilters, onClick } = props;
   return (
     <div className="panel-body">
-      <div className="dropdown">
-        <button className={'btn btn-' + bootstrapStyle + ' dropdown-toggle'} type="button" data-toggle="dropdown">
-          <span className="dropdown-caret-margin">
-            {title}
-          </span>
-          <span className="caret" />
-        </button>
-        <div className="dropdown-menu">
-          {allFilters.map(filter =>
-              <div className='dropdown-option' key={Symbol.keyFor(filter)}>
-                <div onClick={() => onClick(filter)}>
-                  {(currentFilters.includes(filter) ? '\u2713 ' : ' ') + Symbol.keyFor(filter)}
-                </div>
-              </div>)}
-        </div>
-      </div>
+      <DropdownButton bsStyle={bootstrapStyle} title={title} id={`filter-menu-${title}`}>
+        {allFilters.map(filter =>
+            <MenuItem onSelect={() => onClick(filter)} key={Symbol.keyFor(filter)}>
+              {(currentFilters.includes(filter) ? '\u2713 ' : ' ') + Symbol.keyFor(filter)}
+            </MenuItem>)}
+      </DropdownButton>
+      <div>
       {currentFilters.map(filter =>
-          <span className={'label label-' + bootstrapStyle + ' filter-pill'} onClick={() => onClick(filter)} key={Symbol.keyFor(filter)}>
+          <Label bsStyle={bootstrapStyle} className="filter-pill" onClick={() => onClick(filter)} key={Symbol.keyFor(filter)}>
             &#215; {Symbol.keyFor(filter)}
-          </span>)}
+          </Label>)}
+      </div>
     </div>
   );
 };
