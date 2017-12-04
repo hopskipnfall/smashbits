@@ -5,10 +5,16 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore } from 'redux';
-import reducer from './reducer';
+import reducer, { SORT_SCORE } from './reducer';
 import { fromJS } from 'immutable';
-import { addBit } from './action_creators';
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import { addBit, changeSort } from './action_creators';
+// Hack to ensure jQuery is registered before bootstrap.
+// See https://stackoverflow.com/questions/34120250/error-using-bootstrap-jquery-packages-in-es6-with-browserify.
+// TODO(thenuge): Probably just use Sass instead.
+import $ from 'jquery';
+window.jQuery = window.$ = $;
+require('bootstrap');
+require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
 
 const store = createStore(reducer);
 
@@ -37,8 +43,22 @@ const handBit = fromJS({
           title: 'Master Hand\'s getup attack',
           content: 'It\'s a 1HKO.',
         });
+const falconPressureBit = fromJS({
+          id: 'JNHQ98ASKJAK',
+          author: {
+            person_id: '82JS0NG28XL1',
+            name: 'LowwwPower',
+          },
+          date_created: new Date(2010, 8, 12, 6, 17, 53),
+          upvotes: 53,
+          downvotes: 21,
+          title: 'Falcon shield pressure against Yoshi',
+          content: 'A way to pressure Yoshis that love baiting platform push off by holding shield, especially when you are respawning and have invincibility. Even if you don\'t get the break, they often times get hit trying to escape which can lead to a bunch of combo starters.',
+});
 store.dispatch(addBit(foxBit));
 store.dispatch(addBit(handBit));
+store.dispatch(addBit(falconPressureBit));
+store.dispatch(changeSort(SORT_SCORE));
 
 ReactDOM.render(
   <Provider store={store}>
