@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
 import { Map } from 'immutable';
 import FilterMenu from './FilterMenu';
+import { Panel } from 'react-bootstrap';
 
 const FilterControl = props => {
   const { filtering = Map(), toggleMainCharFilter, toggleVsCharFilter, toggleStageFilter, toggleStandaloneTagFilter } = props;
   return (
-    <div className="panel-primary">
-      <div className="panel-heading"><h2 className="panel-title"> Filtering Options </h2></div>
-      <div className="panel-body"><h4> Show me bits about: </h4></div>
+    <Panel bsStyle="primary" header={<h2> Filtering Options </h2>}>
+      <h4> Show me bits about: </h4>
       <FilterMenu
           title="These characters"
           bootstrapStyle="success"
@@ -34,7 +34,7 @@ const FilterControl = props => {
           allFilters={filtering.get('standaloneTags')}
           currentFilters={filtering.get('currentStandaloneTags')}
           onClick={toggleStandaloneTagFilter} />
-    </div>
+    </Panel>
   );
 };
 

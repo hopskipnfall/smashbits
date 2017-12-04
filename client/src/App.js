@@ -3,6 +3,7 @@ import './App.css';
 import BitsContainer from './BitsContainer';
 import SortingMenu from './SortingMenu';
 import FilterControl from './FilterControl';
+import { Col } from 'react-bootstrap'
 
 class App extends Component {
   render() {
@@ -16,13 +17,13 @@ class App extends Component {
             SmashBits is a place to collaborate on and organize game knowledge in a central, public place.
           </p>
         </div>
-        <div className="col-md-4">
+        <Col md={4}>
           <FilterControl />
-        </div>
-        <div className="col-md-8">
+        </Col>
+        <Col md={8}>
           <SortingMenu />
           <BitsContainer />
-        </div>
+        </Col>
       </div>
     );
   }
