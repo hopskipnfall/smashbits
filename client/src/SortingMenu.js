@@ -8,7 +8,7 @@ const SortingMenu = props => {
   return (
     <div className="dropdown">
       <button className="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown">
-        <span className="sort-menu-caret-margin">
+        <span className="dropdown-caret-margin">
           Sorting: {Symbol.keyFor(currentSort)}
         </span>
         <span className="caret" />

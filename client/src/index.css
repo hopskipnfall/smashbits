@@ -12,7 +12,7 @@ body {
   margin: 0 5px;
 }
 
-.sort-menu-caret-margin {
+.dropdown-caret-margin {
   margin: 0 5px 0 0;
 }
 
@@ -27,4 +27,10 @@ body {
   color: white;
 }
 
- /*READ ABOUT SCSS / SASS*/
+.filter-pill {
+  margin: 0 3px 0 0;
+}
+
+.filter-pill:hover {
+  cursor: pointer;
+}
