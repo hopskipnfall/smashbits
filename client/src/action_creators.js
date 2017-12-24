@@ -7,7 +7,11 @@ import {
     ACTION_TOGGLE_MAIN_CHAR_FILTER,
     ACTION_TOGGLE_VS_CHAR_FILTER,
     ACTION_TOGGLE_STAGE_FILTER,
-    ACTION_TOGGLE_STANDALONE_TAG_FILTER
+    ACTION_TOGGLE_STANDALONE_TAG_FILTER,
+    ACTION_SET_MAIN_CHAR_FILTERS,
+    ACTION_SET_VS_CHAR_FILTERS,
+    ACTION_SET_STAGE_FILTERS,
+    ACTION_SET_STANDALONE_TAG_FILTERS
 } from './reducer';
 
 export function addBit(bit) {
@@ -45,10 +49,24 @@ export function changeSort(sort) {
   }
 }
 
+export function setMainCharFilters(chars) {
+  return {
+    type: ACTION_SET_MAIN_CHAR_FILTERS,
+    data: chars
+  }
+}
+
 export function toggleMainCharFilter(char) {
   return {
     type: ACTION_TOGGLE_MAIN_CHAR_FILTER,
     data: char
+  }
+}
+
+export function setVsCharFilters(chars) {
+  return {
+    type: ACTION_SET_VS_CHAR_FILTERS,
+    data: chars
   }
 }
 
@@ -59,10 +77,24 @@ export function toggleVsCharFilter(char) {
   }
 }
 
+export function setStageFilters(stages) {
+  return {
+    type: ACTION_SET_STAGE_FILTERS,
+    data: stages
+  }
+}
+
 export function toggleStageFilter(stage) {
   return {
     type: ACTION_TOGGLE_STAGE_FILTER,
     data: stage
+  }
+}
+
+export function setStandaloneTagFilters(tags) {
+  return {
+    type: ACTION_SET_STANDALONE_TAG_FILTERS,
+    data: tags
   }
 }
 

@@ -34,3 +34,7 @@ body {
 .filter-pill:hover {
   cursor: pointer;
 }
+
+.bit-tag-pills {
+  margin: 0 0 10px 0;
+}

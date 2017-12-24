@@ -1,7 +1,7 @@
 import * as actionCreators from './action_creators';
 import Bit from './Bit';
 import { Map, Set } from 'immutable';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import React from 'react';
 
 const BitsContainer = props => (
