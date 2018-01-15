@@ -6,8 +6,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore } from 'redux';
 import reducer, { SORT_SCORE } from './reducer';
-import { jsonToBit } from './bits_util';
-import { addBit, changeSort } from './action_creators';
+import { initializeBits } from './api_client';
+import { changeSort } from './action_creators';
 // Hack to ensure jQuery is registered before bootstrap.
 // See https://stackoverflow.com/questions/34120250/error-using-bootstrap-jquery-packages-in-es6-with-browserify.
 // TODO(thenuge): Probably just use Sass instead.
@@ -18,13 +18,7 @@ require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
 
 const store = createStore(reducer);
 
-let uri = 'http://localhost:3001/bits';
-if (process.env.NODE_ENV === 'production') {
-  uri = 'https://7mgkyv8jyg.execute-api.us-east-1.amazonaws.com/dev';
-}
-fetch(uri)
-    .then(result => result.json())
-    .then(response => response.bits.map(bit => store.dispatch(addBit(jsonToBit(bit)))));
+initializeBits(store);
 store.dispatch(changeSort(SORT_SCORE));
 
 ReactDOM.render(
