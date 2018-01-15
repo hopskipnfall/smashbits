@@ -1,4 +1,4 @@
-import { fromJS } from 'immutable';
+import { fromJS, Set } from 'immutable';
 
 export function jsonToBit(jsonBit) {
   return fromJS(jsonBit)

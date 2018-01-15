@@ -6,7 +6,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import { createStore } from 'redux';
 import reducer, { SORT_SCORE } from './reducer';
-import { fromJS } from 'immutable';
+import { jsonToBit } from './bits_util';
 import { addBit, changeSort } from './action_creators';
 // Hack to ensure jQuery is registered before bootstrap.
 // See https://stackoverflow.com/questions/34120250/error-using-bootstrap-jquery-packages-in-es6-with-browserify.
@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 fetch(uri)
     .then(result => result.json())
-    .then(response => response.bits.map(bit => store.dispatch(addBit(fromJS(bit), true /*fromJson*/))));
+    .then(response => response.bits.map(bit => store.dispatch(addBit(jsonToBit(bit)))));
 store.dispatch(changeSort(SORT_SCORE));
 
 ReactDOM.render(
