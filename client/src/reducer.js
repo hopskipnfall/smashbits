@@ -101,7 +101,10 @@ const INITIAL_STATE = fromJS({
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
     case ACTION_ADD_BIT:
-      return addBit(state, action.data);
+      if (action.data.fromJson) {
+        return addBitFromJson(state, action.data.bit);
+      }
+      return addBit(state, action.data.bit);
     case ACTION_UPVOTE:
       return state.getIn(['bits', action.data, 'userVote']) === USER_UPVOTE
           ? resetVote(state, action.data)
@@ -129,6 +132,15 @@ export default function(state = INITIAL_STATE, action) {
 
 const addBit = (state = Map(), bit) => state.setIn(['bits', bit.get('id')], bit);
 
+const addBitFromJson = (state = Map(), jsonBit) => {
+  const bit = fromJS(jsonBit)
+      .updateIn(['mainChars'], [], chars => Set(chars.map(char => Symbol.for(char))))
+      .updateIn(['vsChars'], [], chars => Set(chars.map(char => Symbol.for(char))))
+      .updateIn(['stages'], [], stages => Set(stages.map(stage => Symbol.for(stage))))
+      .updateIn(['standaloneTags'], [], tags => Set(tags.map(tag => Symbol.for(tag))));
+  return addBit(state, bit);
+}
+
 const upvote = (state = Map(), bitId) =>
     resetVote(state, bitId)
         .setIn(['bits', bitId, 'userVote'], USER_UPVOTE);
@@ -150,7 +162,7 @@ const changeSort = (state = Map(), sort) => {
     case SORT_DATE:
       return state.set('bits',
           state.get('bits', Map()).sortBy(
-              bit => -1 * bit.get('date_created', 0).getTime()))
+              bit => -1 * bit.get('date_created', 0)))
           .setIn(['sorting', 'currentSort'], sort);
     default:
       return state;

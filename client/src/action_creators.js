@@ -10,10 +10,10 @@ import {
     ACTION_TOGGLE_STANDALONE_TAG_FILTER
 } from './reducer';
 
-export function addBit(bit) {
+export function addBit(bit, fromJson = false) {
   return {
     type: ACTION_ADD_BIT,
-    data: bit
+    data: { bit: bit, fromJson: fromJson }
   }
 }
 
