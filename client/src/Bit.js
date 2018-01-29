@@ -25,7 +25,7 @@ export default function Bit(props) {
         <p>
           <b>{bit.get('author').get('name')}</b>
           {` \u2022 `}
-          <i>{bit.get('date_created').toDateString()}</i>
+          <i>{new Date(bit.get('date_created')).toDateString()}</i>
         </p>
         {bit.get('content')}
       </div>

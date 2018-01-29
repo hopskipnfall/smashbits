@@ -162,7 +162,7 @@ const changeSort = (state = Map(), sort) => {
     case SORT_DATE:
       return state.set('bits',
           state.get('bits', Map()).sortBy(
-              bit => -1 * bit.get('date_created', 0).getTime()))
+              bit => -1 * bit.get('date_created', 0)))
           .setIn(['sorting', 'currentSort'], sort);
     default:
       return state;
