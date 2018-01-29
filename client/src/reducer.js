@@ -12,6 +12,10 @@ export const ACTION_TOGGLE_MAIN_CHAR_FILTER = Symbol('ACTION_TOGGLE_MAIN_CHAR_FI
 export const ACTION_TOGGLE_VS_CHAR_FILTER = Symbol('ACTION_TOGGLE_VS_CHAR_FILTER');
 export const ACTION_TOGGLE_STAGE_FILTER = Symbol('ACTION_TOGGLE_STAGE_FILTER');
 export const ACTION_TOGGLE_STANDALONE_TAG_FILTER = Symbol('ACTION_TOGGLE_STANDALONE_TAG_FILTER');
+export const ACTION_SET_MAIN_CHAR_FILTERS = Symbol('ACTION_SET_MAIN_CHAR_FILTERS');
+export const ACTION_SET_VS_CHAR_FILTERS = Symbol('ACTION_SET_VS_CHAR_FILTERS');
+export const ACTION_SET_STAGE_FILTERS = Symbol('ACTION_SET_STAGE_FILTERS');
+export const ACTION_SET_STANDALONE_TAG_FILTERS = Symbol('ACTION_SET_STANDALONE_TAG_FILTERS');
 
 export const USER_UPVOTE = 1;
 export const USER_DOWNVOTE = -1;
@@ -122,6 +126,14 @@ export default function(state = INITIAL_STATE, action) {
       return toggleStage(state, action.data);
     case ACTION_TOGGLE_STANDALONE_TAG_FILTER:
       return toggleStandaloneTag(state, action.data);
+    case ACTION_SET_MAIN_CHAR_FILTERS:
+      return state.setIn(['filtering', 'currentMainChars'], action.data);
+    case ACTION_SET_VS_CHAR_FILTERS:
+      return state.setIn(['filtering', 'currentVsChars'], action.data);
+    case ACTION_SET_STAGE_FILTERS:
+      return state.setIn(['filtering', 'currentStages'], action.data);
+    case ACTION_SET_STANDALONE_TAG_FILTERS:
+      return state.setIn(['filtering', 'currentStandaloneTags'], action.data);
     default:
       return state;
   }

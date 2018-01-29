@@ -2,6 +2,7 @@ import React from 'react';
 import { Map } from 'immutable';
 import { USER_UPVOTE, USER_DOWNVOTE } from './reducer';
 import { Panel, Button } from 'react-bootstrap';
+import BitTagPills from './BitTagPills';
 
 export default function Bit(props) {
   const { bit = new Map(), upvote, downvote } = props;
@@ -19,7 +20,8 @@ export default function Bit(props) {
   );
   return (
     <Panel header={header}>
-      <div className="panel-body">
+      <div>
+        <BitTagPills bit={bit} {...props} />
         <p>
           <b>{bit.get('author').get('name')}</b>
           {` \u2022 `}
