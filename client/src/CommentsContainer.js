@@ -1,0 +1,23 @@
+import React from 'react';
+import { Map, Set } from 'immutable';
+
+export default function CommentsContainer(props) {
+  const {bit, comments = Map()} = props;
+  return (
+    <div>
+      {bit.get('comments', Set()).map(commentId => {
+        const comment = comments.get(commentId, Map());
+        return (
+          <div key={commentId}>
+            <p>
+              <b>{comment.getIn(['author', 'name'])}</b>
+              {` \u2022 `}
+              <i>{new Date(comment.get('date_created')).toDateString()}</i>
+            </p>
+            {comment.get('content')}
+          </div>
+        );
+      })}
+    </div>
+  );
+};

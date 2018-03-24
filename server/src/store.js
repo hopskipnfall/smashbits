@@ -43,6 +43,42 @@ const falconPressureBit = {
 };
 const bits = {bits: [foxBit, handBit, falconPressureBit]};
 
-export default function getBits() {
+const foxComment1 = {
+  id: 'J78S348M293',
+  bit_id: 'L3WDO8EL3LEKS',
+  author: {
+    person_id: 'JAS724IR8933',
+    name: 'LD'
+  },
+  date_created: new Date(2018, 1, 14, 10, 11, 16).getTime(),
+  content: 'Not true.'
+};
+const foxComment2 = {
+  id: 'B72902B3846',
+  bit_id: 'L3WDO8EL3LEKS',
+  author: {
+    person_id: 'L187S60DD3',
+    name: 'n00bl33t'
+  },
+  date_created: new Date(2018, 1, 17, 6, 13, 28).getTime(),
+  content: 'Pshh what do you know'
+};
+const handComment = {
+  id: 'I26739X7034',
+  bit_id: 'ME8DU23MNO0S',
+  author: {
+    person_id: 'R67218386X',
+    name: 'Cobr'
+  },
+  date_created: new Date(2000, 11, 10, 5, 11, 45).getTime(),
+  content: 'This is the kind of investigative reporting we need right now.'
+};
+const comments = [foxComment1, foxComment2, handComment];
+
+export function getBits() {
   return bits;
+}
+
+export function getComments(reqParams) {
+  return comments.filter(comment => comment.bit_id === reqParams.bitId);
 }
