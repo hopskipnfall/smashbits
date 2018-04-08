@@ -22,6 +22,6 @@ app.post('/bits', (req, res) => {
   createBit(req.body.bit)
       .then(result => res.location('/bits/' + result.postId).sendStatus(201))
       .catch(error => res.status(500).send(error));
-})
+});
 
 export const handler = serverless(app);
