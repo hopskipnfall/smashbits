@@ -1,3 +1,7 @@
+import uuid from "uuid";
+import AWS from "aws-sdk";
+import jsStringEscape from 'js-string-escape';
+
 // TODO(thenuge): Replace this test data with real data from the DB.
 const foxBit = {
     id: 'L3WDO8EL3LEKS',
@@ -43,6 +47,37 @@ const falconPressureBit = {
 };
 const bits = {bits: [foxBit, handBit, falconPressureBit]};
 
-export default function getBits() {
+AWS.config.update({ region: "us-east-2" });
+const dynamoDb = new AWS.DynamoDB.DocumentClient();
+
+export function getBits() {
   return bits;
+}
+
+export function createBit(bit) {
+  const params = {
+      TableName: 'posts',
+      Item: {
+        postId: uuid.v1(),
+        author: {
+          name: jsStringEscape(bit.author.name),
+          personId: jsStringEscape(bit.author.person_id)
+        },
+        dateCreated: new Date().getTime(),
+        upvotes: 0,
+        downvotes: 0,
+        title: jsStringEscape(bit.title),
+        content: jsStringEscape(bit.content),
+        ...(bit.tags ? { tags: jsStringEscape(bit.tags.join()) } : {}),
+        ...(bit.stages ? { stages: jsStringEscape(bit.stages.join()) } : {}),
+        ...(bit.mainChars ? { main_chars: jsStringEscape(bit.main_chars.join()) } : {}),
+        ...(bit.vsChars ? { vs_chars: jsStringEscape(bit.vsCharss.join()) } : {})
+      }
+    };
+
+  return new Promise((resolve, reject) => {
+    dynamoDb.put(params).promise()
+        .then(data => resolve(params.Item))
+        .catch(err => reject(err));
+  });
 }
