@@ -26,3 +26,7 @@ functions:
     events:
       - http: GET /bits
       - http: 'GET /bits/{proxy+}'
+  getComments:
+     handler: index.handler
+     events:
+       - http: GET /bits/{bitId}/comments
