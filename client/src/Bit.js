@@ -3,9 +3,10 @@ import { Map } from 'immutable';
 import { USER_UPVOTE, USER_DOWNVOTE } from './reducer';
 import { Panel, Button } from 'react-bootstrap';
 import BitTagPills from './BitTagPills';
+import CommentsContainer from './CommentsContainer';
 
 export default function Bit(props) {
-  const { bit = new Map(), upvote, downvote } = props;
+  const { bit = new Map(), comments = Map(), upvote, downvote, fetchComments } = props;
   const header = (
       <h3>
         <Button bsStyle={getDownvoteButtonStyle(bit)} className="thumbs-down-button-margin" onClick={() => downvote(bit.get('id'))}>
@@ -28,6 +29,8 @@ export default function Bit(props) {
           <i>{new Date(bit.get('date_created')).toDateString()}</i>
         </p>
         {bit.get('content')}
+        <Button onClick={() => fetchComments(bit.get('id'))}>Get comments</Button>
+        <CommentsContainer bit={bit} comments={comments} />
       </div>
     </Panel>
   );

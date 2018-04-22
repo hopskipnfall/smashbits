@@ -16,6 +16,8 @@ export const ACTION_SET_MAIN_CHAR_FILTERS = Symbol('ACTION_SET_MAIN_CHAR_FILTERS
 export const ACTION_SET_VS_CHAR_FILTERS = Symbol('ACTION_SET_VS_CHAR_FILTERS');
 export const ACTION_SET_STAGE_FILTERS = Symbol('ACTION_SET_STAGE_FILTERS');
 export const ACTION_SET_STANDALONE_TAG_FILTERS = Symbol('ACTION_SET_STANDALONE_TAG_FILTERS');
+export const ACTION_REQUEST_COMMENTS = Symbol('ACTION_REQUEST_COMMENTS');
+export const ACTION_RECEIVE_COMMENTS = Symbol('ACTION_RECEIVE_COMMENTS');
 
 export const USER_UPVOTE = 1;
 export const USER_DOWNVOTE = -1;
@@ -134,6 +136,11 @@ export default function(state = INITIAL_STATE, action) {
       return state.setIn(['filtering', 'currentStages'], action.data);
     case ACTION_SET_STANDALONE_TAG_FILTERS:
       return state.setIn(['filtering', 'currentStandaloneTags'], action.data);
+    case ACTION_REQUEST_COMMENTS:
+      return state.setIn(['bits', action.data, 'isRequestingComments'], true);
+    case ACTION_RECEIVE_COMMENTS:
+      console.log('Got comments for bit ' + action.bitId + ': ' + action.comments);
+      return receiveComments(state, action.bitId, action.comments);
     default:
       return state;
   }
@@ -186,3 +193,8 @@ const toggleStandaloneTag = (state = Map(), tag) =>
         toggleSetElement(state.getIn(['filtering', 'currentStandaloneTags']), tag));
 
 const toggleSetElement = (set, element) => set.includes(element) ? set.delete(element) : set.add(element);
+
+const receiveComments = (state = Map(), bitId, newComments) =>
+    state
+        .mergeIn(['comments'], Map(newComments.map(comment => [comment.get('id'), comment])))
+        .updateIn(['bits', bitId, 'comments'], Set(), comments => comments.union(newComments.map(comment => comment.get('id'))));
