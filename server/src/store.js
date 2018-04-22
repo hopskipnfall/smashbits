@@ -103,8 +103,8 @@ export function createBit(bit) {
       content: jsStringEscape(bit.content),
       ...(bit.tags ? { tags: jsStringEscape(bit.tags.join()) } : {}),
       ...(bit.stages ? { stages: jsStringEscape(bit.stages.join()) } : {}),
-      ...(bit.mainChars ? { main_chars: jsStringEscape(bit.main_chars.join()) } : {}),
-      ...(bit.vsChars ? { vs_chars: jsStringEscape(bit.vsCharss.join()) } : {})
+      ...(bit.mainChars ? { main_chars: jsStringEscape(bit.mainChars.join()) } : {}),
+      ...(bit.vsChars ? { vs_chars: jsStringEscape(bit.vsChars.join()) } : {})
     }
   };
 
