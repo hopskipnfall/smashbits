@@ -1,5 +1,5 @@
-import uuid from "uuid";
-import AWS from "aws-sdk";
+import uuid from 'uuid';
+import AWS from 'aws-sdk';
 import jsStringEscape from 'js-string-escape';
 
 // TODO(thenuge): Replace this test data with real data from the DB.
@@ -80,7 +80,7 @@ const handComment = {
 };
 const comments = [foxComment1, foxComment2, handComment];
 
-AWS.config.update({ region: "us-east-2" });
+AWS.config.update({ region: 'us-east-2' });
 const dynamoDb = new AWS.DynamoDB.DocumentClient();
 
 export function getBits() {
