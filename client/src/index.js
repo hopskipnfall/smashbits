@@ -13,7 +13,6 @@ import { changeSort, fetchBits } from './action_creators';
 // TODO(thenuge): Probably just use Sass instead.
 import $ from 'jquery';
 window.jQuery = window.$ = $;
-require('bootstrap');
 require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));

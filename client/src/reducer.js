@@ -18,6 +18,8 @@ export const ACTION_SET_STAGE_FILTERS = Symbol('ACTION_SET_STAGE_FILTERS');
 export const ACTION_SET_STANDALONE_TAG_FILTERS = Symbol('ACTION_SET_STANDALONE_TAG_FILTERS');
 export const ACTION_REQUEST_COMMENTS = Symbol('ACTION_REQUEST_COMMENTS');
 export const ACTION_RECEIVE_COMMENTS = Symbol('ACTION_RECEIVE_COMMENTS');
+export const ACTION_REQUEST_CREATE_BIT = Symbol('ACTION_REQUEST_CREATE_BIT');
+export const ACTION_RECEIVE_CREATE_BIT = Symbol('ACTION_RECEIVE_CREATE_BIT');
 
 export const USER_UPVOTE = 1;
 export const USER_DOWNVOTE = -1;
@@ -139,8 +141,11 @@ export default function(state = INITIAL_STATE, action) {
     case ACTION_REQUEST_COMMENTS:
       return state.setIn(['bits', action.data, 'isRequestingComments'], true);
     case ACTION_RECEIVE_COMMENTS:
-      console.log('Got comments for bit ' + action.bitId + ': ' + action.comments);
       return receiveComments(state, action.bitId, action.comments);
+    case ACTION_REQUEST_CREATE_BIT:
+      return state;
+    case ACTION_RECEIVE_CREATE_BIT:
+      return state;
     default:
       return state;
   }
@@ -197,4 +202,5 @@ const toggleSetElement = (set, element) => set.includes(element) ? set.delete(el
 const receiveComments = (state = Map(), bitId, newComments) =>
     state
         .mergeIn(['comments'], Map(newComments.map(comment => [comment.get('id'), comment])))
-        .updateIn(['bits', bitId, 'comments'], Set(), comments => comments.union(newComments.map(comment => comment.get('id'))));
+        .updateIn(['bits', bitId, 'comments'], Set(), comments => comments.union(newComments.map(comment => comment.get('id'))))
+        .setIn(['bits', bitId, 'isRequestingComments'], false);

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import BitsContainer from './BitsContainer';
+import CreateBitButton from './CreateBitButton';
 import SortingMenu from './SortingMenu';
 import FilterControl from './FilterControl';
 import { Col } from 'react-bootstrap'
@@ -18,6 +19,7 @@ class App extends Component {
           </p>
         </div>
         <Col md={4}>
+          <CreateBitButton />
           <FilterControl />
         </Col>
         <Col md={8}>
