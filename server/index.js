@@ -21,8 +21,9 @@ app.get('/bits', (req, res) => {
 app.post('/bits', (req, res) => {
   createBit(req.body.bit)
       .then(result => res.location('/bits/' + result.postId).sendStatus(201))
+      // TODO(#19): Don't propagate this to clients.
       .catch(error => res.status(500).send(error));
-})
+});
 
 app.get('/bits/:bitId/comments', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
