@@ -1,5 +1,6 @@
 import uuid from 'uuid';
 import AWS from 'aws-sdk';
+import dynamodb from 'serverless-dynamodb-client';
 import jsStringEscape from 'js-string-escape';
 
 // TODO(thenuge): Replace this test data with real data from the DB.
@@ -47,7 +48,6 @@ const falconPressureBit = {
 };
 const bits = {bits: [foxBit, handBit, falconPressureBit]};
 
-
 const foxComment1 = {
   id: 'J78S348M293',
   bit_id: 'L3WDO8EL3LEKS',
@@ -81,7 +81,7 @@ const handComment = {
 const comments = [foxComment1, foxComment2, handComment];
 
 AWS.config.update({ region: 'us-east-2' });
-const dynamoDb = new AWS.DynamoDB.DocumentClient();
+const dynamoDb = dynamodb.doc;
 
 export function getBits() {
   return bits;
