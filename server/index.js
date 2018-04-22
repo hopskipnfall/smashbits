@@ -18,16 +18,17 @@ app.get('/bits', (req, res) => {
   res.send(JSON.stringify(getBits()));
 });
 
-app.get('/bits/:bitId/comments', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(getComments(req.params)));
-});
-
 app.post('/bits', (req, res) => {
   res.setHeader('Access-Control-Expose-Headers', 'location');
   createBit(req.body.bit)
       .then(result => res.location('/bits/' + result.postId).sendStatus(201))
+      // TODO(#19): Don't propagate this to clients.
       .catch(error => res.status(500).send(error));
+});
+
+app.get('/bits/:bitId/comments', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send(JSON.stringify(getComments(req.params)));
 });
 
 export const handler = serverless(app);
