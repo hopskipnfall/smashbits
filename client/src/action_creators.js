@@ -14,8 +14,10 @@ import {
     ACTION_SET_STANDALONE_TAG_FILTERS,
     ACTION_REQUEST_COMMENTS,
     ACTION_RECEIVE_COMMENTS,
+    ACTION_REQUEST_CREATE_BIT,
+    ACTION_RECEIVE_CREATE_BIT,
 } from './reducer';
-import { fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi } from './api_client';
+import { fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
 
 export function addBit(bit) {
   return {
@@ -108,7 +110,7 @@ export function toggleStandaloneTagFilter(tag) {
   }
 }
 
-export function requestComments(bitId) {
+function requestComments(bitId) {
   return {
     type: ACTION_REQUEST_COMMENTS,
     data: bitId
@@ -134,5 +136,26 @@ export function fetchComments(bitId) {
     dispatch(requestComments(bitId));
 
     return fetchCommentsApi(bitId, dispatch);
+  }
+}
+
+function requestCreateBit(bit) {
+  return {
+    type: ACTION_REQUEST_CREATE_BIT,
+    data: bit
+  }
+}
+
+export function receiveCreateBit(bitUrl) {
+  return {
+    type: ACTION_RECEIVE_CREATE_BIT,
+    data: bitUrl
+  }
+}
+
+export function createBit(bit) {
+  return function(dispatch) {
+    dispatch(requestCreateBit(bit));
+    return createBitApi(bit, dispatch);
   }
 }

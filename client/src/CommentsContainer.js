@@ -10,7 +10,7 @@ export default function CommentsContainer(props) {
         return (
           <div key={commentId}>
             <p>
-              <b>{`${comment.getIn(['author', 'name'])}} • `}</b>
+              <b>{`${comment.getIn(['author', 'name'])} • `}</b>
               <i>{new Date(comment.get('date_created')).toDateString()}</i>
             </p>
             {comment.get('content')}

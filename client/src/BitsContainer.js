@@ -6,7 +6,7 @@ import React from 'react';
 
 const BitsContainer = props => (
   <div>
-    {props.bits.map(entry =>
+    {props.bits.valueSeq().map(entry =>
       <Bit bit={entry} key={entry} {...props} />
     )}
   </div>

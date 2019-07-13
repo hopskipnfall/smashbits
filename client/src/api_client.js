@@ -1,4 +1,4 @@
-import { addBit, receiveComments } from './action_creators';
+import { addBit, receiveComments, receiveCreateBit } from './action_creators';
 import { jsonToBit } from './bits_util';
 import { fromJS } from 'immutable';
 
@@ -20,4 +20,19 @@ export function fetchComments(bitId, dispatch) {
   fetch(BASE_URI + BITS_PATH + '/' + bitId + COMMENTS_PATH)
       .then(result => result.json(), error => console.log('Error fetching comments', error))
       .then(response => dispatch(receiveComments(bitId, fromJS(response))));
+}
+
+export function createBit(bit, dispatch) {
+  fetch(BASE_URI + BITS_PATH,
+      {
+        body: JSON.stringify({bit: bit}),
+        headers: {
+          'content-type': 'application/json',
+        },
+        method: 'POST',
+        mode: 'cors',
+        redirect: 'follow',
+      })
+      .then(result => result.headers.get('location'), error => console.log('Error creating bit', error))
+      .then(bitUrl => dispatch(receiveCreateBit(bitUrl)));
 }
