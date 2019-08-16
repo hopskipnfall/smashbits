@@ -2,7 +2,6 @@ service: smashbits
 
 plugins:
   - serverless-webpack # Use serverless-webpack plugin to transpile ES6/ES7
-  - serverless-dynamodb-local
   - serverless-offline # serverless-offline needs to be last in the list
 
 # Enable auto-packing of external modules
