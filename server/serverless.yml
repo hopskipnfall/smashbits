@@ -10,45 +10,15 @@ custom:
   webpackIncludeModules: true
   serverless-offline:
     port: 3001
-  dynamodb:
-    start:
-      port: 8000
-      inMemory: true
-      migrate: true
-      seed: true
-
-resources:
-  Resources:
-    posts:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: posts
-        AttributeDefinitions:
-          - AttributeName: postId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: postId
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
+  myStage: ${opt:stage, self:provider.stage}
 
 provider:
   name: aws
   runtime: nodejs6.10
   stage: dev
   region: us-east-1
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - dynamodb:DescribeTable
-        - dynamodb:Query
-        - dynamodb:Scan
-        - dynamodb:GetItem
-        - dynamodb:PutItem
-        - dynamodb:UpdateItem
-        - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:us-east-1:*:*"
+  environment:
+    STORE_URI: ${file(./secret/config.${self:provider.stage}.yml):storeUri}
 
 functions:
   app:
@@ -71,4 +41,3 @@ functions:
         - http: POST /bits
         - http: 'POST /bits/{proxy+}'
       cors: true
-      authorizer: aws_iam

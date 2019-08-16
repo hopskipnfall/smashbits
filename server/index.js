@@ -1,12 +1,12 @@
 import serverless from 'serverless-http';
 import express from 'express';
 import helmet from 'helmet';
-import { getBits, getComments, createBit } from './src/store';
+import { getBits, getComments, createBit } from './src/bits';
 
 const app = express();
 app.use(express.json()); // support encoded JSON
 app.use(express.urlencoded({ extended: true })); // support encoded bodies
-// Security middlewhere, but keep client-side caching.
+// Security middleware, but keep client-side caching.
 app.use(helmet({
   noCache: {
     action: 'deny'
@@ -15,7 +15,7 @@ app.use(helmet({
 
 app.get('/bits', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
-  res.send(JSON.stringify(getBits()));
+  res.send(JSON.stringify(getBits(req)));
 });
 
 app.post('/bits', (req, res) => {
