@@ -10,7 +10,6 @@ custom:
   webpackIncludeModules: true
   serverless-offline:
     port: 3001
-  myStage: ${opt:stage, self:provider.stage}
 
 provider:
   name: aws
