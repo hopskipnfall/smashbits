@@ -79,6 +79,8 @@ const handComment = {
 };
 const comments = [foxComment1, foxComment2, handComment];
 
+const PAGE_SIZE = 25;
+
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.STORE_URI);
 
@@ -86,7 +88,7 @@ export const SORT_DATE = Symbol.for('date');
 export const SORT_SCORE = Symbol.for('score');
 
 export function queryBits({ sort=SORT_DATE }) {
-  return bits;
+  return Bit.find({}).sort({ dateCreated: -1 }).limit(PAGE_SIZE).exec();
 }
 
 export function putBit(bit) {
