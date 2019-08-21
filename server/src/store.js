@@ -1,7 +1,6 @@
 import uuid from 'uuid';
-import AWS from 'aws-sdk';
-import dynamodb from 'serverless-dynamodb-client';
-import jsStringEscape from 'js-string-escape';
+import mongoose from 'mongoose';
+import Bit from './Bit';
 
 // TODO(thenuge): Replace this test data with real data from the DB.
 const foxBit = {
@@ -80,41 +79,32 @@ const handComment = {
 };
 const comments = [foxComment1, foxComment2, handComment];
 
-AWS.config.update({ region: 'us-east-2' });
-const dynamoDb = dynamodb.doc;
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.STORE_URI);
 
-export function getBits() {
+export const SORT_DATE = Symbol.for('date');
+export const SORT_SCORE = Symbol.for('score');
+
+export function queryBits({ sort=SORT_DATE }) {
   return bits;
 }
 
-export function createBit(bit) {
+export function putBit(bit) {
   const params = {
-    TableName: 'posts',
-    Item: {
-      postId: uuid.v1(),
-      author: {
-        name: jsStringEscape(bit.author.name),
-        personId: jsStringEscape(bit.author.person_id)
-      },
-      dateCreated: new Date().getTime(),
-      upvotes: 0,
-      downvotes: 0,
-      title: jsStringEscape(bit.title),
-      content: jsStringEscape(bit.content),
-      ...(bit.tags ? { tags: jsStringEscape(bit.tags.join()) } : {}),
-      ...(bit.stages ? { stages: jsStringEscape(bit.stages.join()) } : {}),
-      ...(bit.mainChars ? { main_chars: jsStringEscape(bit.mainChars.join()) } : {}),
-      ...(bit.vsChars ? { vs_chars: jsStringEscape(bit.vsChars.join()) } : {})
-    }
+    postId: uuid.v1(),
+    dateCreated: new Date().getTime(),
+    upvotes: 0,
+    downvotes: 0,
+    ...bit
   };
 
   return new Promise((resolve, reject) => {
-    dynamoDb.put(params).promise()
-        .then(data => resolve(params.Item))
+    Bit.create(params)
+        .then(data => resolve(params))
         .catch(err => reject(err));
   });
 }
 
-export function getComments(reqParams) {
-  return comments.filter(comment => comment.bit_id === reqParams.bitId);
+export function queryComments(bitId) {
+  return comments.filter(comment => comment.bit_id === bitId);
 }
