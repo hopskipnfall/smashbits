@@ -88,7 +88,22 @@ export const SORT_DATE = Symbol.for('date');
 export const SORT_SCORE = Symbol.for('score');
 
 export function queryBits({ sort=SORT_DATE }) {
-  return Bit.find({}).sort({ dateCreated: -1 }).limit(PAGE_SIZE).exec();
+  // Don't expose the DB ID to clients.
+  var projectionParams = { _id: 0 };
+  var sortParams = {};
+
+  var query = Bit.aggregate().project(projectionParams);
+  switch (sort) {
+    case SORT_SCORE:
+      sortParams = { score: -1, upvotes: -1, dateCreated: -1 };
+      query = query.addFields({ score: { $subtract: [ '$upvotes', '$downvotes' ]}});
+      break;
+    case SORT_DATE:
+    default:
+      sortParams = { dateCreated: -1 };
+      break;
+  }
+  return query.sort(sortParams).limit(PAGE_SIZE).exec();
 }
 
 export function putBit(bit) {
