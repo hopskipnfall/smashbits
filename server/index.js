@@ -16,7 +16,7 @@ app.use(helmet({
 app.get('/bits', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   getBits(req)
-      .then(result => res.send(JSON.stringify(result)))
+      .then(result => res.send(JSON.stringify({ bits: result })))
       .catch(error => res.status(500).send(error));
 });
 
