@@ -1,7 +1,11 @@
 import jsStringEscape from 'js-string-escape';
-import { queryBits, putBit, queryComments, SORT_DATE, SORT_SCORE } from './store';
+import { queryBit, queryBits, putBit, queryComments, SORT_DATE, SORT_SCORE } from './store';
 
 const SORTS = [SORT_DATE, SORT_SCORE];
+
+export function getBit(req) {
+  return queryBit({ bitId: req.params.bitId })
+}
 
 export function getBits(req) {
   return queryBits({ sort: paramToSort(req.query.sort) });
