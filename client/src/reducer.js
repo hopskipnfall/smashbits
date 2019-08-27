@@ -151,7 +151,7 @@ export default function(state = INITIAL_STATE, action) {
   }
 }
 
-const addBit = (state = Map(), bit) => state.setIn(['bits', bit.get('id')], bit);
+const addBit = (state = Map(), bit) => state.setIn(['bits', bit.get('postId')], bit);
 
 const upvote = (state = Map(), bitId) =>
     resetVote(state, bitId)
@@ -201,6 +201,6 @@ const toggleSetElement = (set, element) => set.includes(element) ? set.delete(el
 
 const receiveComments = (state = Map(), bitId, newComments) =>
     state
-        .mergeIn(['comments'], Map(newComments.map(comment => [comment.get('id'), comment])))
-        .updateIn(['bits', bitId, 'comments'], Set(), comments => comments.union(newComments.map(comment => comment.get('id'))))
+        .mergeIn(['comments'], Map(newComments.map(comment => [comment.get('postId'), comment])))
+        .updateIn(['bits', bitId, 'comments'], Set(), comments => comments.union(newComments.map(comment => comment.get('postId'))))
         .setIn(['bits', bitId, 'isRequestingComments'], false);
