@@ -31,6 +31,9 @@ export default function Bit(props) {
         {bit.get('content')}
         <Button onClick={() => fetchComments(bit.get('postId'))}>Get comments</Button>
         <CommentsContainer bit={bit} comments={comments} />
+        <p>
+          <a href={ '/bits/' + bit.get('postId') }>permalink</a>
+        </p>
       </div>
     </Panel>
   );
