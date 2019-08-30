@@ -32,7 +32,7 @@ app.get('/bits/:bitId', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   getBit(req)
       .then(result => result
-          ? res.send(JSON.stringify({ bits: result }))
+          ? res.send(JSON.stringify({ bit: result }))
           : res.status(404).send())
       .catch(error => res.status(500).send(error));
 });
