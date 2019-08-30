@@ -17,7 +17,7 @@ import {
     ACTION_REQUEST_CREATE_BIT,
     ACTION_RECEIVE_CREATE_BIT,
 } from './reducer';
-import { fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
+import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
 
 export function addBit(bit) {
   return {
@@ -122,6 +122,12 @@ export function receiveComments(bitId, comments) {
     type: ACTION_RECEIVE_COMMENTS,
     bitId: bitId,
     comments: comments
+  }
+}
+
+export function fetchBit(bitId) {
+  return function(dispatch) {
+    return fetchBitApi(bitId, dispatch);
   }
 }
 
