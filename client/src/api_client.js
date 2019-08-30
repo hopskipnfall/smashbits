@@ -16,6 +16,12 @@ export function fetchBits(dispatch) {
       .then(response => response.bits.map(bit => dispatch(addBit(jsonToBit(bit)))));
 }
 
+export function fetchBit(bitId, dispatch) {
+  fetch(BASE_URI + BITS_PATH + '/' + bitId)
+      .then(result => result.json(), error => console.log('Error fetching bit: ' + bitId, error))
+      .then(response => dispatch(addBit(jsonToBit(response.bit))));
+}
+
 export function fetchComments(bitId, dispatch) {
   fetch(BASE_URI + BITS_PATH + '/' + bitId + COMMENTS_PATH)
       .then(result => result.json(), error => console.log('Error fetching comments', error))

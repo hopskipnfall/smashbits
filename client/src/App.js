@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
-import BitsContainer from './BitsContainer';
-import CreateBitButton from './CreateBitButton';
-import SortingMenu from './SortingMenu';
-import FilterControl from './FilterControl';
-import { Col } from 'react-bootstrap'
+import BitPage from './BitPage';
+import Home from './Home';
+import { Router } from "@reach/router";
 
 class App extends Component {
   render() {
@@ -18,14 +16,10 @@ class App extends Component {
             SmashBits is a place to collaborate on and organize game knowledge in a central, public place.
           </p>
         </div>
-        <Col md={4}>
-          <CreateBitButton />
-          <FilterControl />
-        </Col>
-        <Col md={8}>
-          <SortingMenu />
-          <BitsContainer />
-        </Col>
+        <Router>
+          <Home path='/' />
+          <BitPage path='/bits/:bitId' />
+        </Router>
       </div>
     );
   }

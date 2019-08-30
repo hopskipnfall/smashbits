@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@reach/router": "^1.2.1",
     "bootstrap": "^3.3.7",
     "immutable": "^4.0.0-rc.9",
     "jquery": "^3.2.1",
