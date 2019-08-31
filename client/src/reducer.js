@@ -60,12 +60,15 @@ export const FILTER_TAG_EDGEGUARDING = Symbol.for('Edgeguarding');
 export const FILTER_TAG_COMBOS = Symbol.for('Combos');
 export const FILTER_TAG_ESCAPES = Symbol.for('Escapes');
 
+const DEFAULT_PAGE_SIZE = 25;
+
 const INITIAL_STATE = fromJS({
   bits: OrderedMap(),
   sorting: {
     sorts: [SORT_DATE, SORT_SCORE],
     currentSort: SORT_DATE
   },
+  pageSize: DEFAULT_PAGE_SIZE,
   filtering: {
     chars: [
         FILTER_CHAR_LUIGI,

@@ -56,13 +56,17 @@ export function resetVote(bitId) {
 }
 
 export function changeSort(sort) {
-  return function(dispatch) {
+  return function(dispatch, getState) {
     dispatch({
       type: ACTION_CHANGE_SORT,
       data: sort
     });
-    dispatch(clearBits());
-    return dispatch(fetchBits(sort, dispatch));
+
+    // If we have less than 1 page of bits, we can just sort them client-side.
+    if (getState().get('bits').size >= getState().get('pageSize')) {
+      dispatch(clearBits());
+      dispatch(fetchBits(sort, dispatch));
+    }
   };
 }
 
