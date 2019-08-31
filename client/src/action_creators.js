@@ -1,4 +1,5 @@
 import {
+    ACTION_CLEAR_BITS,
     ACTION_ADD_BIT,
     ACTION_UPVOTE,
     ACTION_DOWNVOTE,
@@ -16,14 +17,21 @@ import {
     ACTION_RECEIVE_COMMENTS,
     ACTION_REQUEST_CREATE_BIT,
     ACTION_RECEIVE_CREATE_BIT,
+    SORT_DATE,
 } from './reducer';
 import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
+
+export function clearBits() {
+  return {
+    type: ACTION_CLEAR_BITS
+  };
+}
 
 export function addBit(bit) {
   return {
     type: ACTION_ADD_BIT,
     data: bit
-  }
+  };
 }
 
 export function upvote(bitId) {
@@ -48,10 +56,14 @@ export function resetVote(bitId) {
 }
 
 export function changeSort(sort) {
-  return {
-    type: ACTION_CHANGE_SORT,
-    data: sort
-  }
+  return function(dispatch) {
+    dispatch({
+      type: ACTION_CHANGE_SORT,
+      data: sort
+    });
+    dispatch(clearBits());
+    return dispatch(fetchBits(sort, dispatch));
+  };
 }
 
 export function setMainCharFilters(chars) {
@@ -131,9 +143,9 @@ export function fetchBit(bitId) {
   }
 }
 
-export function fetchBits() {
+export function fetchBits(sort = SORT_DATE) {
   return function(dispatch) {
-    return fetchBitsApi(dispatch);
+    return fetchBitsApi(sort, dispatch);
   }
 }
 

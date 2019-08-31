@@ -1,8 +1,9 @@
-import { Map, Set, fromJS } from 'immutable';
+import { Map, Set, OrderedMap, fromJS } from 'immutable';
 
 window.fromJS = fromJS;
 
 // TODO(thenuge): Some of these constants should probably go elsewhere.
+export const ACTION_CLEAR_BITS = Symbol('ACTION_CLEAR_BITS');
 export const ACTION_UPVOTE = Symbol('ACTION_UPVOTE');
 export const ACTION_DOWNVOTE = Symbol('ACTION_DOWNVOTE');
 export const ACTION_RESET_VOTE = Symbol('ACTION_RESET_VOTE');
@@ -60,9 +61,10 @@ export const FILTER_TAG_COMBOS = Symbol.for('Combos');
 export const FILTER_TAG_ESCAPES = Symbol.for('Escapes');
 
 const INITIAL_STATE = fromJS({
+  bits: OrderedMap(),
   sorting: {
     sorts: [SORT_DATE, SORT_SCORE],
-    currentSort: SORT_SCORE
+    currentSort: SORT_DATE
   },
   filtering: {
     chars: [
@@ -108,6 +110,8 @@ const INITIAL_STATE = fromJS({
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case ACTION_CLEAR_BITS:
+      return clearBits(state);
     case ACTION_ADD_BIT:
       return addBit(state, action.data);
     case ACTION_UPVOTE:
@@ -150,6 +154,8 @@ export default function(state = INITIAL_STATE, action) {
       return state;
   }
 }
+
+const clearBits = (state = Map()) => state.set('bits', OrderedMap());
 
 const addBit = (state = Map(), bit) => state.setIn(['bits', bit.get('postId')], bit);
 
