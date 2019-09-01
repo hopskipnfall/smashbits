@@ -79,7 +79,7 @@ const handComment = {
 };
 const comments = [foxComment1, foxComment2, handComment];
 
-const PAGE_SIZE = 25;
+const DEFAULT_PAGE_SIZE = 25;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.STORE_URI);
@@ -91,7 +91,7 @@ export function queryBit({ bitId }) {
   return Bit.findOne({ postId: bitId }).exec();
 }
 
-export function queryBits({ sort=SORT_DATE }) {
+export function queryBits({ sort=SORT_DATE, offset=0, limit=DEFAULT_PAGE_SIZE }) {
   // Don't expose the DB ID to clients.
   var projectionParams = { _id: 0 };
   var sortParams = {};
@@ -107,7 +107,7 @@ export function queryBits({ sort=SORT_DATE }) {
       sortParams = { dateCreated: -1 };
       break;
   }
-  return query.sort(sortParams).limit(PAGE_SIZE).exec();
+  return query.sort(sortParams).skip(offset).limit(limit).exec();
 }
 
 export function putBit(bit) {

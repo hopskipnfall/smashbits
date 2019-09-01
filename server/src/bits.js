@@ -8,7 +8,11 @@ export function getBit(req) {
 }
 
 export function getBits(req) {
-  return queryBits({ sort: paramToSort(req.query.sort) });
+  return queryBits({
+      sort: paramToSort(req.query.sort),
+      limit: parseInt(jsStringEscape(req.query.limit)),
+      offset: parseInt(jsStringEscape(req.query.offset)),
+    });
 }
 
 export function createBit(bit) {
