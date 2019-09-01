@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { SORT_DATE } from './reducer';
 import BitsContainer from './BitsContainer';
 import CreateBitButton from './CreateBitButton';
 import SortingMenu from './SortingMenu';
