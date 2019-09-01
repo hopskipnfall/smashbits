@@ -11,9 +11,8 @@ import * as actionCreators from './action_creators';
 class Home extends Component {
   constructor(props, context) {
     super(props, context);
-    const { fetchBits, changeSort } = props;
+    const { fetchBits } = props;
     fetchBits();
-    changeSort(SORT_DATE);
   }
 
   render() {

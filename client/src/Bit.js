@@ -28,6 +28,9 @@ export default function Bit(props) {
           <i>{new Date(bit.get('dateCreated')).toDateString()}</i>
         </p>
         {bit.get('content')}
+        <p>
+          <a href={ '/bits/' + bit.get('postId') }>permalink</a>
+        </p>
       </div>
     </Panel>
   );
