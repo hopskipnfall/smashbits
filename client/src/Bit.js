@@ -8,12 +8,12 @@ export default function Bit(props) {
   const { bit = new Map(), upvote, downvote } = props;
   const header = (
       <h3>
-        <Button bsStyle={getDownvoteButtonStyle(bit)} className="thumbs-down-button-margin" onClick={() => downvote(bit.get('postId'))}>
-          <span className="glyphicon glyphicon-thumbs-down" />
+        <Button bsStyle={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => upvote(bit.get('postId'))}>
+          <span className="glyphicon glyphicon-thumbs-up" />
         </Button>
         {bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0)}
-        <Button bsStyle={getUpvoteButtonStyle(bit)} className="thumbs-up-button-margin" onClick={() => upvote(bit.get('postId'))}>
-          <span className="glyphicon glyphicon-thumbs-up" />
+        <Button bsStyle={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => downvote(bit.get('postId'))}>
+          <span className="glyphicon glyphicon-thumbs-down" />
         </Button>
         {bit.get('title')}
       </h3>
