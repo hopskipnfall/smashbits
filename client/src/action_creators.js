@@ -1,4 +1,5 @@
 import {
+    ACTION_CLEAR_BITS,
     ACTION_ADD_BIT,
     ACTION_UPVOTE,
     ACTION_DOWNVOTE,
@@ -16,14 +17,21 @@ import {
     ACTION_RECEIVE_COMMENTS,
     ACTION_REQUEST_CREATE_BIT,
     ACTION_RECEIVE_CREATE_BIT,
+    SORT_DATE,
 } from './reducer';
-import { fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
+import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
+
+export function clearBits() {
+  return {
+    type: ACTION_CLEAR_BITS
+  };
+}
 
 export function addBit(bit) {
   return {
     type: ACTION_ADD_BIT,
     data: bit
-  }
+  };
 }
 
 export function upvote(bitId) {
@@ -48,10 +56,18 @@ export function resetVote(bitId) {
 }
 
 export function changeSort(sort) {
-  return {
-    type: ACTION_CHANGE_SORT,
-    data: sort
-  }
+  return function(dispatch, getState) {
+    dispatch({
+      type: ACTION_CHANGE_SORT,
+      data: sort
+    });
+
+    // If we have less than 1 page of bits, we can just sort them client-side.
+    if (getState().get('bits').size >= getState().get('pageSize')) {
+      dispatch(clearBits());
+      dispatch(fetchBits(sort, dispatch));
+    }
+  };
 }
 
 export function setMainCharFilters(chars) {
@@ -125,9 +141,15 @@ export function receiveComments(bitId, comments) {
   }
 }
 
-export function fetchBits() {
+export function fetchBit(bitId) {
   return function(dispatch) {
-    return fetchBitsApi(dispatch);
+    return fetchBitApi(bitId, dispatch);
+  }
+}
+
+export function fetchBits(sort = SORT_DATE) {
+  return function(dispatch) {
+    return fetchBitsApi(sort, dispatch);
   }
 }
 

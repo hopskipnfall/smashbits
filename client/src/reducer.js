@@ -1,8 +1,9 @@
-import { Map, Set, fromJS } from 'immutable';
+import { Map, Set, OrderedMap, fromJS } from 'immutable';
 
 window.fromJS = fromJS;
 
 // TODO(thenuge): Some of these constants should probably go elsewhere.
+export const ACTION_CLEAR_BITS = Symbol('ACTION_CLEAR_BITS');
 export const ACTION_UPVOTE = Symbol('ACTION_UPVOTE');
 export const ACTION_DOWNVOTE = Symbol('ACTION_DOWNVOTE');
 export const ACTION_RESET_VOTE = Symbol('ACTION_RESET_VOTE');
@@ -59,11 +60,15 @@ export const FILTER_TAG_EDGEGUARDING = Symbol.for('Edgeguarding');
 export const FILTER_TAG_COMBOS = Symbol.for('Combos');
 export const FILTER_TAG_ESCAPES = Symbol.for('Escapes');
 
+const DEFAULT_PAGE_SIZE = 25;
+
 const INITIAL_STATE = fromJS({
+  bits: OrderedMap(),
   sorting: {
     sorts: [SORT_DATE, SORT_SCORE],
-    currentSort: SORT_SCORE
+    currentSort: SORT_DATE
   },
+  pageSize: DEFAULT_PAGE_SIZE,
   filtering: {
     chars: [
         FILTER_CHAR_LUIGI,
@@ -108,6 +113,8 @@ const INITIAL_STATE = fromJS({
 
 export default function(state = INITIAL_STATE, action) {
   switch (action.type) {
+    case ACTION_CLEAR_BITS:
+      return clearBits(state);
     case ACTION_ADD_BIT:
       return addBit(state, action.data);
     case ACTION_UPVOTE:
@@ -151,6 +158,8 @@ export default function(state = INITIAL_STATE, action) {
   }
 }
 
+const clearBits = (state = Map()) => state.set('bits', OrderedMap());
+
 const addBit = (state = Map(), bit) => state.setIn(['bits', bit.get('postId')], bit);
 
 const upvote = (state = Map(), bitId) =>
@@ -174,7 +183,7 @@ const changeSort = (state = Map(), sort) => {
     case SORT_DATE:
       return state.set('bits',
           state.get('bits', Map()).sortBy(
-              bit => -1 * bit.get('date_created', 0)))
+              bit => -1 * bit.get('dateCreated', 0)))
           .setIn(['sorting', 'currentSort'], sort);
     default:
       return state;
