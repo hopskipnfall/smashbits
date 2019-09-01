@@ -87,6 +87,10 @@ mongoose.connect(process.env.STORE_URI);
 export const SORT_DATE = Symbol.for('date');
 export const SORT_SCORE = Symbol.for('score');
 
+export function queryBit({ bitId }) {
+  return Bit.findOne({ postId: bitId }).exec();
+}
+
 export function queryBits({ sort=SORT_DATE }) {
   // Don't expose the DB ID to clients.
   var projectionParams = { _id: 0 };

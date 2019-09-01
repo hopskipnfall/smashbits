@@ -1,7 +1,7 @@
 import serverless from 'serverless-http';
 import express from 'express';
 import helmet from 'helmet';
-import { getBits, getComments, createBit } from './src/bits';
+import { getBit, getBits, getComments, createBit } from './src/bits';
 
 const app = express();
 app.use(express.json()); // support encoded JSON
@@ -25,6 +25,15 @@ app.post('/bits', (req, res) => {
   createBit(req.body.bit)
       .then(result => res.location('/bits/' + result.postId).sendStatus(201))
       // TODO(#19): Don't propagate this to clients.
+      .catch(error => res.status(500).send(error));
+});
+
+app.get('/bits/:bitId', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  getBit(req)
+      .then(result => result
+          ? res.send(JSON.stringify({ bit: result }))
+          : res.status(404).send())
       .catch(error => res.status(500).send(error));
 });
 
