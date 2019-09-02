@@ -12,7 +12,7 @@ const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
 const CLIENT_SORT_TO_PARAM = { [SORT_DATE]: 'date', [SORT_SCORE]: 'score' };
 // Set this to true in development to use local, fake data instead of making any RPCs.
-const USE_FAKE_CLIENT = false;
+const USE_FAKE_CLIENT = true && process.env.NODE_ENV === 'development';
 
 export function fetchBits(sort, dispatch) {
   let fetchPromise;
@@ -67,9 +67,9 @@ export function createBit(bit, dispatch) {
         method: 'POST',
         mode: 'cors',
         redirect: 'follow',
-      });
+      })
+        .then(result => result.headers.get('location'), error => console.log('Error creating bit', error));
   }
   fetchPromise
-      .then(result => result.headers.get('location'), error => console.log('Error creating bit', error))
       .then(bitUrl => dispatch(receiveCreateBit(bitUrl)));
 }

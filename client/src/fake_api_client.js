@@ -83,7 +83,7 @@ export function fetchBits() {
 }
 
 export function fetchBit(bitId) {
-  return Promise.resolve({ bit: bits.filter(bit => bit.postId === bitId) });
+  return Promise.resolve({ bit: bits.find(bit => bit.postId === bitId) });
 }
 
 export function fetchComments(bitId) {
@@ -96,5 +96,6 @@ export function createBit(bit) {
     postId: uuid.v1(),
     dateCreated: new Date().getTime(),
   });
+  return Promise.resolve('/bits' + bits.slice(-1)[0]);
   // TODO: Return a 201 response
 }
