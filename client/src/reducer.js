@@ -21,6 +21,8 @@ export const ACTION_REQUEST_COMMENTS = Symbol('ACTION_REQUEST_COMMENTS');
 export const ACTION_RECEIVE_COMMENTS = Symbol('ACTION_RECEIVE_COMMENTS');
 export const ACTION_REQUEST_CREATE_BIT = Symbol('ACTION_REQUEST_CREATE_BIT');
 export const ACTION_RECEIVE_CREATE_BIT = Symbol('ACTION_RECEIVE_CREATE_BIT');
+export const ACTION_SET_OFFSET = Symbol('ACTION_SET_OFFSET');
+export const ACTION_SET_PAGE_SIZE = Symbol('ACTION_SET_PAGE_SIZE');
 
 export const USER_UPVOTE = 1;
 export const USER_DOWNVOTE = -1;
@@ -69,6 +71,7 @@ const INITIAL_STATE = fromJS({
     currentSort: SORT_DATE
   },
   pageSize: DEFAULT_PAGE_SIZE,
+  offset: 0,
   filtering: {
     chars: [
         FILTER_CHAR_LUIGI,
@@ -153,6 +156,10 @@ export default function(state = INITIAL_STATE, action) {
       return state;
     case ACTION_RECEIVE_CREATE_BIT:
       return state;
+    case ACTION_SET_OFFSET:
+      return state.set('offset', action.data);
+    case ACTION_SET_PAGE_SIZE:
+      return state.set('pageSize', action.data);
     default:
       return state;
   }

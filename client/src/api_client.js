@@ -11,10 +11,17 @@ const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
 const CLIENT_SORT_TO_PARAM = { [SORT_DATE]: 'date', [SORT_SCORE]: 'score' };
 
-export function fetchBits(sort, dispatch) {
+export function fetchBits({sort, offset, pageSize, dispatch}) {
   // TODO(thenuge): Replace concatenation with a proper URI library.
   // TODO(thenuge): Add actions for initiating requests for bit fetching, as well as errors.
-  fetch(new URI(BASE_URI).path(BITS_PATH).query({ sort: CLIENT_SORT_TO_PARAM[sort] }).toString())
+  fetch(new URI(BASE_URI)
+          .path(BITS_PATH)
+          .query({
+              ...sort && { sort: CLIENT_SORT_TO_PARAM[sort] },
+              ...offset && { offset: offset },
+              ...pageSize && { limit: pageSize },
+            })
+          .toString())
       .then(result => result.json(), error => console.log('Error fetching bits', error))
       .then(response => response.bits.map(bit => dispatch(addBit(jsonToBit(bit)))));
 }
