@@ -12,7 +12,7 @@ const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
 const CLIENT_SORT_TO_PARAM = { [SORT_DATE]: 'date', [SORT_SCORE]: 'score' };
 // Set this to true in development to use local, fake data instead of making any RPCs.
-const USE_FAKE_CLIENT = true;
+const USE_FAKE_CLIENT = false;
 
 export function fetchBits(sort, dispatch) {
   let fetchPromise;
