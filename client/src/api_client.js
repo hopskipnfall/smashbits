@@ -12,7 +12,7 @@ const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
 const CLIENT_SORT_TO_PARAM = { [SORT_DATE]: 'date', [SORT_SCORE]: 'score' };
 // Set this to true in development to use local, fake data instead of making any RPCs.
-const USE_FAKE_CLIENT = true && process.env.NODE_ENV === 'development';
+const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
 
 export function fetchBits(sort, dispatch) {
   let fetchPromise;
@@ -35,7 +35,8 @@ export function fetchBit(bitId, dispatch) {
     fetchPromise = fakeClient.fetchBit(bitId);
   } else {
     fetchPromise = fetch(new URI(BASE_URI).segment([BITS_PATH, bitId]).toString())
-        .then(result => result.json(), error => console.log('Error fetching bit: ' + bitId, error));
+        .then(result => result.json())
+        .catch(error => console.log('Error fetching bit: ' + bitId, error));
   }
   fetchPromise
       .then(response => dispatch(addBit(jsonToBit(response.bit))));
@@ -47,7 +48,8 @@ export function fetchComments(bitId, dispatch) {
     fetchPromise = fakeClient.fetchComments(bitId);
   } else {
     fetchPromise = fetch(new URI(BASE_URI).segment([BITS_PATH, bitId, COMMENTS_PATH]).toString())
-        .then(result => result.json(), error => console.log('Error fetching comments', error));
+        .then(result => result.json())
+        .catch(error => console.log('Error fetching comments', error));
   }
   fetchPromise
       .then(response => dispatch(receiveComments(bitId, fromJS(response))));
@@ -58,17 +60,19 @@ export function createBit(bit, dispatch) {
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.createBit(bit);
   } else {
-    fetchPromise = fetch(new URI(BASE_URI).path(BITS_PATH).toString(),
-      {
-        body: JSON.stringify({bit: bit}),
-        headers: {
-          'content-type': 'application/json',
-        },
-        method: 'POST',
-        mode: 'cors',
-        redirect: 'follow',
-      })
-        .then(result => result.headers.get('location'), error => console.log('Error creating bit', error));
+    fetchPromise =
+        fetch(new URI(BASE_URI).path(BITS_PATH).toString(),
+            {
+              body: JSON.stringify({bit: bit}),
+              headers: {
+                'content-type': 'application/json',
+              },
+              method: 'POST',
+              mode: 'cors',
+              redirect: 'follow',
+            })
+        .then(result => result.headers.get('location'))
+        .catch(error => console.log('Error creating bit', error));
   }
   fetchPromise
       .then(bitUrl => dispatch(receiveCreateBit(bitUrl)));
