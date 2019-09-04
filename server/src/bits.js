@@ -8,10 +8,12 @@ export function getBit(req) {
 }
 
 export function getBits(req) {
+  var limit = parseInt(jsStringEscape(req.query.limit));
+  var offset = parseInt(jsStringEscape(req.query.offset));
   return queryBits({
       sort: paramToSort(req.query.sort),
-      limit: parseInt(jsStringEscape(req.query.limit)),
-      offset: parseInt(jsStringEscape(req.query.offset)),
+      ...limit && { limit: limit },
+      ...offset && { offset: offset },
     });
 }
 

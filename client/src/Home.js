@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Col, Button } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import BitsContainer from './BitsContainer';
 import CreateBitButton from './CreateBitButton';
 import SortingMenu from './SortingMenu';
 import FilterControl from './FilterControl';
-import { Col } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import PageSizeMenu from './PageSizeMenu';
 import * as actionCreators from './action_creators';
 
 class Home extends Component {
@@ -15,6 +16,7 @@ class Home extends Component {
   }
 
   render() {
+    const { fetchNextPage, fetchPreviousPage } = this.props;
     return (
       <div>
         <Col md={4}>
@@ -22,7 +24,14 @@ class Home extends Component {
           <FilterControl />
         </Col>
         <Col md={8}>
-          <SortingMenu />
+          <span>
+            <SortingMenu />
+            <span style={{float: 'right'}}>
+              <PageSizeMenu />
+              <Button onClick={() => fetchPreviousPage()}> &lt; </Button>
+              <Button onClick={() => fetchNextPage()}> &gt; </Button>
+            </span>
+          </span>
           <BitsContainer />
         </Col>
       </div>
