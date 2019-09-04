@@ -14,15 +14,22 @@ const CLIENT_SORT_TO_PARAM = { [SORT_DATE]: 'date', [SORT_SCORE]: 'score' };
 // Set this to true in development to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
 
-export function fetchBits(sort, dispatch) {
+export function fetchBits({sort, offset, pageSize, dispatch}) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBits();
   } else {
     fetchPromise =
-        fetch(new URI(BASE_URI).path(BITS_PATH).query({ sort: CLIENT_SORT_TO_PARAM[sort] }).toString())
-            .then(result => result.json())
-            .catch(error => console.log('Error fetching bits', error));
+        fetch(new URI(BASE_URI)
+            .path(BITS_PATH)
+            .query({
+                ...sort && { sort: CLIENT_SORT_TO_PARAM[sort] },
+                ...offset && { offset: offset },
+                ...pageSize && { limit: pageSize },
+              })
+            .toString())
+        .then(result => result.json())
+        .catch(error => console.log('Error fetching bits', error));
   }
   // TODO(thenuge): Add actions for initiating requests for bit fetching, as well as errors.
   fetchPromise

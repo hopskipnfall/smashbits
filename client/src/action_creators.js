@@ -17,7 +17,8 @@ import {
     ACTION_RECEIVE_COMMENTS,
     ACTION_REQUEST_CREATE_BIT,
     ACTION_RECEIVE_CREATE_BIT,
-    SORT_DATE,
+    ACTION_SET_OFFSET,
+    ACTION_SET_PAGE_SIZE,
 } from './reducer';
 import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
 
@@ -65,7 +66,7 @@ export function changeSort(sort) {
     // If we have less than 1 page of bits, we can just sort them client-side.
     if (getState().get('bits').size >= getState().get('pageSize')) {
       dispatch(clearBits());
-      dispatch(fetchBits(sort, dispatch));
+      dispatch(fetchBits({ sort: sort }));
     }
   };
 }
@@ -147,9 +148,50 @@ export function fetchBit(bitId) {
   }
 }
 
-export function fetchBits(sort = SORT_DATE) {
+export function fetchBits({ sort, offset, limit } = {}) {
+  return function(dispatch, getState) {
+    return fetchBitsApi({
+      sort: sort || getState().getIn(['sorting', 'currentSort']),
+      offset: offset || getState().get('offset'),
+      pageSize: limit || getState().get('pageSize'),
+      dispatch: dispatch
+    });
+  }
+}
+
+export function fetchNextPage() {
+  return function(dispatch, getState) {
+    var offset = getState().get('offset') + getState().get('pageSize');
+    dispatch(clearBits());
+    dispatch(fetchBits({ offset: offset }));
+    return {
+      type: ACTION_SET_OFFSET,
+      data: offset
+    };
+  };
+}
+
+export function fetchPreviousPage() {
+  return function(dispatch, getState) {
+    var offset = Math.max(0, getState().get('offset') - getState().get('pageSize'));
+    dispatch(clearBits());
+    dispatch(fetchBits({ offset: offset }));
+    return {
+      type: ACTION_SET_OFFSET,
+      data: offset
+    };
+  };
+}
+
+export function setPageSize(pageSize) {
   return function(dispatch) {
-    return fetchBitsApi(sort, dispatch);
+    // TODO(thenuge): We could probably be smarter about not clearing everything.
+    dispatch(clearBits());
+    dispatch({
+      type: ACTION_SET_PAGE_SIZE,
+      data: pageSize
+    });
+    dispatch(fetchBits({ pageSize: pageSize }));
   }
 }
 
