@@ -1,9 +1,14 @@
-import { fromJS, Set } from 'immutable';
+import { fromJS, Set, List } from 'immutable';
 
 export function jsonToBit(jsonBit) {
   return fromJS(jsonBit)
-      .updateIn(['mainChars'], [], chars => Set(chars.map(char => Symbol.for(char))))
-      .updateIn(['vsChars'], [], chars => Set(chars.map(char => Symbol.for(char))))
-      .updateIn(['stages'], [], stages => Set(stages.map(stage => Symbol.for(stage))))
-      .updateIn(['standaloneTags'], [], tags => Set(tags.map(tag => Symbol.for(tag))));
+      .updateIn(['mainChars'], List(), jsonListToSymbols)
+      .updateIn(['vsChars'], List(), jsonListToSymbols)
+      .updateIn(['stages'], List(), jsonListToSymbols)
+      .updateIn(['standaloneTags'], List(), jsonListToSymbols);
 };
+
+const jsonListToSymbols = list =>
+    list.get(0)
+        ? Set(list.get(0).split(',').map(tag => Symbol.for(tag)))
+        : list;

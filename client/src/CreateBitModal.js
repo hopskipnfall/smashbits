@@ -15,7 +15,7 @@ class CreateBitModal extends Component {
     return (
        <Modal show={show} onHide={onHide}>
         <Modal.Header>
-          <h3>Create a bit!</h3>
+          <h3>Create a Bit!</h3>
         </Modal.Header>
         <Modal.Body>
            <LocalForm onSubmit={values => this.handleSubmit(values)} id="bit-form">
