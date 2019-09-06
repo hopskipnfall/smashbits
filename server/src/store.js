@@ -1,31 +1,43 @@
 import uuid from 'uuid';
 import mongoose from 'mongoose';
 import Bit from './Bit';
+import { SORT_PARAM_DATE, SORT_PARAM_SCORE } from 'Shared/query_params';
 
 const DEFAULT_PAGE_SIZE = 25;
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.STORE_URI);
 
-export const SORT_DATE = Symbol.for('date');
-export const SORT_SCORE = Symbol.for('score');
-
 export function queryBit({ bitId }) {
   return Bit.findOne({ postId: bitId }).exec();
 }
 
-export function queryBits({ sort=SORT_DATE, offset=0, limit=DEFAULT_PAGE_SIZE }) {
+export function queryBits({
+    sort=SORT_PARAM_DATE,
+    offset=0,
+    limit=DEFAULT_PAGE_SIZE,
+    mainChars,
+    vsChars,
+    stages,
+    standaloneTags,
+  } = {}) {
   // Don't expose the DB ID to clients.
-  var projectionParams = { _id: 0 };
-  var sortParams = {};
-
-  var query = Bit.aggregate().project(projectionParams);
+  const projectionParams = { _id: 0 };
+  let sortParams = {};
+  const filters = {
+    ...mainChars && { mainChars: { $in: mainChars } },
+    ...vsChars && { vsChars: { $in: vsChars }},
+    ...stages && { stages: stages},
+    ...standaloneTags && { tags: standaloneTags},
+  };
+  let query = Bit.aggregate().project(projectionParams);
+  query = filters ? query.match(filters) : query;
   switch (sort) {
-    case SORT_SCORE:
+    case SORT_PARAM_SCORE:
       sortParams = { score: -1, upvotes: -1, dateCreated: -1 };
       query = query.addFields({ score: { $subtract: [ '$upvotes', '$downvotes' ]}});
       break;
-    case SORT_DATE:
+    case SORT_PARAM_DATE:
     default:
       sortParams = { dateCreated: -1 };
       break;

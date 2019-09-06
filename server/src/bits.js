@@ -1,19 +1,29 @@
 import jsStringEscape from 'js-string-escape';
-import { queryBit, queryBits, putBit, queryComments, SORT_DATE, SORT_SCORE } from './store';
+import { queryBit, queryBits, putBit, queryComments } from './store';
+import * as filters from 'Shared/filters';
+import * as query from 'Shared/query_params';
 
-const SORTS = [SORT_DATE, SORT_SCORE];
+const SORTS = [query.SORT_PARAM_DATE, query.SORT_PARAM_SCORE];
 
 export function getBit(req) {
   return queryBit({ bitId: req.params.bitId })
 }
 
 export function getBits(req) {
-  var limit = parseInt(jsStringEscape(req.query.limit));
-  var offset = parseInt(jsStringEscape(req.query.offset));
+  const limit = parseInt(jsStringEscape(req.query[query.QUERY_LIMIT]));
+  const offset = parseInt(jsStringEscape(req.query[query.QUERY_OFFSET]));
+  const mainChars = paramToFilterList(jsStringEscape(req.query[query.QUERY_MAIN_CHARS]), filters.PARAMS_TO_SYMBOLS_CHARS);
+  const vsChars = paramToFilterList(jsStringEscape(req.query[query.QUERY_VS_CHARS]), filters.PARAMS_TO_SYMBOLS_CHARS);
+  const stages = paramToFilterList(jsStringEscape(req.query[query.QUERY_STAGES]), filters.PARAMS_TO_SYMBOLS_STAGES);
+  const standaloneTags = paramToFilterList(jsStringEscape(req.query[query.QUERY_TAGS]), filters.PARAMS_TO_SYMBOLS_TAGS);
   return queryBits({
-      sort: paramToSort(req.query.sort),
+      sort: paramToSort(req.query[query.QUERY_SORT]),
       ...limit && { limit: limit },
       ...offset && { offset: offset },
+      ...mainChars.length && { mainChars: mainChars },
+      ...vsChars.length && { vsChars: vsChars },
+      ...stages.length && { stages: stages },
+      ...standaloneTags.length && { standaloneTags: standaloneTags },
     });
 }
 
@@ -27,8 +37,8 @@ export function createBit(bit) {
       content: jsStringEscape(bit.content),
       ...(bit.tags ? { tags: jsStringEscape(bit.tags.join()) } : {}),
       ...(bit.stages ? { stages: jsStringEscape(bit.stages.join()) } : {}),
-      ...(bit.mainChars ? { main_chars: jsStringEscape(bit.mainChars.join()) } : {}),
-      ...(bit.vsChars ? { vs_chars: jsStringEscape(bit.vsChars.join()) } : {})
+      ...(bit.mainChars ? { mainChars: jsStringEscape(bit.mainChars.join()) } : {}),
+      ...(bit.vsChars ? { vsChars: jsStringEscape(bit.vsChars.join()) } : {})
     })
 }
 
@@ -38,9 +48,10 @@ export function getComments(reqParams) {
 
 const normalize = string => string.trim().toLowerCase();
 
-const paramToSort = param => paramToSymbol(param, SORTS, SORT_DATE);
+const paramToSort = param => {
+  const normalized = normalize(jsStringEscape(param));
+  return SORTS.includes(normalized) ? normalized : SORT_DATE;
+};
 
-const paramToSymbol = (param, allowedSymbols, defaultValue) => {
-  const symbol = Symbol.for(normalize(jsStringEscape(param)));
-  return allowedSymbols.includes(symbol) ? symbol : defaultValue;
-}
+const paramToFilterList = (jsonString, filterMap) =>
+  jsonString.split(',').map(param => filterMap[param]).filter(Boolean);
