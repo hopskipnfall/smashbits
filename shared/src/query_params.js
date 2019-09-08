@@ -20,7 +20,7 @@ export const FILTER_PARAM_YOSHI = 'yo';
 export const FILTER_PARAM_KIRBY = 'ki';
 export const FILTER_PARAM_FOX = 'fo';
 export const FILTER_PARAM_PIKA = 'pi';
-export const FILTER_PARAM_JIGGLY = 'ji';
+export const FILTER_PARAM_JIGGLY = 'pu';
 
 export const FILTER_PARAM_PEACH = 'pc';
 export const FILTER_PARAM_CONGO = 'cj';
