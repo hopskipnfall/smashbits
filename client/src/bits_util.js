@@ -2,13 +2,13 @@ import { fromJS, Set, List } from 'immutable';
 
 export function jsonToBit(jsonBit) {
   return fromJS(jsonBit)
-      .updateIn(['mainChars'], List(), jsonListToSymbols)
-      .updateIn(['vsChars'], List(), jsonListToSymbols)
-      .updateIn(['stages'], List(), jsonListToSymbols)
-      .updateIn(['standaloneTags'], List(), jsonListToSymbols);
+      .updateIn(['mainChars'], List(), jsonListToStringList)
+      .updateIn(['vsChars'], List(), jsonListToStringList)
+      .updateIn(['stages'], List(), jsonListToStringList)
+      .updateIn(['standaloneTags'], List(), jsonListToStringList);
 };
 
-const jsonListToSymbols = list =>
+const jsonListToStringList = list =>
     list.get(0)
-        ? Set(list.get(0).split(',').map(tag => Symbol.for(tag)))
+        ? Set(list.get(0).split(','))
         : list;

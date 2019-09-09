@@ -1,66 +1,36 @@
 import { Map, Set, OrderedMap, fromJS } from 'immutable';
+import * as filters from 'Shared/filters';
 
 window.fromJS = fromJS;
 
 // TODO(thenuge): Some of these constants should probably go elsewhere.
-export const ACTION_CLEAR_BITS = Symbol('ACTION_CLEAR_BITS');
-export const ACTION_UPVOTE = Symbol('ACTION_UPVOTE');
-export const ACTION_DOWNVOTE = Symbol('ACTION_DOWNVOTE');
-export const ACTION_RESET_VOTE = Symbol('ACTION_RESET_VOTE');
-export const ACTION_ADD_BIT = Symbol('ACTION_ADD_BIT');
-export const ACTION_CHANGE_SORT = Symbol('ACTION_CHANGE_SORT');
-export const ACTION_TOGGLE_MAIN_CHAR_FILTER = Symbol('ACTION_TOGGLE_MAIN_CHAR_FILTER');
-export const ACTION_TOGGLE_VS_CHAR_FILTER = Symbol('ACTION_TOGGLE_VS_CHAR_FILTER');
-export const ACTION_TOGGLE_STAGE_FILTER = Symbol('ACTION_TOGGLE_STAGE_FILTER');
-export const ACTION_TOGGLE_STANDALONE_TAG_FILTER = Symbol('ACTION_TOGGLE_STANDALONE_TAG_FILTER');
-export const ACTION_SET_MAIN_CHAR_FILTERS = Symbol('ACTION_SET_MAIN_CHAR_FILTERS');
-export const ACTION_SET_VS_CHAR_FILTERS = Symbol('ACTION_SET_VS_CHAR_FILTERS');
-export const ACTION_SET_STAGE_FILTERS = Symbol('ACTION_SET_STAGE_FILTERS');
-export const ACTION_SET_STANDALONE_TAG_FILTERS = Symbol('ACTION_SET_STANDALONE_TAG_FILTERS');
-export const ACTION_REQUEST_COMMENTS = Symbol('ACTION_REQUEST_COMMENTS');
-export const ACTION_RECEIVE_COMMENTS = Symbol('ACTION_RECEIVE_COMMENTS');
-export const ACTION_REQUEST_CREATE_BIT = Symbol('ACTION_REQUEST_CREATE_BIT');
-export const ACTION_RECEIVE_CREATE_BIT = Symbol('ACTION_RECEIVE_CREATE_BIT');
-export const ACTION_SET_OFFSET = Symbol('ACTION_SET_OFFSET');
-export const ACTION_SET_PAGE_SIZE = Symbol('ACTION_SET_PAGE_SIZE');
+export const ACTION_CLEAR_BITS = 'ACTION_CLEAR_BITS';
+export const ACTION_UPVOTE = 'ACTION_UPVOTE';
+export const ACTION_DOWNVOTE = 'ACTION_DOWNVOTE';
+export const ACTION_RESET_VOTE = 'ACTION_RESET_VOTE';
+export const ACTION_ADD_BIT = 'ACTION_ADD_BIT';
+export const ACTION_CHANGE_SORT = 'ACTION_CHANGE_SORT';
+export const ACTION_TOGGLE_MAIN_CHAR_FILTER = 'ACTION_TOGGLE_MAIN_CHAR_FILTER';
+export const ACTION_TOGGLE_VS_CHAR_FILTER = 'ACTION_TOGGLE_VS_CHAR_FILTER';
+export const ACTION_TOGGLE_STAGE_FILTER = 'ACTION_TOGGLE_STAGE_FILTER';
+export const ACTION_TOGGLE_STANDALONE_TAG_FILTER = 'ACTION_TOGGLE_STANDALONE_TAG_FILTER';
+export const ACTION_SET_MAIN_CHAR_FILTERS = 'ACTION_SET_MAIN_CHAR_FILTERS';
+export const ACTION_SET_VS_CHAR_FILTERS = 'ACTION_SET_VS_CHAR_FILTERS';
+export const ACTION_SET_STAGE_FILTERS = 'ACTION_SET_STAGE_FILTERS';
+export const ACTION_SET_STANDALONE_TAG_FILTERS = 'ACTION_SET_STANDALONE_TAG_FILTERS';
+export const ACTION_REQUEST_COMMENTS = 'ACTION_REQUEST_COMMENTS';
+export const ACTION_RECEIVE_COMMENTS = 'ACTION_RECEIVE_COMMENTS';
+export const ACTION_REQUEST_CREATE_BIT = 'ACTION_REQUEST_CREATE_BIT';
+export const ACTION_RECEIVE_CREATE_BIT = 'ACTION_RECEIVE_CREATE_BIT';
+export const ACTION_SET_OFFSET = 'ACTION_SET_OFFSET';
+export const ACTION_SET_PAGE_SIZE = 'ACTION_SET_PAGE_SIZE';
 
 export const USER_UPVOTE = 1;
 export const USER_DOWNVOTE = -1;
 export const USER_DEFAULT_VOTE = 0;
 
-export const SORT_DATE = Symbol.for('Date');
-export const SORT_SCORE = Symbol.for('Score');
-
-export const FILTER_CHAR_LUIGI = Symbol.for('Luigi');
-export const FILTER_CHAR_MARIO = Symbol.for('Mario');
-export const FILTER_CHAR_DK = Symbol.for('Donkey Kong');
-export const FILTER_CHAR_LINK = Symbol.for('Link');
-export const FILTER_CHAR_SAMUS = Symbol.for('Samus');
-export const FILTER_CHAR_FALCON = Symbol.for('Captain Falcon');
-export const FILTER_CHAR_NESS = Symbol.for('Ness');
-export const FILTER_CHAR_YOSHI = Symbol.for('Yoshi');
-export const FILTER_CHAR_KIRBY = Symbol.for('Kirby');
-export const FILTER_CHAR_FOX = Symbol.for('Fox');
-export const FILTER_CHAR_PIKA = Symbol.for('Pikachu');
-export const FILTER_CHAR_JIGGLY = Symbol.for('Jigglypuff');
-
-export const FILTER_STAGE_PEACH = Symbol.for('Peach\'s Castle');
-export const FILTER_STAGE_CONGO = Symbol.for('Congo Jungle');
-export const FILTER_STAGE_HYRULE = Symbol.for('Hyrule Castle');
-export const FILTER_STAGE_ZEBES = Symbol.for('Planet Zebes');
-export const FILTER_STAGE_MUSHROOM = Symbol.for('Mushroom Kingdom');
-export const FILTER_STAGE_DREAMLAND = Symbol.for('Dream Land');
-export const FILTER_STAGE_SECTOR_Z = Symbol.for('Sector Z');
-export const FILTER_STAGE_SAFFRON = Symbol.for('Saffron City');
-export const FILTER_STAGE_META_CRYSTAL = Symbol.for('Meta Crystal (19xx)');
-export const FILTER_STAGE_YOSHI_ISLAND_19XX = Symbol.for('Yoshi\'s Island (19xx)');
-export const FILTER_STAGE_FINAL_DESTINATION = Symbol.for('Final Destination (19xx)');
-export const FILTER_STAGE_BATTLEFIELD = Symbol.for('Battlefield (19xx)');
-
-export const FILTER_TAG_APPROACH = Symbol.for('Approach');
-export const FILTER_TAG_EDGEGUARDING = Symbol.for('Edgeguarding');
-export const FILTER_TAG_COMBOS = Symbol.for('Combos');
-export const FILTER_TAG_ESCAPES = Symbol.for('Escapes');
+export const SORT_DATE = 'Date';
+export const SORT_SCORE = 'Score';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -74,41 +44,41 @@ const INITIAL_STATE = fromJS({
   offset: 0,
   filtering: {
     chars: [
-        FILTER_CHAR_LUIGI,
-        FILTER_CHAR_MARIO,
-        FILTER_CHAR_DK,
-        FILTER_CHAR_LINK,
-        FILTER_CHAR_SAMUS,
-        FILTER_CHAR_FALCON,
-        FILTER_CHAR_NESS,
-        FILTER_CHAR_YOSHI,
-        FILTER_CHAR_KIRBY,
-        FILTER_CHAR_FOX,
-        FILTER_CHAR_PIKA,
-        FILTER_CHAR_JIGGLY
+        filters.FILTER_CHAR_LUIGI,
+        filters.FILTER_CHAR_MARIO,
+        filters.FILTER_CHAR_DK,
+        filters.FILTER_CHAR_LINK,
+        filters.FILTER_CHAR_SAMUS,
+        filters.FILTER_CHAR_FALCON,
+        filters.FILTER_CHAR_NESS,
+        filters.FILTER_CHAR_YOSHI,
+        filters.FILTER_CHAR_KIRBY,
+        filters.FILTER_CHAR_FOX,
+        filters.FILTER_CHAR_PIKA,
+        filters.FILTER_CHAR_JIGGLY
     ],
     currentMainChars: Set(),
     currentVsChars: Set(),
     stages: [
-        FILTER_STAGE_PEACH,
-        FILTER_STAGE_CONGO,
-        FILTER_STAGE_HYRULE,
-        FILTER_STAGE_ZEBES,
-        FILTER_STAGE_MUSHROOM,
-        FILTER_STAGE_DREAMLAND,
-        FILTER_STAGE_SECTOR_Z,
-        FILTER_STAGE_SAFFRON,
-        FILTER_STAGE_META_CRYSTAL,
-        FILTER_STAGE_YOSHI_ISLAND_19XX,
-        FILTER_STAGE_FINAL_DESTINATION,
-        FILTER_STAGE_BATTLEFIELD
+        filters.FILTER_STAGE_PEACH,
+        filters.FILTER_STAGE_CONGO,
+        filters.FILTER_STAGE_HYRULE,
+        filters.FILTER_STAGE_ZEBES,
+        filters.FILTER_STAGE_MUSHROOM,
+        filters.FILTER_STAGE_DREAMLAND,
+        filters.FILTER_STAGE_SECTOR_Z,
+        filters.FILTER_STAGE_SAFFRON,
+        filters.FILTER_STAGE_META_CRYSTAL,
+        filters.FILTER_STAGE_YOSHI_ISLAND_19XX,
+        filters.FILTER_STAGE_FINAL_DESTINATION,
+        filters.FILTER_STAGE_BATTLEFIELD
     ],
     currentStages: Set(),
     standaloneTags: [
-        FILTER_TAG_APPROACH,
-        FILTER_TAG_EDGEGUARDING,
-        FILTER_TAG_COMBOS,
-        FILTER_TAG_ESCAPES
+        filters.FILTER_TAG_APPROACH,
+        filters.FILTER_TAG_EDGEGUARDING,
+        filters.FILTER_TAG_COMBOS,
+        filters.FILTER_TAG_ESCAPES
     ],
     currentStandaloneTags: Set()
   }

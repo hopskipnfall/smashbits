@@ -2,6 +2,7 @@ import { addBit, receiveComments, receiveCreateBit } from './action_creators';
 import { jsonToBit } from './bits_util';
 import { SORT_DATE, SORT_SCORE } from './reducer';
 import * as fakeClient from './fake_api_client';
+import * as query from 'Shared/query_params';
 import { fromJS } from 'immutable';
 import URI from 'urijs';
 
@@ -10,7 +11,7 @@ const BASE_URI = process.env.NODE_ENV === 'production'
     : 'http://localhost:3001';
 const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
-const CLIENT_SORT_TO_PARAM = { [SORT_DATE]: 'date', [SORT_SCORE]: 'score' };
+const CLIENT_SORT_TO_PARAM = { [SORT_DATE]: query.SORT_PARAM_DATE, [SORT_SCORE]: query.SORT_PARAM_DATE };
 // Set this to true in development to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
 
@@ -23,9 +24,9 @@ export function fetchBits({sort, offset, pageSize, dispatch}) {
         fetch(new URI(BASE_URI)
             .path(BITS_PATH)
             .query({
-                ...sort && { sort: CLIENT_SORT_TO_PARAM[sort] },
-                ...offset && { offset: offset },
-                ...pageSize && { limit: pageSize },
+                ...sort && { [query.QUERY_SORT]: CLIENT_SORT_TO_PARAM[sort] },
+                ...offset && { [query.QUERY_OFFSET]: offset },
+                ...pageSize && { [query.QUERY_LIMIT]: pageSize },
               })
             .toString())
         .then(result => result.json())
