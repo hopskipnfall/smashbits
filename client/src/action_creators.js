@@ -56,6 +56,13 @@ export function resetVote(bitId) {
   };
 }
 
+function refreshBits() {
+  return function(dispatch, getState) {
+    dispatch(clearBits());
+    dispatch(fetchBits());
+  };
+}
+
 export function changeSort(sort) {
   return function(dispatch, getState) {
     dispatch({
@@ -65,66 +72,97 @@ export function changeSort(sort) {
 
     // If we have less than 1 page of bits, we can just sort them client-side.
     if (getState().get('bits').size >= getState().get('pageSize')) {
-      dispatch(clearBits());
-      dispatch(fetchBits({ sort: sort }));
+      dispatch(refreshBits());
     }
   };
 }
 
 export function setMainCharFilters(chars) {
-  return {
-    type: ACTION_SET_MAIN_CHAR_FILTERS,
-    data: chars
-  }
+  return function(dispatch, getState) {
+    dispatch({
+      type: ACTION_SET_MAIN_CHAR_FILTERS,
+      data: chars
+    });
+
+    dispatch(refreshBits());
+  };
 }
 
 export function toggleMainCharFilter(char) {
-  return {
-    type: ACTION_TOGGLE_MAIN_CHAR_FILTER,
-    data: char
-  }
+  return function(dispatch, getState) {
+    dispatch({
+      type: ACTION_TOGGLE_MAIN_CHAR_FILTER,
+      data: char
+    });
+
+    dispatch(refreshBits());
+  };
 }
 
 export function setVsCharFilters(chars) {
-  return {
-    type: ACTION_SET_VS_CHAR_FILTERS,
-    data: chars
-  }
+  return function(dispatch, getState) {
+    dispatch({
+      type: ACTION_SET_VS_CHAR_FILTERS,
+      data: chars
+    });
+
+    dispatch(refreshBits());
+  };
 }
 
 export function toggleVsCharFilter(char) {
-  return {
-    type: ACTION_TOGGLE_VS_CHAR_FILTER,
-    data: char
-  }
+  return function(dispatch, getState) {
+    dispatch({
+      type: ACTION_TOGGLE_VS_CHAR_FILTER,
+      data: char
+    });
+
+    dispatch(refreshBits());
+  };
 }
 
 export function setStageFilters(stages) {
-  return {
-    type: ACTION_SET_STAGE_FILTERS,
-    data: stages
-  }
+  return function(dispatch, getState) {
+    dispatch({
+      type: ACTION_SET_STAGE_FILTERS,
+      data: stages
+    });
+
+    dispatch(refreshBits());
+  };
 }
 
 export function toggleStageFilter(stage) {
-  return {
-    type: ACTION_TOGGLE_STAGE_FILTER,
-    data: stage
-  }
+  return function(dispatch, getState) {
+    dispatch({
+      type: ACTION_TOGGLE_STAGE_FILTER,
+      data: stage
+    });
+
+    dispatch(refreshBits());
+  };
 }
 
 export function setStandaloneTagFilters(tags) {
-  return {
-    type: ACTION_SET_STANDALONE_TAG_FILTERS,
-    data: tags
-  }
+  return function(dispatch, getState) {
+    dispatch({
+      type: ACTION_SET_STANDALONE_TAG_FILTERS,
+      data: tags
+    });
+
+    dispatch(refreshBits());
+  };
 }
 
 export function toggleStandaloneTagFilter(tag) {
-  return {
-    type: ACTION_TOGGLE_STANDALONE_TAG_FILTER,
-    data: tag
-  }
+  return function(dispatch, getState) {
+    dispatch({
+      type: ACTION_TOGGLE_STANDALONE_TAG_FILTER,
+      data: tag
+    });
+
+    dispatch(refreshBits());
+  };
 }
 
 function requestComments(bitId) {
@@ -148,12 +186,16 @@ export function fetchBit(bitId) {
   }
 }
 
-export function fetchBits({ sort, offset, limit } = {}) {
+export function fetchBits({ sort, offset, limit, mainChars, vsChars, stages, standaloneTags } = {}) {
   return function(dispatch, getState) {
     return fetchBitsApi({
       sort: sort || getState().getIn(['sorting', 'currentSort']),
       offset: offset || getState().get('offset'),
       pageSize: limit || getState().get('pageSize'),
+      mainChars: mainChars || getState().getIn(['filtering', 'currentMainChars']),
+      vsChars: vsChars || getState().getIn(['filtering', 'currentVsChars']),
+      stages: stages || getState().getIn(['filtering', 'currentStages']),
+      standaloneTags: standaloneTags || getState().getIn(['filtering', 'currentStandaloneTags']),
       dispatch: dispatch
     });
   }
@@ -162,36 +204,32 @@ export function fetchBits({ sort, offset, limit } = {}) {
 export function fetchNextPage() {
   return function(dispatch, getState) {
     var offset = getState().get('offset') + getState().get('pageSize');
-    dispatch(clearBits());
-    dispatch(fetchBits({ offset: offset }));
-    return {
+    dispatch({
       type: ACTION_SET_OFFSET,
       data: offset
-    };
+    });
+    dispatch(refreshBits());
   };
 }
 
 export function fetchPreviousPage() {
   return function(dispatch, getState) {
     var offset = Math.max(0, getState().get('offset') - getState().get('pageSize'));
-    dispatch(clearBits());
-    dispatch(fetchBits({ offset: offset }));
-    return {
+    dispatch({
       type: ACTION_SET_OFFSET,
       data: offset
-    };
+    });
+    dispatch(refreshBits());
   };
 }
 
 export function setPageSize(pageSize) {
   return function(dispatch) {
-    // TODO(thenuge): We could probably be smarter about not clearing everything.
-    dispatch(clearBits());
     dispatch({
       type: ACTION_SET_PAGE_SIZE,
       data: pageSize
     });
-    dispatch(fetchBits({ pageSize: pageSize }));
+    dispatch(refreshBits());
   }
 }
 

@@ -27,8 +27,8 @@ export function queryBits({
   const filters = {
     ...mainChars && { mainChars: { $in: mainChars } },
     ...vsChars && { vsChars: { $in: vsChars }},
-    ...stages && { stages: stages},
-    ...standaloneTags && { tags: standaloneTags},
+    ...stages && { stages: { $in: stages }},
+    ...standaloneTags && { tags: { $in: standaloneTags }},
   };
   let query = Bit.aggregate().project(projectionParams);
   query = filters ? query.match(filters) : query;
