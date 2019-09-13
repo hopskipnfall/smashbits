@@ -38,9 +38,9 @@ class CreateBitModal extends Component {
                 type="checkbox">
               {allChars.map(char =>
                   <ToggleButton
-                      value={Symbol.keyFor(char)}
-                      key={Symbol.keyFor(char)}
-                      children={Symbol.keyFor(char)} />)}
+                      value={char}
+                      key={char}
+                      children={char} />)}
             </Control>
             <br /> <br />
             <ControlLabel> Vs. Characters </ControlLabel>
@@ -50,9 +50,9 @@ class CreateBitModal extends Component {
                 type="checkbox">
               {allChars.map(char =>
                   <ToggleButton
-                      value={Symbol.keyFor(char)}
-                      key={Symbol.keyFor(char)}
-                      children={Symbol.keyFor(char)} />)}
+                      value={char}
+                      key={char}
+                      children={char} />)}
             </Control>
             <br /> <br />
             <ControlLabel> On Stages </ControlLabel>
@@ -62,9 +62,9 @@ class CreateBitModal extends Component {
                 type="checkbox">
               {allStages.map(stage =>
                   <ToggleButton
-                      value={Symbol.keyFor(stage)}
-                      key={Symbol.keyFor(stage)}
-                      children={Symbol.keyFor(stage)} />)}
+                      value={stage}
+                      key={stage}
+                      children={stage} />)}
             </Control>
             <br /> <br />
             <ControlLabel> With Tags </ControlLabel>
@@ -74,9 +74,9 @@ class CreateBitModal extends Component {
                 type="checkbox">
               {allTags.map(tag =>
                   <ToggleButton
-                      value={Symbol.keyFor(tag)}
-                      key={Symbol.keyFor(tag)}
-                      children={Symbol.keyFor(tag)} />)}
+                      value={tag}
+                      key={tag}
+                      children={tag} />)}
             </Control>
           </LocalForm>
         </Modal.Body>

@@ -17,9 +17,9 @@ export default function BitTagPills(props) {
           bsStyle="success"
           className="filter-pill"
           onClick={() => setMainCharFilters(Set.of(tag))}
-          key={Symbol.keyFor(tag)}
+          key={tag}
         >
-          {Symbol.keyFor(tag)}
+          {tag}
         </Label>
       ))}
       {bit.get("vsChars", List()).map(tag => (
@@ -27,9 +27,9 @@ export default function BitTagPills(props) {
           bsStyle="danger"
           className="filter-pill"
           onClick={() => setVsCharFilters(Set.of(tag))}
-          key={Symbol.keyFor(tag)}
+          key={tag}
         >
-          {Symbol.keyFor(tag)}
+          {tag}
         </Label>
       ))}
       {bit.get("stages", List()).map(tag => (
@@ -37,9 +37,9 @@ export default function BitTagPills(props) {
           bsStyle="primary"
           className="filter-pill"
           onClick={() => setStageFilters(Set.of(tag))}
-          key={Symbol.keyFor(tag)}
+          key={tag}
         >
-          {Symbol.keyFor(tag)}
+          {tag}
         </Label>
       ))}
       {bit.get("standaloneTags", List()).map(tag => (
@@ -47,9 +47,9 @@ export default function BitTagPills(props) {
           bsStyle="warning"
           className="filter-pill"
           onClick={() => setStandaloneTagFilters(Set.of(tag))}
-          key={Symbol.keyFor(tag)}
+          key={tag}
         >
-          {Symbol.keyFor(tag)}
+          {tag}
         </Label>
       ))}
     </div>

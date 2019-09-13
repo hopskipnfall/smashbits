@@ -7,10 +7,10 @@ import { DropdownButton, MenuItem } from 'react-bootstrap';
 const SortingMenu = props => {
   const { sorts = Map(), currentSort, changeSort } = props;
   return (
-    <DropdownButton bsStyle="info" title={`Sorting: ${Symbol.keyFor(currentSort)}`} id="sorting-menu">
+    <DropdownButton bsStyle="info" title={`Sorting: ${currentSort}`} id="sorting-menu">
       {sorts.map(sort =>
-        <MenuItem onSelect={() => changeSort(sort)} key={Symbol.keyFor(sort)}>
-          {Symbol.keyFor(sort)}
+        <MenuItem onSelect={() => changeSort(sort)} key={sort}>
+          {sort}
         </MenuItem>)}
     </DropdownButton>
   );

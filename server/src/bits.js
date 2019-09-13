@@ -12,10 +12,10 @@ export function getBit(req) {
 export function getBits(req) {
   const limit = parseInt(jsStringEscape(req.query[query.QUERY_LIMIT]));
   const offset = parseInt(jsStringEscape(req.query[query.QUERY_OFFSET]));
-  const mainChars = paramToFilterList(jsStringEscape(req.query[query.QUERY_MAIN_CHARS]), filters.PARAMS_TO_SYMBOLS_CHARS);
-  const vsChars = paramToFilterList(jsStringEscape(req.query[query.QUERY_VS_CHARS]), filters.PARAMS_TO_SYMBOLS_CHARS);
-  const stages = paramToFilterList(jsStringEscape(req.query[query.QUERY_STAGES]), filters.PARAMS_TO_SYMBOLS_STAGES);
-  const standaloneTags = paramToFilterList(jsStringEscape(req.query[query.QUERY_TAGS]), filters.PARAMS_TO_SYMBOLS_TAGS);
+  const mainChars = paramToFilterList(jsStringEscape(req.query[query.QUERY_MAIN_CHARS]), filters.PARAMS_TO_DISPLAY_CHARS);
+  const vsChars = paramToFilterList(jsStringEscape(req.query[query.QUERY_VS_CHARS]), filters.PARAMS_TO_DISPLAY_CHARS);
+  const stages = paramToFilterList(jsStringEscape(req.query[query.QUERY_STAGES]), filters.PARAMS_TO_DISPLAY_STAGES);
+  const standaloneTags = paramToFilterList(jsStringEscape(req.query[query.QUERY_TAGS]), filters.PARAMS_TO_DISPLAY_TAGS);
   return queryBits({
       sort: paramToSort(req.query[query.QUERY_SORT]),
       ...limit && { limit: limit },
@@ -35,10 +35,10 @@ export function createBit(bit) {
       },
       title: jsStringEscape(bit.title),
       content: jsStringEscape(bit.content),
-      ...(bit.tags ? { tags: jsStringEscape(bit.tags.join()) } : {}),
-      ...(bit.stages ? { stages: jsStringEscape(bit.stages.join()) } : {}),
-      ...(bit.mainChars ? { mainChars: jsStringEscape(bit.mainChars.join()) } : {}),
-      ...(bit.vsChars ? { vsChars: jsStringEscape(bit.vsChars.join()) } : {})
+      ...(bit.tags ? { tags: bit.tags.map(tag => jsStringEscape(tag)) } : {}),
+      ...(bit.stages ? { stages: bit.stages.map(stage => jsStringEscape(stage)) } : {}),
+      ...(bit.mainChars ? { mainChars: bit.mainChars.map(char => jsStringEscape(char)) } : {}),
+      ...(bit.vsChars ? { vsChars: bit.vsChars.map(char => jsStringEscape(char)) } : {})
     })
 }
 
@@ -50,7 +50,7 @@ const normalize = string => string.trim().toLowerCase();
 
 const paramToSort = param => {
   const normalized = normalize(jsStringEscape(param));
-  return SORTS.includes(normalized) ? normalized : SORT_DATE;
+  return SORTS.includes(normalized) ? normalized : query.SORT_PARAM_DATE;
 };
 
 const paramToFilterList = (jsonString, filterMap) =>
