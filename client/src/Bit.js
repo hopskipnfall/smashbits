@@ -2,6 +2,7 @@ import React from 'react';
 import { Map } from 'immutable';
 import { USER_UPVOTE, USER_DOWNVOTE } from './reducer';
 import { Panel, Button } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 import BitTagPills from './BitTagPills';
 
 export default function Bit(props) {
@@ -29,7 +30,7 @@ export default function Bit(props) {
         </p>
         {bit.get('content')}
         <p>
-          <a href={ '/bits/' + bit.get('postId') }>permalink</a>
+          <Link to={ '/bits/' + bit.get('postId') }>permalink</Link>
         </p>
       </div>
     </Panel>

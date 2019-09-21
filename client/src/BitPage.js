@@ -7,7 +7,7 @@ class BitPage extends Component {
   constructor(props, context) {
     super(props, context);
     const { fetchBit } = props;
-    fetchBit(props.bitId);
+    fetchBit(props.match.params.bitId);
   }
 
   render() {

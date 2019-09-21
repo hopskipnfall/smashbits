@@ -182,6 +182,7 @@ export function receiveComments(bitId, comments) {
 
 export function fetchBit(bitId) {
   return function(dispatch) {
+    dispatch(clearBits());
     return fetchBitApi(bitId, dispatch);
   }
 }
@@ -204,10 +205,7 @@ export function fetchBits({ sort, offset, limit, mainChars, vsChars, stages, sta
 export function fetchNextPage() {
   return function(dispatch, getState) {
     var offset = getState().get('offset') + getState().get('pageSize');
-    dispatch({
-      type: ACTION_SET_OFFSET,
-      data: offset
-    });
+    dispatch(setOffset(offset));
     dispatch(refreshBits());
   };
 }
@@ -215,12 +213,16 @@ export function fetchNextPage() {
 export function fetchPreviousPage() {
   return function(dispatch, getState) {
     var offset = Math.max(0, getState().get('offset') - getState().get('pageSize'));
-    dispatch({
-      type: ACTION_SET_OFFSET,
-      data: offset
-    });
+    dispatch(setOffset(offset));
     dispatch(refreshBits());
   };
+}
+
+export function setOffset(offset) {
+  return {
+    type: ACTION_SET_OFFSET,
+    data: offset
+  }
 }
 
 export function setPageSize(pageSize) {
@@ -229,6 +231,7 @@ export function setPageSize(pageSize) {
       type: ACTION_SET_PAGE_SIZE,
       data: pageSize
     });
+    dispatch(setOffset(0));
     dispatch(refreshBits());
   }
 }

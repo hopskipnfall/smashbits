@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import BitPage from './BitPage';
 import Home from './Home';
-import { Router } from "@reach/router";
+import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
   render() {
@@ -16,10 +16,10 @@ class App extends Component {
             SmashBits is a place to collaborate on and organize game knowledge in a central, public place.
           </p>
         </div>
-        <Router>
-          <Home path='/' />
-          <BitPage path='/bits/:bitId' />
-        </Router>
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/bits/:bitId' component={BitPage} />
+        </Switch>
       </div>
     );
   }
