@@ -16,6 +16,8 @@ export const getDisplayQueryParams = queryString => {
   const queryMap = URI(queryString).query(true);
   return {
     ...queryMap[query.QUERY_SORT] && { currentSort: getSort(queryString) },
+    ...queryMap[query.QUERY_LIMIT] && { currentPageSize: getPageSize(queryString) },
+    ...queryMap[query.QUERY_OFFSET] && { currentOffset: getOffset(queryString) },
     ...queryMap[query.QUERY_MAIN_CHARS] && { currentMainChars: getCharFilters(queryMap[query.QUERY_MAIN_CHARS]) },
     ...queryMap[query.QUERY_VS_CHARS] && { currentVsChars: getCharFilters(queryMap[query.QUERY_VS_CHARS]) },
     ...queryMap[query.QUERY_STAGES] && { currentStages: getStageFilters(queryMap[query.QUERY_STAGES]) },
@@ -27,8 +29,28 @@ export const getSort = queryString => {
   return PARAM_TO_CLIENT_SORT[URI(queryString).query(true)[query.QUERY_SORT]];
 };
 
+export const getPageSize = queryString => {
+  return parseInt(URI(queryString).query(true)[query.QUERY_LIMIT], 10);
+};
+
+export const getOffset = queryString => {
+  return parseInt(URI(queryString).query(true)[query.QUERY_OFFSET], 10);
+};
+
 export const setSortQuery = (sort, queryString) => {
   const params = { ...getDisplayQueryParams(queryString), currentSort: sort };
+  const uri = URI().search(displayParamsToQuery(params));
+  return uri.search();
+}
+
+export const setPageSizeQuery = (pageSize, queryString) => {
+  const params = { ...getDisplayQueryParams(queryString), currentPageSize: pageSize };
+  const uri = URI().search(displayParamsToQuery(params));
+  return uri.search();
+}
+
+export const setOffsetQuery = (offset, queryString) => {
+  const params = { ...getDisplayQueryParams(queryString), currentOffset: offset };
   const uri = URI().search(displayParamsToQuery(params));
   return uri.search();
 }
@@ -87,6 +109,8 @@ export const toggleStandaloneTagQuery = (char, queryString) => {
 
 const displayParamsToQuery = params => _.pickBy({
   ...params.currentSort && { [query.QUERY_SORT]: CLIENT_SORT_TO_PARAM[params.currentSort] },
+  ...params.currentPageSize && { [query.QUERY_LIMIT]: params.currentPageSize },
+  ...params.currentOffset && { [query.QUERY_OFFSET]: params.currentOffset },
   ...params.currentMainChars && { [query.QUERY_MAIN_CHARS]: getCharFilterQuery(params.currentMainChars) },
   ...params.currentVsChars && { [query.QUERY_VS_CHARS]: getCharFilterQuery(params.currentVsChars) },
   ...params.currentStages && { [query.QUERY_STAGES]: getStageFilterQuery(params.currentStages) },

@@ -7,8 +7,8 @@ import SortingMenu from './SortingMenu';
 import FilterControl from './FilterControl';
 import PageSizeMenu from './PageSizeMenu';
 import * as actionCreators from './action_creators';
-import { getFilters, getSort } from './uri_util';
-import { SORT_DATE } from './reducer';
+import { getFilters, getSort, getPageSize } from './uri_util';
+import { SORT_DATE, DEFAULT_PAGE_SIZE } from './reducer';
 
 class Home extends Component {
   constructor(props, context) {
@@ -29,7 +29,7 @@ class Home extends Component {
           <span>
             <SortingMenu sort={getSort(location.search) || SORT_DATE} />
             <span style={{float: 'right'}}>
-              <PageSizeMenu />
+              <PageSizeMenu pageSize={getPageSize(location.search) || DEFAULT_PAGE_SIZE} />
               <Button onClick={() => fetchPreviousPage()}> &lt; </Button>
               <Button onClick={() => fetchNextPage()}> &gt; </Button>
             </span>

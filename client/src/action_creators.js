@@ -9,13 +9,14 @@ import {
     ACTION_RECEIVE_COMMENTS,
     ACTION_REQUEST_CREATE_BIT,
     ACTION_RECEIVE_CREATE_BIT,
-    ACTION_SET_OFFSET,
-    ACTION_SET_PAGE_SIZE,
+    DEFAULT_PAGE_SIZE,
 } from './reducer';
 import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
 import history from './history';
 import {
   getDisplayQueryParams,
+  getOffset,
+  getPageSize,
   setMainCharsQuery,
   toggleMainCharQuery,
   setVsCharsQuery,
@@ -25,6 +26,8 @@ import {
   setStandaloneTagsQuery,
   toggleStandaloneTagQuery,
   setSortQuery,
+  setOffsetQuery,
+  setPageSizeQuery,
 } from './uri_util';
 
 export function clearBits() {
@@ -167,8 +170,8 @@ export function fetchBits({ sort, offset, limit, mainChars, vsChars, stages, sta
     const params = getDisplayQueryParams(history.location.search);
     return fetchBitsApi({
       sort: sort || params.currentSort,
-      offset: offset || getState().get('offset'),
-      pageSize: limit || getState().get('pageSize'),
+      offset: offset || params.currentOffset,
+      pageSize: limit || params.currentPageSize,
       mainChars: mainChars || params.currentMainChars,
       vsChars: vsChars || params.currentVsChars,
       stages: stages || params.currentStages,
@@ -180,7 +183,8 @@ export function fetchBits({ sort, offset, limit, mainChars, vsChars, stages, sta
 
 export function fetchNextPage() {
   return function(dispatch, getState) {
-    var offset = getState().get('offset') + getState().get('pageSize');
+    const offset = (getOffset(history.location.search) || 0)
+        + (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE);
     dispatch(setOffset(offset));
     dispatch(refreshBits());
   };
@@ -188,26 +192,24 @@ export function fetchNextPage() {
 
 export function fetchPreviousPage() {
   return function(dispatch, getState) {
-    var offset = Math.max(0, getState().get('offset') - getState().get('pageSize'));
+    const offset = Math.max(
+        0,
+        (getOffset(history.location.search) || 0)
+          - (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE));
     dispatch(setOffset(offset));
     dispatch(refreshBits());
   };
 }
 
 export function setOffset(offset) {
-  return {
-    type: ACTION_SET_OFFSET,
-    data: offset
+  return function(dispatch, getState) {
+    history.push(setOffsetQuery(offset, history.location.search));
   }
 }
 
 export function setPageSize(pageSize) {
   return function(dispatch) {
-    dispatch({
-      type: ACTION_SET_PAGE_SIZE,
-      data: pageSize
-    });
-    dispatch(setOffset(0));
+    history.push(setPageSizeQuery(pageSize, setOffsetQuery(0, history.location.search)));
     dispatch(refreshBits());
   }
 }
