@@ -1,6 +1,6 @@
 import { addBit, receiveComments, receiveCreateBit } from './action_creators';
-import { SORT_DATE, SORT_SCORE } from './reducer';
 import * as fakeClient from './fake_api_client';
+import { CLIENT_SORT_TO_PARAM } from './uri_util';
 import * as query from 'Shared/query_params';
 import { getCharFilterQuery, getStageFilterQuery, getTagFilterQuery } from 'Shared/query_util';
 import { fromJS } from 'immutable';
@@ -11,7 +11,6 @@ const BASE_URI = process.env.NODE_ENV === 'production'
     : 'http://localhost:3001';
 const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
-const CLIENT_SORT_TO_PARAM = { [SORT_DATE]: query.SORT_PARAM_DATE, [SORT_SCORE]: query.SORT_PARAM_DATE };
 // Set this to true in development to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
 

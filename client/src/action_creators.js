@@ -15,7 +15,7 @@ import {
 import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
 import history from './history';
 import {
-  getFilters,
+  getDisplayQueryParams,
   setMainCharsQuery,
   toggleMainCharQuery,
   setVsCharsQuery,
@@ -24,6 +24,7 @@ import {
   toggleStageQuery,
   setStandaloneTagsQuery,
   toggleStandaloneTagQuery,
+  setSortQuery,
 } from './uri_util';
 
 export function clearBits() {
@@ -69,14 +70,16 @@ function refreshBits() {
 
 export function changeSort(sort) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_CHANGE_SORT,
-      data: sort
-    });
+    history.push(setSortQuery(sort, history.location.search));
 
     // If we have less than 1 page of bits, we can just sort them client-side.
     if (getState().get('bits').size >= getState().get('pageSize')) {
       dispatch(refreshBits());
+    } else {
+      dispatch({
+        type: ACTION_CHANGE_SORT,
+        data: sort
+      });
     }
   };
 }
@@ -161,15 +164,15 @@ export function fetchBit(bitId) {
 
 export function fetchBits({ sort, offset, limit, mainChars, vsChars, stages, standaloneTags } = {}) {
   return function(dispatch, getState) {
-    const filters = getFilters(history.location.search);
+    const params = getDisplayQueryParams(history.location.search);
     return fetchBitsApi({
-      sort: sort || getState().getIn(['sorting', 'currentSort']),
+      sort: sort || params.currentSort,
       offset: offset || getState().get('offset'),
       pageSize: limit || getState().get('pageSize'),
-      mainChars: mainChars || filters.currentMainChars,
-      vsChars: vsChars || filters.currentVsChars,
-      stages: stages || filters.currentStages,
-      standaloneTags: standaloneTags || filters.currentStandaloneTags,
+      mainChars: mainChars || params.currentMainChars,
+      vsChars: vsChars || params.currentVsChars,
+      stages: stages || params.currentStages,
+      standaloneTags: standaloneTags || params.currentStandaloneTags,
       dispatch: dispatch
     });
   }

@@ -28,10 +28,7 @@ const DEFAULT_PAGE_SIZE = 25;
 
 const INITIAL_STATE = fromJS({
   bits: OrderedMap(),
-  sorting: {
-    sorts: [SORT_DATE, SORT_SCORE],
-    currentSort: SORT_DATE
-  },
+  sorts: [SORT_DATE, SORT_SCORE],
   pageSize: DEFAULT_PAGE_SIZE,
   offset: 0,
   filtering: {
@@ -127,13 +124,11 @@ const changeSort = (state = Map(), sort) => {
     case SORT_SCORE:
       return state.set('bits',
           state.get('bits', Map()).sortBy(
-              bit => -1 * (bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0))))
-          .setIn(['sorting', 'currentSort'], sort);
+              bit => -1 * (bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0))));
     case SORT_DATE:
       return state.set('bits',
           state.get('bits', Map()).sortBy(
-              bit => -1 * bit.get('dateCreated', 0)))
-          .setIn(['sorting', 'currentSort'], sort);
+              bit => -1 * bit.get('dateCreated', 0)));
     default:
       return state;
   }
