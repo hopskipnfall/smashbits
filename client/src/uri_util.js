@@ -12,7 +12,7 @@ export const getFilters = queryString => _.pick(
     ['currentMainChars', 'currentVsChars', 'currentStages', 'currentStandaloneTags']
 );
 
-export const getDisplayQueryParams = queryString => {
+const getDisplayQueryParams = queryString => {
   const queryMap = URI(queryString).query(true);
   return {
     ...queryMap[query.QUERY_SORT] && { currentSort: getSort(queryString) },
@@ -38,72 +38,60 @@ export const getOffset = queryString => {
 };
 
 export const setSortQuery = (sort, queryString) => {
-  const params = { ...getDisplayQueryParams(queryString), currentSort: sort };
-  const uri = URI().search(displayParamsToQuery(params));
-  return uri.search();
+  return setQueryParam('currentSort', sort, queryString);
 }
 
 export const setPageSizeQuery = (pageSize, queryString) => {
-  const params = { ...getDisplayQueryParams(queryString), currentPageSize: pageSize };
-  const uri = URI().search(displayParamsToQuery(params));
-  return uri.search();
+  return setQueryParam('currentPageSize', pageSize, queryString);
 }
 
 export const setOffsetQuery = (offset, queryString) => {
-  const params = { ...getDisplayQueryParams(queryString), currentOffset: offset };
-  const uri = URI().search(displayParamsToQuery(params));
-  return uri.search();
+  return setQueryParam('currentOffset', offset, queryString);
 }
 
 export const setMainCharsQuery = (chars, queryString) => {
-  const params = { ...getDisplayQueryParams(queryString), currentMainChars: chars };
-  const uri = URI().search(displayParamsToQuery(params));
-  return uri.search();
+  return setQueryParam('currentMainChars', chars, queryString);
 }
 
 export const toggleMainCharQuery = (char, queryString) => {
   const params = getDisplayQueryParams(queryString);
   const toggledFilters = _.xor(params.currentMainChars, [char]);
-  const uri = URI().search(displayParamsToQuery({ ...params, currentMainChars: toggledFilters }));
-  return uri.search();
+  return setMainCharsQuery(toggledFilters, queryString);
 }
 
 export const setVsCharsQuery = (chars, queryString) => {
-  const params = { ...getDisplayQueryParams(queryString), currentVsChars: chars };
-  const uri = URI().search(displayParamsToQuery(params));
-  return uri.search();
+  return setQueryParam('currentVsChars', chars, queryString);
 }
 
 export const toggleVsCharQuery = (char, queryString) => {
   const params = getDisplayQueryParams(queryString);
   const toggledFilters = _.xor(params.currentVsChars, [char]);
-  const uri = URI().search(displayParamsToQuery({ ...params, currentVsChars: toggledFilters }));
-  return uri.search();
+  return setVsCharsQuery(toggledFilters, queryString);
 }
 
 export const setStagesQuery = (stages, queryString) => {
-  const params = { ...getDisplayQueryParams(queryString), currentStages: stages };
-  const uri = URI().search(displayParamsToQuery(params));
-  return uri.search();
+  return setQueryParam('currentStages', stages, queryString);
 }
 
 export const toggleStageQuery = (char, queryString) => {
   const params = getDisplayQueryParams(queryString);
   const toggledFilters = _.xor(params.currentStages, [char]);
-  const uri = URI().search(displayParamsToQuery({ ...params, currentStages: toggledFilters }));
-  return uri.search();
+  return setStagesQuery(toggledFilters, queryString);
 }
 
 export const setStandaloneTagsQuery = (tags, queryString) => {
-  const params = { ...getDisplayQueryParams(queryString), currentStandaloneTags: tags };
-  const uri = URI().search(displayParamsToQuery(params));
-  return uri.search();
+  return setQueryParam('currentStandaloneTags', tags, queryString);
 }
 
 export const toggleStandaloneTagQuery = (char, queryString) => {
   const params = getDisplayQueryParams(queryString);
   const toggledFilters = _.xor(params.currentStandaloneTags, [char]);
-  const uri = URI().search(displayParamsToQuery({ ...params, currentStandaloneTags: toggledFilters }));
+  return setStandaloneTagsQuery(toggledFilters, queryString);
+}
+
+const setQueryParam = (key, value, queryString) => {
+  const params = { ...getDisplayQueryParams(queryString), [key]: value };
+  const uri = URI().search(displayParamsToQuery(params));
   return uri.search();
 }
 

@@ -1,8 +1,6 @@
 import { addBit, receiveComments, receiveCreateBit } from './action_creators';
 import * as fakeClient from './fake_api_client';
-import { CLIENT_SORT_TO_PARAM } from './uri_util';
-import * as query from 'Shared/query_params';
-import { getCharFilterQuery, getStageFilterQuery, getTagFilterQuery } from 'Shared/query_util';
+import history from './history';
 import { fromJS } from 'immutable';
 import URI from 'urijs';
 
@@ -14,7 +12,7 @@ const COMMENTS_PATH = '/comments';
 // Set this to true in development to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
 
-export function fetchBits({sort, offset, pageSize, mainChars, vsChars, stages, standaloneTags, dispatch}) {
+export function fetchBits(dispatch) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBits();
@@ -22,16 +20,7 @@ export function fetchBits({sort, offset, pageSize, mainChars, vsChars, stages, s
     fetchPromise =
         fetch(new URI(BASE_URI)
             .path(BITS_PATH)
-            // TODO(thenuge): The query logic can be replaced with the URL querystring once we've migrated each param over.
-            .query({
-                ...sort && { [query.QUERY_SORT]: CLIENT_SORT_TO_PARAM[sort] },
-                ...offset && { [query.QUERY_OFFSET]: offset },
-                ...pageSize && { [query.QUERY_LIMIT]: pageSize },
-                ...mainChars && { [query.QUERY_MAIN_CHARS]: getCharFilterQuery(mainChars) },
-                ...vsChars && { [query.QUERY_VS_CHARS]: getCharFilterQuery(vsChars) },
-                ...stages && { [query.QUERY_STAGES]: getStageFilterQuery(stages) },
-                ...standaloneTags && { [query.QUERY_TAGS]: getTagFilterQuery(standaloneTags) },
-              })
+            .query(history.location.search)
             .toString())
         .then(result => result.json())
         .catch(error => {

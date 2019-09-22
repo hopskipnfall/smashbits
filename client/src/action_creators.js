@@ -14,7 +14,6 @@ import {
 import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
 import history from './history';
 import {
-  getDisplayQueryParams,
   getOffset,
   getPageSize,
   setMainCharsQuery,
@@ -165,19 +164,9 @@ export function fetchBit(bitId) {
   }
 }
 
-export function fetchBits({ sort, offset, limit, mainChars, vsChars, stages, standaloneTags } = {}) {
+export function fetchBits() {
   return function(dispatch, getState) {
-    const params = getDisplayQueryParams(history.location.search);
-    return fetchBitsApi({
-      sort: sort || params.currentSort,
-      offset: offset || params.currentOffset,
-      pageSize: limit || params.currentPageSize,
-      mainChars: mainChars || params.currentMainChars,
-      vsChars: vsChars || params.currentVsChars,
-      stages: stages || params.currentStages,
-      standaloneTags: standaloneTags || params.currentStandaloneTags,
-      dispatch: dispatch
-    });
+    return fetchBitsApi(dispatch: dispatch);
   }
 }
 
