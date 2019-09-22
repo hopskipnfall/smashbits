@@ -1,11 +1,11 @@
 import { Map, Set } from 'immutable';
 
-export const filterBits = state => {
+export const filterBits = (state, filters = {}) => {
   const bits = state.get('bits', Map());
-  const mainChars = state.getIn(['filtering', 'currentMainChars'], Set());
-  const vsChars = state.getIn(['filtering', 'currentVsChars'], Set());
-  const stages = state.getIn(['filtering', 'currentStages'], Set());
-  const standaloneTags = state.getIn(['filtering', 'currentStandaloneTags'], Set());
+  const mainChars = Set(filters.currentMainChars || []);
+  const vsChars = Set(filters.currentVsChars || []);
+  const stages = Set(filters.currentStages || []);
+  const standaloneTags = Set(filters.currentStandaloneTags || []);
 
   return bits.filter(bit =>
       (mainChars.size === 0

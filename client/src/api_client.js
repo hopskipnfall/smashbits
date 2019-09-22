@@ -1,8 +1,8 @@
 import { addBit, receiveComments, receiveCreateBit } from './action_creators';
 import { SORT_DATE, SORT_SCORE } from './reducer';
 import * as fakeClient from './fake_api_client';
-import * as filters from 'Shared/filters';
 import * as query from 'Shared/query_params';
+import { getCharFilterQuery, getStageFilterQuery, getTagFilterQuery } from 'Shared/query_util';
 import { fromJS } from 'immutable';
 import URI from 'urijs';
 
@@ -23,14 +23,15 @@ export function fetchBits({sort, offset, pageSize, mainChars, vsChars, stages, s
     fetchPromise =
         fetch(new URI(BASE_URI)
             .path(BITS_PATH)
+            // TODO(thenuge): The query logic can be replaced with the URL querystring once we've migrated each param over.
             .query({
                 ...sort && { [query.QUERY_SORT]: CLIENT_SORT_TO_PARAM[sort] },
                 ...offset && { [query.QUERY_OFFSET]: offset },
                 ...pageSize && { [query.QUERY_LIMIT]: pageSize },
-                ...mainChars.size && { [query.QUERY_MAIN_CHARS]: mainChars.map(char => filters.DISPLAY_TO_PARAMS_CHARS[char]).join(',') },
-                ...vsChars.size && { [query.QUERY_VS_CHARS]: vsChars.map(char => filters.DISPLAY_TO_PARAMS_CHARS[char]).join(',') },
-                ...stages.size && { [query.QUERY_STAGES]: stages.map(stage => filters.DISPLAY_TO_PARAMS_STAGES[stage]).join(',') },
-                ...standaloneTags.size && { [query.QUERY_TAGS]: standaloneTags.map(tag => filters.DISPLAY_TO_PARAMS_TAGS[tag]).join(',') },
+                ...mainChars && { [query.QUERY_MAIN_CHARS]: getCharFilterQuery(mainChars) },
+                ...vsChars && { [query.QUERY_VS_CHARS]: getCharFilterQuery(vsChars) },
+                ...stages && { [query.QUERY_STAGES]: getStageFilterQuery(stages) },
+                ...standaloneTags && { [query.QUERY_TAGS]: getTagFilterQuery(standaloneTags) },
               })
             .toString())
         .then(result => result.json())

@@ -7,6 +7,7 @@ import SortingMenu from './SortingMenu';
 import FilterControl from './FilterControl';
 import PageSizeMenu from './PageSizeMenu';
 import * as actionCreators from './action_creators';
+import { getFilters } from './uri_util';
 
 class Home extends Component {
   constructor(props, context) {
@@ -16,12 +17,12 @@ class Home extends Component {
   }
 
   render() {
-    const { fetchNextPage, fetchPreviousPage } = this.props;
+    const { fetchNextPage, fetchPreviousPage, location } = this.props;
     return (
       <div>
         <Col md={4}>
           <CreateBitButton />
-          <FilterControl />
+          <FilterControl filters={getFilters(location.search)} />
         </Col>
         <Col md={8}>
           <span>
@@ -32,7 +33,7 @@ class Home extends Component {
               <Button onClick={() => fetchNextPage()}> &gt; </Button>
             </span>
           </span>
-          <BitsContainer />
+          <BitsContainer filters={getFilters(location.search)}/>
         </Col>
       </div>
     );

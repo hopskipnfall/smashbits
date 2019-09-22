@@ -10,14 +10,6 @@ export const ACTION_DOWNVOTE = 'ACTION_DOWNVOTE';
 export const ACTION_RESET_VOTE = 'ACTION_RESET_VOTE';
 export const ACTION_ADD_BIT = 'ACTION_ADD_BIT';
 export const ACTION_CHANGE_SORT = 'ACTION_CHANGE_SORT';
-export const ACTION_TOGGLE_MAIN_CHAR_FILTER = 'ACTION_TOGGLE_MAIN_CHAR_FILTER';
-export const ACTION_TOGGLE_VS_CHAR_FILTER = 'ACTION_TOGGLE_VS_CHAR_FILTER';
-export const ACTION_TOGGLE_STAGE_FILTER = 'ACTION_TOGGLE_STAGE_FILTER';
-export const ACTION_TOGGLE_STANDALONE_TAG_FILTER = 'ACTION_TOGGLE_STANDALONE_TAG_FILTER';
-export const ACTION_SET_MAIN_CHAR_FILTERS = 'ACTION_SET_MAIN_CHAR_FILTERS';
-export const ACTION_SET_VS_CHAR_FILTERS = 'ACTION_SET_VS_CHAR_FILTERS';
-export const ACTION_SET_STAGE_FILTERS = 'ACTION_SET_STAGE_FILTERS';
-export const ACTION_SET_STANDALONE_TAG_FILTERS = 'ACTION_SET_STANDALONE_TAG_FILTERS';
 export const ACTION_REQUEST_COMMENTS = 'ACTION_REQUEST_COMMENTS';
 export const ACTION_RECEIVE_COMMENTS = 'ACTION_RECEIVE_COMMENTS';
 export const ACTION_REQUEST_CREATE_BIT = 'ACTION_REQUEST_CREATE_BIT';
@@ -57,8 +49,6 @@ const INITIAL_STATE = fromJS({
         filters.FILTER_CHAR_PIKA,
         filters.FILTER_CHAR_JIGGLY
     ],
-    currentMainChars: Set(),
-    currentVsChars: Set(),
     stages: [
         filters.FILTER_STAGE_PEACH,
         filters.FILTER_STAGE_CONGO,
@@ -73,14 +63,12 @@ const INITIAL_STATE = fromJS({
         filters.FILTER_STAGE_FINAL_DESTINATION,
         filters.FILTER_STAGE_BATTLEFIELD
     ],
-    currentStages: Set(),
     standaloneTags: [
         filters.FILTER_TAG_APPROACH,
         filters.FILTER_TAG_EDGEGUARDING,
         filters.FILTER_TAG_COMBOS,
         filters.FILTER_TAG_ESCAPES
     ],
-    currentStandaloneTags: Set()
   }
 })
 
@@ -102,22 +90,6 @@ export default function(state = INITIAL_STATE, action) {
       return resetVote(state, action.data);
     case ACTION_CHANGE_SORT:
       return changeSort(state, action.data);
-    case ACTION_TOGGLE_MAIN_CHAR_FILTER:
-      return toggleMainChar(state, action.data);
-    case ACTION_TOGGLE_VS_CHAR_FILTER:
-      return toggleVsChar(state, action.data);
-    case ACTION_TOGGLE_STAGE_FILTER:
-      return toggleStage(state, action.data);
-    case ACTION_TOGGLE_STANDALONE_TAG_FILTER:
-      return toggleStandaloneTag(state, action.data);
-    case ACTION_SET_MAIN_CHAR_FILTERS:
-      return state.setIn(['filtering', 'currentMainChars'], action.data);
-    case ACTION_SET_VS_CHAR_FILTERS:
-      return state.setIn(['filtering', 'currentVsChars'], action.data);
-    case ACTION_SET_STAGE_FILTERS:
-      return state.setIn(['filtering', 'currentStages'], action.data);
-    case ACTION_SET_STANDALONE_TAG_FILTERS:
-      return state.setIn(['filtering', 'currentStandaloneTags'], action.data);
     case ACTION_REQUEST_COMMENTS:
       return state.setIn(['bits', action.data, 'isRequestingComments'], true);
     case ACTION_RECEIVE_COMMENTS:
@@ -166,24 +138,6 @@ const changeSort = (state = Map(), sort) => {
       return state;
   }
 };
-
-const toggleMainChar = (state = Map(), char) =>
-    state.setIn(['filtering', 'currentMainChars'],
-        toggleSetElement(state.getIn(['filtering', 'currentMainChars']), char));
-
-const toggleVsChar = (state = Map(), char) =>
-    state.setIn(['filtering', 'currentVsChars'],
-        toggleSetElement(state.getIn(['filtering', 'currentVsChars']), char));
-
-const toggleStage = (state = Map(), stage) =>
-    state.setIn(['filtering', 'currentStages'],
-        toggleSetElement(state.getIn(['filtering', 'currentStages']), stage));
-
-const toggleStandaloneTag = (state = Map(), tag) =>
-    state.setIn(['filtering', 'currentStandaloneTags'],
-        toggleSetElement(state.getIn(['filtering', 'currentStandaloneTags']), tag));
-
-const toggleSetElement = (set, element) => set.includes(element) ? set.delete(element) : set.add(element);
 
 const receiveComments = (state = Map(), bitId, newComments) =>
     state

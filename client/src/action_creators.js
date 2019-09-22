@@ -5,14 +5,6 @@ import {
     ACTION_DOWNVOTE,
     ACTION_RESET_VOTE,
     ACTION_CHANGE_SORT,
-    ACTION_TOGGLE_MAIN_CHAR_FILTER,
-    ACTION_TOGGLE_VS_CHAR_FILTER,
-    ACTION_TOGGLE_STAGE_FILTER,
-    ACTION_TOGGLE_STANDALONE_TAG_FILTER,
-    ACTION_SET_MAIN_CHAR_FILTERS,
-    ACTION_SET_VS_CHAR_FILTERS,
-    ACTION_SET_STAGE_FILTERS,
-    ACTION_SET_STANDALONE_TAG_FILTERS,
     ACTION_REQUEST_COMMENTS,
     ACTION_RECEIVE_COMMENTS,
     ACTION_REQUEST_CREATE_BIT,
@@ -21,6 +13,18 @@ import {
     ACTION_SET_PAGE_SIZE,
 } from './reducer';
 import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
+import history from './history';
+import {
+  getFilters,
+  setMainCharsQuery,
+  toggleMainCharQuery,
+  setVsCharsQuery,
+  toggleVsCharQuery,
+  setStagesQuery,
+  toggleStageQuery,
+  setStandaloneTagsQuery,
+  toggleStandaloneTagQuery,
+} from './uri_util';
 
 export function clearBits() {
   return {
@@ -79,88 +83,56 @@ export function changeSort(sort) {
 
 export function setMainCharFilters(chars) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_SET_MAIN_CHAR_FILTERS,
-      data: chars
-    });
-
+    history.push(setMainCharsQuery(chars, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function toggleMainCharFilter(char) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_TOGGLE_MAIN_CHAR_FILTER,
-      data: char
-    });
-
+    history.push(toggleMainCharQuery(char, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function setVsCharFilters(chars) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_SET_VS_CHAR_FILTERS,
-      data: chars
-    });
-
+    history.push(setVsCharsQuery(chars, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function toggleVsCharFilter(char) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_TOGGLE_VS_CHAR_FILTER,
-      data: char
-    });
-
+    history.push(toggleVsCharQuery(char, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function setStageFilters(stages) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_SET_STAGE_FILTERS,
-      data: stages
-    });
-
+    history.push(setStagesQuery(stages, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function toggleStageFilter(stage) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_TOGGLE_STAGE_FILTER,
-      data: stage
-    });
-
+    history.push(toggleStageQuery(stage, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function setStandaloneTagFilters(tags) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_SET_STANDALONE_TAG_FILTERS,
-      data: tags
-    });
-
+    history.push(setStandaloneTagsQuery(tags, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function toggleStandaloneTagFilter(tag) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_TOGGLE_STANDALONE_TAG_FILTER,
-      data: tag
-    });
-
+    history.push(toggleStandaloneTagQuery(tag, history.location.search));
     dispatch(refreshBits());
   };
 }
@@ -189,14 +161,15 @@ export function fetchBit(bitId) {
 
 export function fetchBits({ sort, offset, limit, mainChars, vsChars, stages, standaloneTags } = {}) {
   return function(dispatch, getState) {
+    const filters = getFilters(history.location.search);
     return fetchBitsApi({
       sort: sort || getState().getIn(['sorting', 'currentSort']),
       offset: offset || getState().get('offset'),
       pageSize: limit || getState().get('pageSize'),
-      mainChars: mainChars || getState().getIn(['filtering', 'currentMainChars']),
-      vsChars: vsChars || getState().getIn(['filtering', 'currentVsChars']),
-      stages: stages || getState().getIn(['filtering', 'currentStages']),
-      standaloneTags: standaloneTags || getState().getIn(['filtering', 'currentStandaloneTags']),
+      mainChars: mainChars || filters.currentMainChars,
+      vsChars: vsChars || filters.currentVsChars,
+      stages: stages || filters.currentStages,
+      standaloneTags: standaloneTags || filters.currentStandaloneTags,
       dispatch: dispatch
     });
   }
