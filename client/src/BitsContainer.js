@@ -13,8 +13,8 @@ const BitsContainer = props => (
   </div>
 );
 
-const mapStateToProps = state => ({
-  bits: filterBits(state),
+const mapStateToProps = (state, ownProps) => ({
+  bits: filterBits(state, ownProps.filters),
   comments: state.get('comments', Map())
 });
 

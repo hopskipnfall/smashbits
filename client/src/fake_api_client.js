@@ -27,7 +27,7 @@ const handBit = {
     downvotes: 8,
     title: 'Master Hand\'s getup attack',
     content: 'It\'s a 1HKO.',
-    stages: ['Dream Land,Congo Jungle'],
+    stages: ['Dream Land', 'Congo Jungle'],
     standaloneTags: ['Approach'],
 };
 const falconPressureBit = {

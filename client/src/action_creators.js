@@ -5,22 +5,29 @@ import {
     ACTION_DOWNVOTE,
     ACTION_RESET_VOTE,
     ACTION_CHANGE_SORT,
-    ACTION_TOGGLE_MAIN_CHAR_FILTER,
-    ACTION_TOGGLE_VS_CHAR_FILTER,
-    ACTION_TOGGLE_STAGE_FILTER,
-    ACTION_TOGGLE_STANDALONE_TAG_FILTER,
-    ACTION_SET_MAIN_CHAR_FILTERS,
-    ACTION_SET_VS_CHAR_FILTERS,
-    ACTION_SET_STAGE_FILTERS,
-    ACTION_SET_STANDALONE_TAG_FILTERS,
     ACTION_REQUEST_COMMENTS,
     ACTION_RECEIVE_COMMENTS,
     ACTION_REQUEST_CREATE_BIT,
     ACTION_RECEIVE_CREATE_BIT,
-    ACTION_SET_OFFSET,
-    ACTION_SET_PAGE_SIZE,
+    DEFAULT_PAGE_SIZE,
 } from './reducer';
 import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
+import history from './history';
+import {
+  getOffset,
+  getPageSize,
+  setMainCharsQuery,
+  toggleMainCharQuery,
+  setVsCharsQuery,
+  toggleVsCharQuery,
+  setStagesQuery,
+  toggleStageQuery,
+  setStandaloneTagsQuery,
+  toggleStandaloneTagQuery,
+  setSortQuery,
+  setOffsetQuery,
+  setPageSizeQuery,
+} from './uri_util';
 
 export function clearBits() {
   return {
@@ -65,102 +72,72 @@ function refreshBits() {
 
 export function changeSort(sort) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_CHANGE_SORT,
-      data: sort
-    });
+    history.push(setSortQuery(sort, history.location.search));
 
     // If we have less than 1 page of bits, we can just sort them client-side.
     if (getState().get('bits').size >= getState().get('pageSize')) {
       dispatch(refreshBits());
+    } else {
+      dispatch({
+        type: ACTION_CHANGE_SORT,
+        data: sort
+      });
     }
   };
 }
 
 export function setMainCharFilters(chars) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_SET_MAIN_CHAR_FILTERS,
-      data: chars
-    });
-
+    history.push(setMainCharsQuery(chars, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function toggleMainCharFilter(char) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_TOGGLE_MAIN_CHAR_FILTER,
-      data: char
-    });
-
+    history.push(toggleMainCharQuery(char, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function setVsCharFilters(chars) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_SET_VS_CHAR_FILTERS,
-      data: chars
-    });
-
+    history.push(setVsCharsQuery(chars, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function toggleVsCharFilter(char) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_TOGGLE_VS_CHAR_FILTER,
-      data: char
-    });
-
+    history.push(toggleVsCharQuery(char, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function setStageFilters(stages) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_SET_STAGE_FILTERS,
-      data: stages
-    });
-
+    history.push(setStagesQuery(stages, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function toggleStageFilter(stage) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_TOGGLE_STAGE_FILTER,
-      data: stage
-    });
-
+    history.push(toggleStageQuery(stage, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function setStandaloneTagFilters(tags) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_SET_STANDALONE_TAG_FILTERS,
-      data: tags
-    });
-
+    history.push(setStandaloneTagsQuery(tags, history.location.search));
     dispatch(refreshBits());
   };
 }
 
 export function toggleStandaloneTagFilter(tag) {
   return function(dispatch, getState) {
-    dispatch({
-      type: ACTION_TOGGLE_STANDALONE_TAG_FILTER,
-      data: tag
-    });
-
+    history.push(toggleStandaloneTagQuery(tag, history.location.search));
     dispatch(refreshBits());
   };
 }
@@ -187,24 +164,16 @@ export function fetchBit(bitId) {
   }
 }
 
-export function fetchBits({ sort, offset, limit, mainChars, vsChars, stages, standaloneTags } = {}) {
+export function fetchBits() {
   return function(dispatch, getState) {
-    return fetchBitsApi({
-      sort: sort || getState().getIn(['sorting', 'currentSort']),
-      offset: offset || getState().get('offset'),
-      pageSize: limit || getState().get('pageSize'),
-      mainChars: mainChars || getState().getIn(['filtering', 'currentMainChars']),
-      vsChars: vsChars || getState().getIn(['filtering', 'currentVsChars']),
-      stages: stages || getState().getIn(['filtering', 'currentStages']),
-      standaloneTags: standaloneTags || getState().getIn(['filtering', 'currentStandaloneTags']),
-      dispatch: dispatch
-    });
+    return fetchBitsApi(dispatch: dispatch);
   }
 }
 
 export function fetchNextPage() {
   return function(dispatch, getState) {
-    var offset = getState().get('offset') + getState().get('pageSize');
+    const offset = (getOffset(history.location.search) || 0)
+        + (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE);
     dispatch(setOffset(offset));
     dispatch(refreshBits());
   };
@@ -212,26 +181,24 @@ export function fetchNextPage() {
 
 export function fetchPreviousPage() {
   return function(dispatch, getState) {
-    var offset = Math.max(0, getState().get('offset') - getState().get('pageSize'));
+    const offset = Math.max(
+        0,
+        (getOffset(history.location.search) || 0)
+          - (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE));
     dispatch(setOffset(offset));
     dispatch(refreshBits());
   };
 }
 
 export function setOffset(offset) {
-  return {
-    type: ACTION_SET_OFFSET,
-    data: offset
+  return function(dispatch, getState) {
+    history.push(setOffsetQuery(offset, history.location.search));
   }
 }
 
 export function setPageSize(pageSize) {
   return function(dispatch) {
-    dispatch({
-      type: ACTION_SET_PAGE_SIZE,
-      data: pageSize
-    });
-    dispatch(setOffset(0));
+    history.push(setPageSizeQuery(pageSize, setOffsetQuery(0, history.location.search)));
     dispatch(refreshBits());
   }
 }
