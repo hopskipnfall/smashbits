@@ -1,8 +1,6 @@
 import { addBit, receiveComments, receiveCreateBit } from './action_creators';
-import { SORT_DATE, SORT_SCORE } from './reducer';
 import * as fakeClient from './fake_api_client';
-import * as filters from 'Shared/filters';
-import * as query from 'Shared/query_params';
+import history from './history';
 import { fromJS } from 'immutable';
 import URI from 'urijs';
 
@@ -11,11 +9,10 @@ const BASE_URI = process.env.NODE_ENV === 'production'
     : 'http://localhost:3001';
 const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
-const CLIENT_SORT_TO_PARAM = { [SORT_DATE]: query.SORT_PARAM_DATE, [SORT_SCORE]: query.SORT_PARAM_DATE };
 // Set this to true in development to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
 
-export function fetchBits({sort, offset, pageSize, mainChars, vsChars, stages, standaloneTags, dispatch}) {
+export function fetchBits(dispatch) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBits();
@@ -23,15 +20,7 @@ export function fetchBits({sort, offset, pageSize, mainChars, vsChars, stages, s
     fetchPromise =
         fetch(new URI(BASE_URI)
             .path(BITS_PATH)
-            .query({
-                ...sort && { [query.QUERY_SORT]: CLIENT_SORT_TO_PARAM[sort] },
-                ...offset && { [query.QUERY_OFFSET]: offset },
-                ...pageSize && { [query.QUERY_LIMIT]: pageSize },
-                ...mainChars.size && { [query.QUERY_MAIN_CHARS]: mainChars.map(char => filters.DISPLAY_TO_PARAMS_CHARS[char]).join(',') },
-                ...vsChars.size && { [query.QUERY_VS_CHARS]: vsChars.map(char => filters.DISPLAY_TO_PARAMS_CHARS[char]).join(',') },
-                ...stages.size && { [query.QUERY_STAGES]: stages.map(stage => filters.DISPLAY_TO_PARAMS_STAGES[stage]).join(',') },
-                ...standaloneTags.size && { [query.QUERY_TAGS]: standaloneTags.map(tag => filters.DISPLAY_TO_PARAMS_TAGS[tag]).join(',') },
-              })
+            .query(history.location.search)
             .toString())
         .then(result => result.json())
         .catch(error => {

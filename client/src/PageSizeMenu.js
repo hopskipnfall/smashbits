@@ -20,8 +20,8 @@ const PageSizeMenu = props => {
   );
 };
 
-const mapStateToProps = state => ({
-  pageSize: state.get('pageSize'),
+const mapStateToProps = (state, ownProps) => ({
+  pageSize: ownProps.pageSize,
 });
 
 export default connect(mapStateToProps, actionCreators)(PageSizeMenu);

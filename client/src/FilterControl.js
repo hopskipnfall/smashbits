@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
-import { Map } from 'immutable';
+import { List, Map, fromJS } from 'immutable';
 import FilterMenu from './FilterMenu';
 import { Panel } from 'react-bootstrap';
 
@@ -14,32 +14,32 @@ const FilterControl = props => {
           title="These characters"
           bootstrapStyle="success"
           allFilters={filtering.get('chars')}
-          currentFilters={filtering.get('currentMainChars')}
+          currentFilters={filtering.get('currentMainChars', List())}
           onClick={toggleMainCharFilter} />
       <FilterMenu
           title="vs. these characters"
           bootstrapStyle="danger"
           allFilters={filtering.get('chars')}
-          currentFilters={filtering.get('currentVsChars')}
+          currentFilters={filtering.get('currentVsChars', List())}
           onClick={toggleVsCharFilter} />
       <FilterMenu
           title="on these stages"
           bootstrapStyle="primary"
           allFilters={filtering.get('stages')}
-          currentFilters={filtering.get('currentStages')}
+          currentFilters={filtering.get('currentStages', List())}
           onClick={toggleStageFilter} />
       <FilterMenu
           title="with these tags"
           bootstrapStyle="warning"
           allFilters={filtering.get('standaloneTags')}
-          currentFilters={filtering.get('currentStandaloneTags')}
+          currentFilters={filtering.get('currentStandaloneTags', List())}
           onClick={toggleStandaloneTagFilter} />
     </Panel>
   );
 };
 
-const mapStateToProps = state => ({
-  filtering: state.get('filtering')
+const mapStateToProps = (state, ownProps) => ({
+  filtering: state.get('filtering').merge(fromJS(ownProps.filters))
 });
 
 export default connect(mapStateToProps, actionCreators)(FilterControl);
