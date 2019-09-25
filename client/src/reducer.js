@@ -14,8 +14,6 @@ export const ACTION_REQUEST_COMMENTS = 'ACTION_REQUEST_COMMENTS';
 export const ACTION_RECEIVE_COMMENTS = 'ACTION_RECEIVE_COMMENTS';
 export const ACTION_REQUEST_CREATE_BIT = 'ACTION_REQUEST_CREATE_BIT';
 export const ACTION_RECEIVE_CREATE_BIT = 'ACTION_RECEIVE_CREATE_BIT';
-export const ACTION_SET_OFFSET = 'ACTION_SET_OFFSET';
-export const ACTION_SET_PAGE_SIZE = 'ACTION_SET_PAGE_SIZE';
 
 export const USER_UPVOTE = 1;
 export const USER_DOWNVOTE = -1;
@@ -24,16 +22,11 @@ export const USER_DEFAULT_VOTE = 0;
 export const SORT_DATE = 'Date';
 export const SORT_SCORE = 'Score';
 
-const DEFAULT_PAGE_SIZE = 25;
+export const DEFAULT_PAGE_SIZE = 25;
 
 const INITIAL_STATE = fromJS({
   bits: OrderedMap(),
-  sorting: {
-    sorts: [SORT_DATE, SORT_SCORE],
-    currentSort: SORT_DATE
-  },
-  pageSize: DEFAULT_PAGE_SIZE,
-  offset: 0,
+  sorts: [SORT_DATE, SORT_SCORE],
   filtering: {
     chars: [
         filters.FILTER_CHAR_LUIGI,
@@ -98,10 +91,6 @@ export default function(state = INITIAL_STATE, action) {
       return state;
     case ACTION_RECEIVE_CREATE_BIT:
       return state;
-    case ACTION_SET_OFFSET:
-      return state.set('offset', action.data);
-    case ACTION_SET_PAGE_SIZE:
-      return state.set('pageSize', action.data);
     default:
       return state;
   }
@@ -127,13 +116,11 @@ const changeSort = (state = Map(), sort) => {
     case SORT_SCORE:
       return state.set('bits',
           state.get('bits', Map()).sortBy(
-              bit => -1 * (bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0))))
-          .setIn(['sorting', 'currentSort'], sort);
+              bit => -1 * (bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0))));
     case SORT_DATE:
       return state.set('bits',
           state.get('bits', Map()).sortBy(
-              bit => -1 * bit.get('dateCreated', 0)))
-          .setIn(['sorting', 'currentSort'], sort);
+              bit => -1 * bit.get('dateCreated', 0)));
     default:
       return state;
   }
