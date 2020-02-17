@@ -47,11 +47,13 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "body-parser": "^1.18.2",
+    "cors": "^2.8.5",
     "express": "^4.16.2",
     "helmet": "^3.12.0",
     "immutable": "^3.8.1",
     "js-string-escape": "^1.0.1",
     "mongoose": "^5.0.16",
+    "node-twitter-api": "^1.8.0",
     "redux": "^3.7.2",
     "serverless-http": "^1.5.2",
     "uuid": "^3.2.1"
