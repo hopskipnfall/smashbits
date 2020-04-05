@@ -17,28 +17,30 @@ provider:
   region: us-east-1
   environment:
     STORE_URI: ${file(./secret/config.${self:provider.stage}.yml):storeUri}
+    BASE_SERVER_URL: ${file(./secret/config.${self:provider.stage}.yml):baseServerUrl}
+    BASE_CLIENT_URL: ${file(./secret/config.${self:provider.stage}.yml):baseClientUrl}
 
 functions:
   app:
     handler: index.handler
     events:
       - http: ANY /
-      - http: 'ANY {proxy+}'
+      - http: "ANY {proxy+}"
   getBits:
     handler: index.handler
     events:
       - http: GET /bits
-      - http: 'GET /bits/{proxy+}'
+      - http: "GET /bits/{proxy+}"
   getComments:
-     handler: index.handler
-     events:
-       - http: GET /bits/{bitId}/comments
+    handler: index.handler
+    events:
+      - http: GET /bits/{bitId}/comments
   createBit:
-      handler: index.handler
-      events:
-        - http: POST /bits
-        - http: 'POST /bits/{proxy+}'
-      cors: true
+    handler: index.handler
+    events:
+      - http: POST /bits
+      - http: "POST /bits/{proxy+}"
+    cors: true
   twitterCallback:
     handler: index.handler
     events:
