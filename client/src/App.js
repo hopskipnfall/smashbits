@@ -3,7 +3,7 @@ import './App.css';
 import BitPage from './BitPage';
 import Home from './Home';
 import { Route, Switch } from "react-router-dom";
-import TwitterLogin from 'react-twitter-auth';
+import { Button }  from 'react-bootstrap';
 
 const onSuccess = res => console.log(JSON.stringify(res));
 const onFailed = err => console.log(err);
@@ -15,12 +15,9 @@ class App extends Component {
         <div className="App">
           <div className="App-header">
             <h2>Welcome to SmashBits!</h2>
-            <TwitterLogin
-                requestTokenUrl="http://localhost:3001/request-token"
-                loginUrl="http://localhost:3001/access-token"
-                onFailure={onFailed}
-                onSuccess={onSuccess}
-            />
+            <a href="http://localhost:3001/login/twitter" target="_blank">
+              <Button>Log in with Twitter</Button>
+            </a>
           </div>
           <p className="App-intro">
             SmashBits is a place to collaborate on and organize game knowledge in a central, public place.

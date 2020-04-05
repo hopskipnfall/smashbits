@@ -39,11 +39,11 @@ functions:
         - http: POST /bits
         - http: 'POST /bits/{proxy+}'
       cors: true
-  requestToken:
+  twitterCallback:
     handler: index.handler
     events:
-      - http: POST /request-token
-  accessToken:
+      - http: GET /oauth/twitter/callback
+  twitterLogin:
     handler: index.handler
     events:
-      - http: GET /access-token
+      - http: GET /login/twitter

@@ -1,15 +1,23 @@
 import serverless from 'serverless-http';
 import express from 'express';
 import helmet from 'helmet';
-import Twitter from 'node-twitter-api';
 import cors from 'cors';
+import passport from 'passport';
+import TwitterStrategy from 'passport-twitter';
+import session from 'express-session';
 import { getBit, getBits, getComments, createBit } from './src/bits';
 
-var twitter = new Twitter({
-  consumerKey: 'nkoFyhVvx9BVOR7vsjv6c9EHz',
-  consumerSecret: 'Be0VOmwgZ4B20i40MlmKJOAnILKjW7cj7vTcxB9Qr6omncczbe',
-  callback: 'http://localhost:3000/request-token'
-});
+passport.use(new TwitterStrategy({
+    consumerKey: 'nkoFyhVvx9BVOR7vsjv6c9EHz',
+    consumerSecret: 'Be0VOmwgZ4B20i40MlmKJOAnILKjW7cj7vTcxB9Qr6omncczbe',
+    callback: "/oauth/twitter/callback",
+  },
+  function(token, tokenSecret, profile, cb) {
+    // TODO(thenuge): Associate the Twitter profile with a user in the DB.
+    return cb(null, profile);
+  }
+));
+
 var _requestSecret;
 
 const app = express();
@@ -21,6 +29,32 @@ app.use(helmet({
     action: 'deny'
   }
 }));
+app.use(session({
+  // TODO(thenuge): Use a real secret.
+  secret: 'kirby',
+  saveUninitialized: true,
+  resave: true,
+  cookie: { secure: false },
+}))
+app.use(passport.initialize());
+app.use(passport.session());
+
+// TODO(thenuge): Use the user ID from the DB.
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+app.use(
+  cors({
+    origin: "http://localhost:3000", // allow to server to accept request from different origin
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true // allow session cookie from browser to pass through
+  })
+);
 
 app.get('/bits', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -51,44 +85,16 @@ app.get('/bits/:bitId/comments', (req, res) => {
   res.send(JSON.stringify(getComments(req.params)));
 });
 
-/*var corsOptions = {
-  origin: 'http://localhost:3001',
-};*/
+app.get('/login/twitter',
+  passport.authenticate('twitter'),
+  (req, res) => console.log('Login req cookie: ' + req.headers.cookie)
+ );
 
-var corsOption = {
-  origin: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true,
-  exposedHeaders: ['x-auth-token']
-};
-app.use(cors(corsOption));
-
-app.post('/request-token', (req, res) => {
-        twitter.getRequestToken((err, requestToken, requestSecret) => {
-            if (err)
-                res.status(500).send(err);
-            else {
-                _requestSecret = requestSecret;
-                res.redirect("https://api.twitter.com/oauth/authenticate?oauth_token=" + requestToken);
-            }
-        });
-    });
-
-app.get("/access-token", (req, res) => {
-      var requestToken = req.query.oauth_token,
-      verifier = req.query.oauth_verifier;
-
-        twitter.getAccessToken(requestToken, _requestSecret, verifier, (err, accessToken, accessSecret) => {
-            if (err)
-                res.status(500).send(err);
-            else
-                twitter.verifyCredentials(accessToken, accessSecret, (err, user) => {
-                    if (err)
-                        res.status(500).send(err);
-                    else
-                        res.send(user);
-                });
-        });
-    });
+app.get('/oauth/twitter/callback',
+  passport.authenticate('twitter', { failureRedirect: '/login' }),
+  function(req, res) {
+    console.log('Callback cookie: ' + req.headers.cookie);
+    res.redirect('/');
+  });
 
 export const handler = serverless(app);
