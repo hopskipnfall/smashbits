@@ -9,7 +9,9 @@
     "test:all": "npm run test -- --recursive",
     "test:watch": "npm run test -- --watch",
     "test_debug:all": "npm run test:all -- --inspect-brk",
-    "test_debug": "npm run test -- --inspect-brk"
+    "test_debug": "npm run test -- --inspect-brk",
+    "serverless": "serverless offline start",
+    "serverless:print": "serverless print"
   },
   "repository": {
     "type": "git",
