@@ -14,7 +14,6 @@ import { getBit, getBits, getComments, createBit } from './src/bits';
 passport.use(
   new TwitterStrategy(
     {
-      // @TODO - rotate these when you take them out of the codebase
       consumerKey: `${process.env.TWITTER_API_KEY}`,
       consumerSecret: `${process.env.TWITTER_API_SECRET_KEY}`,
       callback: `${process.env.BASE_SERVER_URL}/oauth/twitter/callback`,
