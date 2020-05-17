@@ -1,24 +1,24 @@
-import { addBit, receiveComments, receiveCreateBit } from "./action_creators";
-import * as fakeClient from "./fake_api_client";
-import history from "./history";
-import { fromJS } from "immutable";
-import URI from "urijs";
+import { addBit, receiveComments, receiveCreateBit } from './action_creators';
+import * as fakeClient from './fake_api_client';
+import history from './history';
+import { fromJS } from 'immutable';
+import URI from 'urijs';
 
 function safeFetch(url, options) {
   return fetch(url, {
     ...options,
-    credentials: "include",
+    credentials: 'include',
   });
 }
 
 const BASE_URI =
-  process.env.NODE_ENV === "production"
-    ? "https://7mgkyv8jyg.execute-api.us-east-1.amazonaws.com/dev"
-    : "http://localhost:3001";
-const BITS_PATH = "/bits";
-const COMMENTS_PATH = "/comments";
+  process.env.NODE_ENV === 'production'
+    ? 'https://7mgkyv8jyg.execute-api.us-east-1.amazonaws.com/dev'
+    : 'http://localhost:3001';
+const BITS_PATH = '/bits';
+const COMMENTS_PATH = '/comments';
 // Set this to true in development to use local, fake data instead of making any RPCs.
-const USE_FAKE_CLIENT = false && process.env.NODE_ENV === "development";
+const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
 
 export function fetchBits(dispatch) {
   let fetchPromise;
@@ -33,7 +33,7 @@ export function fetchBits(dispatch) {
     )
       .then((result) => result.json())
       .catch((error) => {
-        console.log("Error fetching bits", error);
+        console.log('Error fetching bits', error);
         // TODO(thenuge): Handle this more gracefully with a message in the UI.
         throw error;
       });
@@ -54,7 +54,7 @@ export function fetchBit(bitId, dispatch) {
     )
       .then((result) => result.json())
       .catch((error) => {
-        console.log("Error fetching bit: " + bitId, error);
+        console.log('Error fetching bit: ' + bitId, error);
         // TODO(thenuge): Handle this more gracefully with a message in the UI.
         throw error;
       });
@@ -72,7 +72,7 @@ export function fetchComments(bitId, dispatch) {
     )
       .then((result) => result.json())
       .catch((error) => {
-        console.log("Error fetching comments", error);
+        console.log('Error fetching comments', error);
         // TODO(thenuge): Handle this more gracefully with a message in the UI.
         throw error;
       });
@@ -90,15 +90,15 @@ export function createBit(bit, dispatch) {
     fetchPromise = safeFetch(new URI(BASE_URI).path(BITS_PATH).toString(), {
       body: JSON.stringify({ bit: bit }),
       headers: {
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
-      method: "POST",
-      mode: "cors",
-      redirect: "follow",
+      method: 'POST',
+      mode: 'cors',
+      redirect: 'follow',
     })
-      .then((result) => result.headers.get("location"))
+      .then((result) => result.headers.get('location'))
       .catch((error) => {
-        console.log("Error creating bit", error);
+        console.log('Error creating bit', error);
         // TODO(thenuge): Handle this more gracefully with a message in the UI.
         throw error;
       });

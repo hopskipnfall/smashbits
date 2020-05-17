@@ -17,20 +17,22 @@ provider:
   region: us-east-1
   environment:
     STORE_URI: ${file(./secret/config.${self:provider.stage}.yml):storeUri}
-    BASE_SERVER_URL: ${file(./secret/config.${self:provider.stage}.yml):baseServerUrl}
-    BASE_CLIENT_URL: ${file(./secret/config.${self:provider.stage}.yml):baseClientUrl}
+    BASE_SERVER_URL: ${file(./env/config.${self:provider.stage}.yml):baseServerUrl}
+    BASE_CLIENT_URL: ${file(./env/config.${self:provider.stage}.yml):baseClientUrl}
+    TWITTER_API_KEY: ${file(./secret/config.${self:provider.stage}.yml):twitterApiKey}
+    TWITTER_API_SECRET_KEY: ${file(./secret/config.${self:provider.stage}.yml):twitterApiSecretKey}
 
 functions:
   app:
     handler: index.handler
     events:
       - http: ANY /
-      - http: "ANY {proxy+}"
+      - http: 'ANY {proxy+}'
   getBits:
     handler: index.handler
     events:
       - http: GET /bits
-      - http: "GET /bits/{proxy+}"
+      - http: 'GET /bits/{proxy+}'
   getComments:
     handler: index.handler
     events:
@@ -39,7 +41,7 @@ functions:
     handler: index.handler
     events:
       - http: POST /bits
-      - http: "POST /bits/{proxy+}"
+      - http: 'POST /bits/{proxy+}'
     cors: true
   twitterCallback:
     handler: index.handler

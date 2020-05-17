@@ -5,9 +5,6 @@ import Home from "./Home";
 import { Route, Switch } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-const onSuccess = (res) => console.log(JSON.stringify(res));
-const onFailed = (err) => console.log(err);
-
 class App extends Component {
   render() {
     return (

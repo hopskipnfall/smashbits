@@ -1,7 +1,7 @@
-import uuid from "uuid";
-import mongoose from "mongoose";
-import Bit from "./Bit";
-import { SORT_PARAM_DATE, SORT_PARAM_SCORE } from "Shared/query_params";
+import uuid from 'uuid';
+import mongoose from 'mongoose';
+import Bit from './Bit';
+import { SORT_PARAM_DATE, SORT_PARAM_SCORE } from 'Shared/query_params';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -40,7 +40,7 @@ export function queryBits({
     case SORT_PARAM_SCORE:
       sortParams = { score: -1, upvotes: -1, dateCreated: -1 };
       query = query.addFields({
-        score: { $subtract: ["$upvotes", "$downvotes"] },
+        score: { $subtract: ['$upvotes', '$downvotes'] },
       });
       break;
     case SORT_PARAM_DATE:
