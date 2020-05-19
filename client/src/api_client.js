@@ -4,7 +4,15 @@ import history from './history';
 import { fromJS } from 'immutable';
 import URI from 'urijs';
 
-const BASE_URI = process.env.NODE_ENV === 'production'
+function safeFetch(url, options) {
+  return fetch(url, {
+    ...options,
+    credentials: 'include',
+  });
+}
+
+const BASE_URI =
+  process.env.NODE_ENV === 'production'
     ? 'https://7mgkyv8jyg.execute-api.us-east-1.amazonaws.com/dev'
     : 'http://localhost:3001';
 const BITS_PATH = '/bits';
@@ -17,21 +25,23 @@ export function fetchBits(dispatch) {
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBits();
   } else {
-    fetchPromise =
-        fetch(new URI(BASE_URI)
-            .path(BITS_PATH)
-            .query(history.location.search)
-            .toString())
-        .then(result => result.json())
-        .catch(error => {
-          console.log('Error fetching bits', error);
-          // TODO(thenuge): Handle this more gracefully with a message in the UI.
-          throw error;
-        });
+    fetchPromise = safeFetch(
+      new URI(BASE_URI)
+        .path(BITS_PATH)
+        .query(history.location.search)
+        .toString()
+    )
+      .then((result) => result.json())
+      .catch((error) => {
+        console.log('Error fetching bits', error);
+        // TODO(thenuge): Handle this more gracefully with a message in the UI.
+        throw error;
+      });
   }
   // TODO(thenuge): Add actions for initiating requests for bit fetching, as well as errors.
-  fetchPromise
-      .then(response => response.bits.map(bit => dispatch(addBit(fromJS(bit)))));
+  fetchPromise.then((response) =>
+    response.bits.map((bit) => dispatch(addBit(fromJS(bit))))
+  );
 }
 
 export function fetchBit(bitId, dispatch) {
@@ -39,16 +49,17 @@ export function fetchBit(bitId, dispatch) {
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBit(bitId);
   } else {
-    fetchPromise = fetch(new URI(BASE_URI).segment([BITS_PATH, bitId]).toString())
-        .then(result => result.json())
-        .catch(error => {
-          console.log('Error fetching bit: ' + bitId, error);
-          // TODO(thenuge): Handle this more gracefully with a message in the UI.
-          throw error;
-        });
+    fetchPromise = safeFetch(
+      new URI(BASE_URI).segment([BITS_PATH, bitId]).toString()
+    )
+      .then((result) => result.json())
+      .catch((error) => {
+        console.log('Error fetching bit: ' + bitId, error);
+        // TODO(thenuge): Handle this more gracefully with a message in the UI.
+        throw error;
+      });
   }
-  fetchPromise
-      .then(response => dispatch(addBit(fromJS(response.bit))));
+  fetchPromise.then((response) => dispatch(addBit(fromJS(response.bit))));
 }
 
 export function fetchComments(bitId, dispatch) {
@@ -56,16 +67,19 @@ export function fetchComments(bitId, dispatch) {
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchComments(bitId);
   } else {
-    fetchPromise = fetch(new URI(BASE_URI).segment([BITS_PATH, bitId, COMMENTS_PATH]).toString())
-        .then(result => result.json())
-        .catch(error => {
-          console.log('Error fetching comments', error);
-          // TODO(thenuge): Handle this more gracefully with a message in the UI.
-          throw error;
-        });
+    fetchPromise = safeFetch(
+      new URI(BASE_URI).segment([BITS_PATH, bitId, COMMENTS_PATH]).toString()
+    )
+      .then((result) => result.json())
+      .catch((error) => {
+        console.log('Error fetching comments', error);
+        // TODO(thenuge): Handle this more gracefully with a message in the UI.
+        throw error;
+      });
   }
-  fetchPromise
-      .then(response => dispatch(receiveComments(bitId, fromJS(response))));
+  fetchPromise.then((response) =>
+    dispatch(receiveComments(bitId, fromJS(response)))
+  );
 }
 
 export function createBit(bit, dispatch) {
@@ -73,24 +87,21 @@ export function createBit(bit, dispatch) {
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.createBit(bit);
   } else {
-    fetchPromise =
-        fetch(new URI(BASE_URI).path(BITS_PATH).toString(),
-            {
-              body: JSON.stringify({bit: bit}),
-              headers: {
-                'content-type': 'application/json',
-              },
-              method: 'POST',
-              mode: 'cors',
-              redirect: 'follow',
-            })
-        .then(result => result.headers.get('location'))
-        .catch(error => {
-          console.log('Error creating bit', error);
-          // TODO(thenuge): Handle this more gracefully with a message in the UI.
-          throw error;
-        });
+    fetchPromise = safeFetch(new URI(BASE_URI).path(BITS_PATH).toString(), {
+      body: JSON.stringify({ bit: bit }),
+      headers: {
+        'content-type': 'application/json',
+      },
+      method: 'POST',
+      mode: 'cors',
+      redirect: 'follow',
+    })
+      .then((result) => result.headers.get('location'))
+      .catch((error) => {
+        console.log('Error creating bit', error);
+        // TODO(thenuge): Handle this more gracefully with a message in the UI.
+        throw error;
+      });
   }
-  fetchPromise
-      .then(bitUrl => dispatch(receiveCreateBit(bitUrl)));
+  fetchPromise.then((bitUrl) => dispatch(receiveCreateBit(bitUrl)));
 }

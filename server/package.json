@@ -9,7 +9,9 @@
     "test:all": "npm run test -- --recursive",
     "test:watch": "npm run test -- --watch",
     "test_debug:all": "npm run test:all -- --inspect-brk",
-    "test_debug": "npm run test -- --inspect-brk"
+    "test_debug": "npm run test -- --inspect-brk",
+    "serverless": "serverless offline start",
+    "serverless:print": "serverless print"
   },
   "repository": {
     "type": "git",
@@ -47,11 +49,16 @@
   "dependencies": {
     "babel-runtime": "^6.26.0",
     "body-parser": "^1.18.2",
+    "connect-mongo": "^3.2.0",
+    "cors": "^2.8.5",
     "express": "^4.16.2",
+    "express-session": "^1.17.0",
     "helmet": "^3.12.0",
     "immutable": "^3.8.1",
     "js-string-escape": "^1.0.1",
     "mongoose": "^5.0.16",
+    "passport": "^0.4.1",
+    "passport-twitter": "^1.0.4",
     "redux": "^3.7.2",
     "serverless": "^1.67.0",
     "serverless-http": "^1.5.2",
