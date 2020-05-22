@@ -1,25 +1,7 @@
 // A fake implementation of api_client with test data to avoid making an RPC during development.
 
 import * as uuid from 'uuid';
-
-interface Author {
-  personId: string;
-  name: string;
-}
-
-interface Bit {
-  postId: string;
-  author: Author;
-  dateCreated: number;
-  upvotes: number;
-  downvotes: number;
-  title: string;
-  content: string;
-  mainChars?: string[];
-  standaloneTags?: string[];
-  stages?: string[];
-  vsChars?: string[];
-}
+import { Bit } from './types';
 
 const foxBit: Bit = {
   postId: 'L3WDO8EL3LEKS',
