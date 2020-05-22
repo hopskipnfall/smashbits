@@ -1,10 +1,12 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 module.exports = {
-  entry: './src/App.js',
+  entry: './src/index.jsx',
   output: {
     filename: './bundle.js',
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"]
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   module: {
     rules: [{
@@ -15,23 +17,34 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        enforce: "pre",
+        enforce: 'pre',
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: "source-map-loader",
+        loader: 'source-map-loader',
       },
       {
-        test: /\.css$/,
+        test: /\.s[ac]ss$/i,
         use: [
           'style-loader',
-          'css-loader'
+          'css-loader',
+          'sass-loader',
         ],
-      }
+      },
+      {
+        test: /\.(jpe?g|gif|png|svg|woff|ttf|wav|mp3|ico|json)$/,
+        loader: "file"
+      },
     ],
   },
-  externals: {
-    "react": "React",
-    "react-dom": "ReactDOM",
+  devtool: 'source-map',
+  devServer: {
+    contentBase: './dist',
   },
-  devtool: "source-map",
-}
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'SmashBits',
+      template: 'index.html',
+      favicon: 'static/favicon.ico',
+    }),
+  ]
+};

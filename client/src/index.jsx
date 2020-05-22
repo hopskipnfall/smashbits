@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import './index.css';
+import './index.sass';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import thunkMiddleware from 'redux-thunk';
@@ -14,7 +14,7 @@ import history from "./history";
 // TODO(thenuge): Probably just use Sass instead.
 import $ from 'jquery';
 window.jQuery = window.$ = $;
-require('../node_modules/bootstrap/dist/css/bootstrap.min.css');
+require('bootstrap');
 
 const store = createStore(reducer, applyMiddleware(thunkMiddleware));
 

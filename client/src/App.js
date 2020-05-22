@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.sass';
 import BitPage from './BitPage';
 import Home from './Home';
 import { Route, Switch } from "react-router-dom";
