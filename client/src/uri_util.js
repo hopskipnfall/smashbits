@@ -1,6 +1,6 @@
 import { SORT_DATE, SORT_SCORE } from './reducer';
-import { getCharFilters, getStageFilters, getTagFilters, getCharFilterQuery, getStageFilterQuery, getTagFilterQuery } from 'Shared/query_util';
-import * as query from 'Shared/query_params';
+import { getCharFilters, getStageFilters, getTagFilters, getCharFilterQuery, getStageFilterQuery, getTagFilterQuery } from './shared/query_util';
+import * as query from './shared/query_params';
 import URI from 'urijs';
 import * as _ from 'lodash';
 

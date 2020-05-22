@@ -166,7 +166,7 @@ export function fetchBit(bitId) {
 
 export function fetchBits() {
   return function(dispatch, getState) {
-    return fetchBitsApi(dispatch: dispatch);
+    return fetchBitsApi(dispatch);
   }
 }
 

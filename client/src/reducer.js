@@ -1,5 +1,5 @@
 import { Map, Set, OrderedMap, fromJS } from 'immutable';
-import * as filters from 'Shared/filters';
+import * as filters from './shared/filters';
 
 window.fromJS = fromJS;
 
