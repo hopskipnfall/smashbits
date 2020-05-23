@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import './App.css';
+import { Button } from 'react-bootstrap';
+import { Route, Switch } from 'react-router-dom';
+import './App.sass';
 import BitPage from './BitPage';
 import Home from './Home';
-import { Route, Switch } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
 
 class App extends Component {
   render() {

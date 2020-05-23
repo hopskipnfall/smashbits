@@ -1,10 +1,12 @@
+import * as URI from 'urijs';
 import { addBit, receiveComments, receiveCreateBit } from './action_creators';
 import * as fakeClient from './fake_api_client';
 import history from './history';
-import { fromJS } from 'immutable';
-import URI from 'urijs';
+import { Bit } from './types';
+const { fromJS } = require('immutable');
 
-function safeFetch(url, options) {
+// TODO: Fix this "any" type.
+function safeFetch(url: string, options?: any) {
   return fetch(url, {
     ...options,
     credentials: 'include',
@@ -20,7 +22,7 @@ const COMMENTS_PATH = '/comments';
 // Set this to true in development to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
 
-export function fetchBits(dispatch) {
+export function fetchBits(dispatch: Function) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBits();
@@ -40,11 +42,11 @@ export function fetchBits(dispatch) {
   }
   // TODO(thenuge): Add actions for initiating requests for bit fetching, as well as errors.
   fetchPromise.then((response) =>
-    response.bits.map((bit) => dispatch(addBit(fromJS(bit))))
+    response.bits.map((bit: Bit) => dispatch(addBit(fromJS(bit))))
   );
 }
 
-export function fetchBit(bitId, dispatch) {
+export function fetchBit(bitId: string, dispatch: Function) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBit(bitId);
@@ -62,7 +64,7 @@ export function fetchBit(bitId, dispatch) {
   fetchPromise.then((response) => dispatch(addBit(fromJS(response.bit))));
 }
 
-export function fetchComments(bitId, dispatch) {
+export function fetchComments(bitId: string, dispatch: Function) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchComments(bitId);
@@ -82,7 +84,7 @@ export function fetchComments(bitId, dispatch) {
   );
 }
 
-export function createBit(bit, dispatch) {
+export function createBit(bit: Bit, dispatch: Function) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.createBit(bit);
