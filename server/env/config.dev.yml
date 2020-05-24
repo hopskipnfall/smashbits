@@ -1,2 +1,2 @@
-baseClientUrl: http://localhost:3000
+baseClientUrl: http://localhost:8080
 baseServerUrl: http://localhost:3001
