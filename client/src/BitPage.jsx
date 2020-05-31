@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import BitsContainer from './BitsContainer';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
+import BitsContainer from './BitsContainer';
 
 class BitPage extends Component {
   constructor(props, context) {
