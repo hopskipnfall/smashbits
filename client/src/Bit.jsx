@@ -17,7 +17,6 @@ export default function Bit(props) {
       <Button bsStyle={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => downvote(bit.get('postId'))}>
         <span className="glyphicon glyphicon-thumbs-down" />
       </Button>
-      {bit.get('title')}
       <span className={styles.title}>{bit.get('title')}</span>
     </h3>
   );
