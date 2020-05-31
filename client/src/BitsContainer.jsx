@@ -1,9 +1,9 @@
-import * as actionCreators from './action_creators';
-import { filterBits } from './bits_util';
-import Bit from './Bit';
 import { Map } from 'immutable';
-import { connect } from 'react-redux';
 import React from 'react';
+import { connect } from 'react-redux';
+import * as actionCreators from './action_creators';
+import Bit from './Bit';
+import { filterBits } from './bits_util';
 
 const BitsContainer = props => (
   <div>

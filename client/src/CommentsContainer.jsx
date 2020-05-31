@@ -1,8 +1,8 @@
-import React from 'react';
 import { Map, Set } from 'immutable';
+import React from 'react';
 
 export default function CommentsContainer(props) {
-  const {bit, comments = Map()} = props;
+  const { bit, comments = Map() } = props;
   return (
     <div>
       {bit.get('comments', Set()).map(commentId => {

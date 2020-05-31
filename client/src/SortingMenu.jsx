@@ -1,7 +1,7 @@
 import React from 'react';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
-import { DropdownButton, MenuItem } from 'react-bootstrap';
 
 const SortingMenu = props => {
   const { sorts, currentSort, changeSort } = props;
