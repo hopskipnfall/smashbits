@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { Route, Switch } from 'react-router-dom';
-import './App.sass';
+import styles from './App.sass';
 import BitPage from './BitPage';
 import Home from './Home';
 
@@ -9,14 +9,14 @@ class App extends Component {
   render() {
     return (
       <div>
-        <div className='App'>
-          <div className='App-header'>
+        <div className={styles.container}>
+          <div className={styles.header}>
             <h2>Welcome to SmashBits!</h2>
             <a href='http://localhost:3001/login/twitter'>
               <Button>Log in with Twitter</Button>
             </a>
           </div>
-          <p className='App-intro'>
+          <p className={styles.intro}>
             SmashBits is a place to collaborate on and organize game knowledge
             in a central, public place.
           </p>

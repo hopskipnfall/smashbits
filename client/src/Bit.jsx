@@ -1,9 +1,10 @@
-import React from 'react';
 import { Map } from 'immutable';
-import { USER_UPVOTE, USER_DOWNVOTE } from './reducer';
-import { Panel, Button } from 'react-bootstrap';
+import React from 'react';
+import { Button, Panel } from 'react-bootstrap';
 import { Link } from "react-router-dom";
+import styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
+import { USER_DOWNVOTE, USER_UPVOTE } from './reducer';
 
 export default function Bit(props) {
   const { bit = new Map(), upvote, downvote } = props;
@@ -17,6 +18,7 @@ export default function Bit(props) {
         <span className="glyphicon glyphicon-thumbs-down" />
       </Button>
       {bit.get('title')}
+      <span className={styles.title}>{bit.get('title')}</span>
     </h3>
   );
   return (
