@@ -115,10 +115,10 @@ export function initTwitterLogin() {
   if (USE_FAKE_CLIENT) {
     history.push('/login?success=true');
   } else {
-    history.push(
+    window.location.href =
       new URI(BASE_URI)
-          .path(OAUTH_PATH + TWITTER_PATH)
-          .toString());
+        .path(OAUTH_PATH + TWITTER_PATH)
+        .toString();
   }
 }
 
