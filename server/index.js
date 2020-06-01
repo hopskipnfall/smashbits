@@ -101,8 +101,8 @@ app.get('/login/twitter', passport.authenticate('twitter'));
 app.get(
   '/oauth/twitter/callback',
   passport.authenticate('twitter', {
-    failureRedirect: `${process.env.BASE_CLIENT_URL}/login?succeeded=false`,
-    successRedirect: `${process.env.BASE_CLIENT_URL}/login?succeeded=true`,
+    failureRedirect: `${process.env.BASE_CLIENT_URL}/login?success=false`,
+    successRedirect: `${process.env.BASE_CLIENT_URL}/login?success=true`,
   }),
   function (req, res) {
     res.redirect('/');

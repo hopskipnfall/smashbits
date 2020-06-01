@@ -19,6 +19,8 @@ const BASE_URI =
     : 'http://localhost:3001';
 const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
+const OAUTH_PATH = '/login';
+const TWITTER_PATH = '/twitter';
 const PROFILE_PATH = '/profile';
 // Set this to true in development to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = true && process.env.NODE_ENV === 'development';
@@ -107,6 +109,17 @@ export function createBit(bit: Bit, dispatch: Function) {
       });
   }
   fetchPromise.then((bitUrl) => dispatch(receiveCreateBit(bitUrl)));
+}
+
+export function initTwitterLogin() {
+  if (USE_FAKE_CLIENT) {
+    history.push('/login?success=true');
+  } else {
+    history.push(
+      new URI(BASE_URI)
+          .path(OAUTH_PATH + TWITTER_PATH)
+          .toString());
+  }
 }
 
 export function fetchProfile(successPath: String, dispatch: Function) {

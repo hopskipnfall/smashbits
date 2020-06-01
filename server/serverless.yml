@@ -43,6 +43,10 @@ functions:
       - http: POST /bits
       - http: 'POST /bits/{proxy+}'
     cors: true
+  getProfile:
+    handler: index.handler
+    events:
+      - http: GET /profile
   twitterCallback:
     handler: index.handler
     events:
