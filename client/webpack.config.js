@@ -4,7 +4,6 @@ module.exports = {
   entry: './src/index.jsx',
   output: {
     filename: './bundle.js',
-    publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx']
