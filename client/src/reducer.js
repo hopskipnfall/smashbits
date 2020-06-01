@@ -14,6 +14,7 @@ export const ACTION_REQUEST_COMMENTS = 'ACTION_REQUEST_COMMENTS';
 export const ACTION_RECEIVE_COMMENTS = 'ACTION_RECEIVE_COMMENTS';
 export const ACTION_REQUEST_CREATE_BIT = 'ACTION_REQUEST_CREATE_BIT';
 export const ACTION_RECEIVE_CREATE_BIT = 'ACTION_RECEIVE_CREATE_BIT';
+export const ACTION_SET_PROFILE = 'ACTION_SET_PROFILE';
 
 export const USER_UPVOTE = 1;
 export const USER_DOWNVOTE = -1;
@@ -91,6 +92,8 @@ export default function(state = INITIAL_STATE, action) {
       return state;
     case ACTION_RECEIVE_CREATE_BIT:
       return state;
+    case ACTION_SET_PROFILE:
+      return setProfile(state, action.data);
     default:
       return state;
   }
@@ -125,6 +128,8 @@ const changeSort = (state = Map(), sort) => {
       return state;
   }
 };
+
+const setProfile = (state = Map(), profile) => state.set('profile', profile);
 
 const receiveComments = (state = Map(), bitId, newComments) =>
     state

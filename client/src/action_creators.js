@@ -9,9 +9,16 @@ import {
     ACTION_RECEIVE_COMMENTS,
     ACTION_REQUEST_CREATE_BIT,
     ACTION_RECEIVE_CREATE_BIT,
+    ACTION_SET_PROFILE,
     DEFAULT_PAGE_SIZE,
 } from './reducer';
-import { fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, createBit as createBitApi } from './api_client';
+import {
+  fetchBit as fetchBitApi,
+  fetchBits as fetchBitsApi,
+  fetchComments as fetchCommentsApi,
+  createBit as createBitApi,
+  fetchProfile as fetchProfileApi,
+} from './api_client';
 import history from './history';
 import {
   getOffset,
@@ -154,6 +161,19 @@ export function receiveComments(bitId, comments) {
     type: ACTION_RECEIVE_COMMENTS,
     bitId: bitId,
     comments: comments
+  }
+}
+
+export function fetchProfile(successPath) {
+  return function(dispatch) {
+    return fetchProfileApi(successPath, dispatch);
+  }
+}
+
+export function setProfile(profile) {
+  return {
+    type: ACTION_SET_PROFILE,
+    data: profile,
   }
 }
 
