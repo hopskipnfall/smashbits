@@ -19,8 +19,8 @@ const BASE_URI =
     : 'http://localhost:3001';
 const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
-// Set this to true in development to use local, fake data instead of making any RPCs.
-const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
+// Set this to true in .env to use local, fake data instead of making any RPCs.
+const USE_FAKE_CLIENT = process.env.USE_FAKE_API_CLIENT && process.env.NODE_ENV === 'development';
 
 export function fetchBits(dispatch: Function) {
   let fetchPromise;
