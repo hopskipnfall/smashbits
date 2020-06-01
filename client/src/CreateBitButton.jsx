@@ -32,9 +32,9 @@ class CreateBitButton extends Component {
         Create new bit
       </Button>,
       <CreateBitModal show={this.state.show} createBit={createBit} onHide={this.hide} key="create-bit-modal"
-          allChars={filtering.get('chars')}
-          allStages={filtering.get('stages')}
-          allTags={filtering.get('standaloneTags')}/>
+        allChars={filtering.get('chars')}
+        allStages={filtering.get('stages')}
+        allTags={filtering.get('standaloneTags')} />
     ]);
   };
 }
