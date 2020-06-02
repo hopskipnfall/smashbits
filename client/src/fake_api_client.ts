@@ -100,3 +100,7 @@ export function createBit(bit: Bit) {
   return Promise.resolve('/bits' + bits.slice(-1)[0]);
   // TODO: Return a 201 response
 }
+
+export function fetchProfile() {
+  return Promise.resolve({ user: { displayName: 'LD_on_1_frame' } });
+}

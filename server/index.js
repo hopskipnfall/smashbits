@@ -101,12 +101,24 @@ app.get('/login/twitter', passport.authenticate('twitter'));
 app.get(
   '/oauth/twitter/callback',
   passport.authenticate('twitter', {
-    failureRedirect: '/login?why=twitter_auth_failed',
-    successRedirect: `${process.env.BASE_CLIENT_URL}`,
+    failureRedirect: `${process.env.BASE_CLIENT_URL}/login?success=false`,
+    successRedirect: `${process.env.BASE_CLIENT_URL}/login?success=true`,
   }),
   function (req, res) {
     res.redirect('/');
   }
 );
+
+app.get('/profile', (req, res) => {
+  if (req.user) {
+    res.json({
+      success: true,
+      user: req.user,
+      cookies: req.cookies
+    });
+  } else {
+    res.status(401).setHeader('WWW-Authenticate', 'Basic');
+  }
+});
 
 export const handler = serverless(app);

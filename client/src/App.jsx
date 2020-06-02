@@ -3,6 +3,8 @@ import { Button } from 'react-bootstrap';
 import { Route, Switch } from 'react-router-dom';
 import styles from './App.sass';
 import BitPage from './BitPage';
+import LoginButton from './LoginButton';
+import LoginTransitionPage from './LoginTransitionPage';
 import Home from './Home';
 
 class App extends Component {
@@ -12,9 +14,7 @@ class App extends Component {
         <div className={styles.container}>
           <div className={styles.header}>
             <h2>Welcome to SmashBits!</h2>
-            <a href='http://localhost:3001/login/twitter'>
-              <Button>Log in with Twitter</Button>
-            </a>
+            <LoginButton />
           </div>
           <p className={styles.intro}>
             SmashBits is a place to collaborate on and organize game knowledge
@@ -24,6 +24,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/bits/:bitId' component={BitPage} />
+          <Route path='/login' component={LoginTransitionPage} />
         </Switch>
       </div>
     );
