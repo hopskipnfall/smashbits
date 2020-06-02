@@ -22,8 +22,8 @@ const COMMENTS_PATH = '/comments';
 const OAUTH_PATH = '/login';
 const TWITTER_PATH = '/twitter';
 const PROFILE_PATH = '/profile';
-// Set this to true in development to use local, fake data instead of making any RPCs.
-const USE_FAKE_CLIENT = false && process.env.NODE_ENV === 'development';
+// Set this to true in .env to use local, fake data instead of making any RPCs.
+const USE_FAKE_CLIENT = process.env.USE_FAKE_API_CLIENT && process.env.NODE_ENV === 'development';
 
 export function fetchBits(dispatch: Function) {
   let fetchPromise;
