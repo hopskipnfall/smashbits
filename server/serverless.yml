@@ -21,6 +21,7 @@ provider:
     BASE_CLIENT_URL: ${file(./env/config.${self:provider.stage}.yml):baseClientUrl}
     TWITTER_API_KEY: ${file(./secret/config.${self:provider.stage}.yml):twitterApiKey}
     TWITTER_API_SECRET_KEY: ${file(./secret/config.${self:provider.stage}.yml):twitterApiSecretKey}
+    SESSION_SECRET: ${file(./secret/config.${self:provider.stage}.yml):sessionSecret}
 
 functions:
   app:
