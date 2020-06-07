@@ -3,6 +3,7 @@ import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
 import CreateBitModal from './CreateBitModal';
+import LoginButton from './LoginButton';
 
 class CreateBitButton extends Component {
 
@@ -26,21 +27,26 @@ class CreateBitButton extends Component {
   }
 
   render() {
-    const { filtering, createBit } = this.props;
-    return ([
-      <Button bsStyle="danger" onClick={this.show} key="create-bit-button">
-        Create new bit
-      </Button>,
-      <CreateBitModal show={this.state.show} createBit={createBit} onHide={this.hide} key="create-bit-modal"
-        allChars={filtering.get('chars')}
-        allStages={filtering.get('stages')}
-        allTags={filtering.get('standaloneTags')} />
-    ]);
+    const { filtering, profile, createBit } = this.props;
+    if (profile) {
+      return ([
+        <Button bsStyle="danger" onClick={this.show} key="create-bit-button">
+          Create new bit
+        </Button>,
+        <CreateBitModal show={this.state.show} createBit={createBit} onHide={this.hide} key="create-bit-modal"
+          allChars={filtering.get('chars')}
+          allStages={filtering.get('stages')}
+          allTags={filtering.get('standaloneTags')} />
+      ]);
+    } else {
+      return <LoginButton bsStyle="danger" loginText="Log in to create bits" />;
+    }
   };
 }
 
 const mapStateToProps = state => ({
-  filtering: state.get('filtering')
+  filtering: state.get('filtering'),
+  profile: state.get('profile'),
 });
 
 export default connect(mapStateToProps, actionCreators)(CreateBitButton);

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { initTwitterLogin } from './api_client';
 
 const LoginButton = props => {
-  const { profile } = props;
+  const { profile, bsStyle = 'default', loginText = 'Log in with Twitter' } = props;
   if (profile) {
     return (
       <Label>
@@ -13,12 +13,12 @@ const LoginButton = props => {
     );
   } else {
     return (
-      <Button onClick={() => initTwitterLogin()}>Log in with Twitter</Button>
+      <Button bsStyle={bsStyle} onClick={() => initTwitterLogin()}>{loginText}</Button>
     );
   }
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   profile: state.get('profile'),
 });
 
