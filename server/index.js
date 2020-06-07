@@ -6,6 +6,7 @@ import passport from 'passport';
 import TwitterStrategy from 'passport-twitter';
 import session from 'express-session';
 import ConnectMongo from 'connect-mongo';
+import crypto from 'crypto';
 import { getMongooseConnection } from './src/store';
 const MongoStore = ConnectMongo(session);
 
@@ -39,8 +40,8 @@ app.use(
 );
 app.use(
   session({
-    // TODO(thenuge): Use a better secret.
-    secret: 'kirby',
+    // If the environment var wasn't set, fall back to a randomly generated secret. This will effectively log everyone out each time the server restarts.
+    secret: `${process.env.SESSION_SECRET}` || crypto.randomBytes(20).toString('hex'),
     store: new MongoStore({ mongooseConnection: getMongooseConnection() }),
     cookie: { secure: false },
   })
