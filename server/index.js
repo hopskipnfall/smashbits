@@ -7,7 +7,7 @@ import TwitterStrategy from 'passport-twitter';
 import session from 'express-session';
 import ConnectMongo from 'connect-mongo';
 import crypto from 'crypto';
-import { getMongooseConnection } from './src/store';
+import { getMongooseConnection, queryUser, putTwitterUser } from './src/store';
 const MongoStore = ConnectMongo(session);
 
 import { getBit, getBits, getComments, createBit } from './src/bits';
@@ -19,8 +19,14 @@ passport.use(
       consumerSecret: `${process.env.TWITTER_API_SECRET_KEY}`,
       callback: `${process.env.BASE_SERVER_URL}/oauth/twitter/callback`,
     },
-    function (token, tokenSecret, profile, cb) {
-      return cb(null, profile);
+    async function (token, tokenSecret, profile, cb) {
+      // If the user isn't already in the DB, add them.
+      const user = await queryUser({ twitterId: profile.id });
+      if (!user) {
+        const newUser = await putTwitterUser(profile);
+        return cb(null, newUser);
+      }
+      return cb(null, user);
     }
   )
 );
@@ -49,13 +55,14 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-// TODO(thenuge): Use the user ID from the DB.
 passport.serializeUser(function (user, cb) {
-  cb(null, user);
+  cb(null, user.id);
 });
 
-passport.deserializeUser(function (obj, cb) {
-  cb(null, obj);
+passport.deserializeUser(function (id, cb) {
+  queryUser({id: id})
+      .then(user => cb(null, user))
+      .catch(e => cb(new Error('Failed to deserialize a user')));
 });
 
 app.use(
@@ -114,11 +121,12 @@ app.get('/profile', (req, res) => {
   if (req.user) {
     res.json({
       success: true,
+      // TODO(thenuge): Probably only expose the data we need to the client.
       user: req.user,
       cookies: req.cookies
     });
   } else {
-    res.status(401).setHeader('WWW-Authenticate', 'Basic');
+    res.status(401).setHeader('WWW-Authenticate', 'Bearer').send();
   }
 });
 
