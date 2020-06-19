@@ -39,6 +39,6 @@ class Home extends Component {
       </div>
     );
   }
-};
+}
 
 export default connect(null, actionCreators)(Home);

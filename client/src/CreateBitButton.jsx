@@ -6,7 +6,6 @@ import CreateBitModal from './CreateBitModal';
 import LoginButton from './LoginButton';
 
 class CreateBitButton extends Component {
-
   constructor(props, context) {
     super(props, context);
 
@@ -14,7 +13,7 @@ class CreateBitButton extends Component {
     this.hide = this.hide.bind(this);
 
     this.state = {
-      show: false
+      show: false,
     };
   }
 
@@ -33,15 +32,19 @@ class CreateBitButton extends Component {
         <Button bsStyle="danger" onClick={this.show} key="create-bit-button">
           Create new bit
         </Button>,
-        <CreateBitModal show={this.state.show} createBit={createBit} onHide={this.hide} key="create-bit-modal"
+        <CreateBitModal
+          show={this.state.show}
+          createBit={createBit}
+          onHide={this.hide}
+          key="create-bit-modal"
           allChars={filtering.get('chars')}
           allStages={filtering.get('stages')}
-          allTags={filtering.get('standaloneTags')} />
+          allTags={filtering.get('standaloneTags')}
+        />,
       ]);
-    } else {
-      return <LoginButton bsStyle="danger" loginText="Log in to create bits" />;
     }
-  };
+    return <LoginButton bsStyle="danger" loginText="Log in to create bits" />;
+  }
 }
 
 const mapStateToProps = state => ({

@@ -7,15 +7,13 @@ import { filterBits } from './bits_util';
 
 const BitsContainer = props => (
   <div>
-    {props.bits.valueSeq().map(entry =>
-      <Bit bit={entry} key={entry} {...props} />
-    )}
+    {props.bits.valueSeq().map(entry => <Bit bit={entry} key={entry} {...props} />)}
   </div>
 );
 
 const mapStateToProps = (state, ownProps) => ({
   bits: filterBits(state, ownProps.filters),
-  comments: state.get('comments', Map())
+  comments: state.get('comments', Map()),
 });
 
 export default connect(mapStateToProps, actionCreators)(BitsContainer);

@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 import React from 'react';
 import { Button, Panel } from 'react-bootstrap';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
 import { USER_DOWNVOTE, USER_UPVOTE } from './reducer';
@@ -26,20 +26,18 @@ export default function Bit(props) {
         <BitTagPills bit={bit} {...props} />
         <p>
           <b>{bit.get('author', new Map()).get('name')}</b>
-          {` \u2022 `}
+          {' \u2022 '}
           <i>{new Date(bit.get('dateCreated')).toDateString()}</i>
         </p>
         {bit.get('content')}
         <p>
-          <Link to={'/bits/' + bit.get('postId')}>permalink</Link>
+          <Link to={`/bits/${bit.get('postId')}`}>permalink</Link>
         </p>
       </div>
     </Panel>
   );
 }
 
-const getDownvoteButtonStyle = bit =>
-  bit.get('userVote') === USER_DOWNVOTE ? 'danger' : 'default';
+const getDownvoteButtonStyle = bit => (bit.get('userVote') === USER_DOWNVOTE ? 'danger' : 'default');
 
-const getUpvoteButtonStyle = bit =>
-  bit.get('userVote') === USER_UPVOTE ? 'success' : 'default';
+const getUpvoteButtonStyle = bit => (bit.get('userVote') === USER_UPVOTE ? 'success' : 'default');

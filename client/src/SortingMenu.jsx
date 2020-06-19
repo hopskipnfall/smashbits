@@ -7,10 +7,11 @@ const SortingMenu = props => {
   const { sorts, currentSort, changeSort } = props;
   return (
     <DropdownButton bsStyle="info" title={`Sorting: ${currentSort}`} id="sorting-menu">
-      {sorts.map(sort =>
+      {sorts.map(sort => (
         <MenuItem onSelect={() => changeSort(sort)} key={sort}>
           {sort}
-        </MenuItem>)}
+        </MenuItem>
+      ))}
     </DropdownButton>
   );
 };
