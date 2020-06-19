@@ -102,5 +102,5 @@ export function createBit(bit: Bit) {
 }
 
 export function fetchProfile() {
-  return Promise.resolve({ user: { displayName: 'LD_on_1_frame' } });
+  return Promise.resolve({ user: { twitterProfile: { displayName: 'LD_on_1_frame' } } });
 }

@@ -8,7 +8,7 @@ const LoginButton = props => {
   if (profile) {
     return (
       <Label>
-        Welcome, {profile.get('displayName')}!
+        Welcome, {profile.getIn(['twitterProfile', 'displayName'])}!
       </Label>
     );
   } else {

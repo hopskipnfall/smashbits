@@ -1,7 +1,8 @@
 import uuid from 'uuid';
 import mongoose from 'mongoose';
-import Bit from './Bit';
 import { SORT_PARAM_DATE, SORT_PARAM_SCORE } from 'Shared/query_params';
+import Bit from './Bit';
+import User from './User';
 
 const DEFAULT_PAGE_SIZE = 25;
 
@@ -62,8 +63,33 @@ export function putBit(bit) {
 
   return new Promise((resolve, reject) => {
     Bit.create(params)
-      .then((data) => resolve(params))
-      .catch((err) => reject(err));
+      .then(data => resolve(params))
+      .catch(err => reject(err));
+  });
+}
+
+export function queryUser({
+  id,
+  twitterId,
+} = {}) {
+  if (id) {
+    return User.findOne({ id }).exec();
+  }
+  if (twitterId) {
+    return User.findOne({ 'twitterProfile.id': twitterId }).exec();
+  }
+}
+
+export function putTwitterUser(profile) {
+  const params = {
+    id: uuid.v1(),
+    twitterProfile: profile,
+  };
+
+  return new Promise((resolve, reject) => {
+    User.create(params)
+      .then(data => resolve(params))
+      .catch(err => reject(err));
   });
 }
 
