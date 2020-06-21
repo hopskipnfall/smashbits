@@ -26,7 +26,9 @@ export default function Bit(props) {
         <BitTagPills bit={bit} {...props} />
         <p>
           <b>{bit.get('author', new Map()).get('name')}</b>
-          {' \u2022 '}
+          {' '}
+          •
+          {' '}
           <i>{new Date(bit.get('dateCreated')).toDateString()}</i>
         </p>
         {bit.get('content')}
