@@ -8,17 +8,19 @@ const LoginButton = props => {
   if (profile) {
     return (
       <Label>
-        Welcome, {profile.getIn(['twitterProfile', 'displayName'])}!
+        Welcome,
+        {' '}
+        {profile.getIn(['twitterProfile', 'displayName'])}
+        !
       </Label>
     );
-  } else {
-    return (
-      <Button bsStyle={bsStyle} onClick={() => initTwitterLogin()}>{loginText}</Button>
-    );
   }
+  return (
+    <Button bsStyle={bsStyle} onClick={() => initTwitterLogin()}>{loginText}</Button>
+  );
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   profile: state.get('profile'),
 });
 

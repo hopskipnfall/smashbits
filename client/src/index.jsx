@@ -5,14 +5,15 @@ import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router } from "react-router-dom";
+import { Router } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import App from './App';
-import history from "./history";
+import history from './history';
 import './index.sass';
 import reducer from './reducer';
 import registerServiceWorker from './registerServiceWorker';
+
 window.jQuery = window.$ = $;
 require('bootstrap');
 
@@ -24,6 +25,6 @@ ReactDOM.render(
       <App />
     </Router>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 registerServiceWorker();

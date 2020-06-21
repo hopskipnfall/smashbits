@@ -52,35 +52,35 @@ const foxComment1 = {
   postId: 'L3WDO8EL3LEKS',
   author: {
     personId: 'JAS724IR8933',
-    name: 'LD'
+    name: 'LD',
   },
   dateCreated: new Date(2018, 1, 14, 10, 11, 16).getTime(),
-  content: 'Not true.'
+  content: 'Not true.',
 };
 const foxComment2 = {
   id: 'B72902B3846',
   postId: 'L3WDO8EL3LEKS',
   author: {
     personId: 'L187S60DD3',
-    name: 'n00bl33t'
+    name: 'n00bl33t',
   },
   dateCreated: new Date(2018, 1, 17, 6, 13, 28).getTime(),
-  content: 'Pshh what do you know'
+  content: 'Pshh what do you know',
 };
 const handComment = {
   id: 'I26739X7034',
   postId: 'ME8DU23MNO0S',
   author: {
     personId: 'R67218386X',
-    name: 'Cobr'
+    name: 'Cobr',
   },
   dateCreated: new Date(2000, 11, 10, 5, 11, 45).getTime(),
-  content: 'This is the kind of investigative reporting we need right now.'
+  content: 'This is the kind of investigative reporting we need right now.',
 };
 const comments = [foxComment1, foxComment2, handComment];
 
 export function fetchBits() {
-  return Promise.resolve({ bits: bits });
+  return Promise.resolve({ bits });
 }
 
 export function fetchBit(bitId: string) {
@@ -97,7 +97,7 @@ export function createBit(bit: Bit) {
     postId: uuid.v1(),
     dateCreated: new Date().getTime(),
   });
-  return Promise.resolve('/bits' + bits.slice(-1)[0]);
+  return Promise.resolve(`/bits${bits.slice(-1)[0]}`);
   // TODO: Return a 201 response
 }
 

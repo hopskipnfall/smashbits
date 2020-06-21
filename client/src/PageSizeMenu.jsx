@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from './action_creators';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
+import * as actionCreators from './action_creators';
 
 const SIZES = [10, 25, 50];
 
@@ -11,10 +11,11 @@ const PageSizeMenu = props => {
     <span>
       Results per page:
       <DropdownButton bsStyle="info" title={`${pageSize}`} id="page-size-menu">
-        {SIZES.map(size =>
+        {SIZES.map(size => (
           <MenuItem onSelect={() => setPageSize(size)} key={size}>
             {size}
-          </MenuItem>)}
+          </MenuItem>
+        ))}
       </DropdownButton>
     </span>
   );
