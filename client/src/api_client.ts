@@ -138,5 +138,7 @@ export function fetchProfile(successPath: String, dispatch: Function) {
   }
   // TODO(thenuge): Handle errors.
   fetchPromise.then(response => dispatch(setProfile(fromJS(response.user))));
-  history.push(successPath);
+  if (successPath) {
+    history.push(successPath);
+  }
 }
