@@ -4,10 +4,9 @@ import * as actionCreators from './action_creators';
 import BitsContainer from './BitsContainer';
 
 class BitPage extends Component {
-  constructor(props, context) {
-    super(props, context);
-    const { fetchBit } = props;
-    fetchBit(props.match.params.bitId);
+  componentDidMount() {
+    const { fetchBit } = this.props;
+    fetchBit(this.props.match.params.bitId);
   }
 
   render() {
