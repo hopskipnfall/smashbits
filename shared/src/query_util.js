@@ -1,5 +1,4 @@
 import * as filters from './filters';
-import * as query from './query_params';
 
 export const getCharFilters = queryString => paramToFilterList(queryString, filters.PARAMS_TO_DISPLAY_CHARS);
 export const getStageFilters = queryString => paramToFilterList(queryString, filters.PARAMS_TO_DISPLAY_STAGES);

@@ -1,12 +1,14 @@
 import jsStringEscape from 'js-string-escape';
-import { queryBit, queryBits, putBit, queryComments } from './store';
 import * as query from 'Shared/query_params';
 import { getCharFilters, getStageFilters, getTagFilters } from 'Shared/query_util';
+import {
+  queryBit, queryBits, putBit, queryComments,
+} from './store';
 
 const SORTS = [query.SORT_PARAM_DATE, query.SORT_PARAM_SCORE];
 
 export function getBit(req) {
-  return queryBit({ bitId: req.params.bitId })
+  return queryBit({ bitId: req.params.bitId });
 }
 
 export function getBits(req) {
@@ -17,29 +19,29 @@ export function getBits(req) {
   const stages = getStageFilters(jsStringEscape(req.query[query.QUERY_STAGES]));
   const standaloneTags = getTagFilters(jsStringEscape(req.query[query.QUERY_TAGS]));
   return queryBits({
-      sort: paramToSort(req.query[query.QUERY_SORT]),
-      ...limit && { limit: limit },
-      ...offset && { offset: offset },
-      ...mainChars.length && { mainChars: mainChars },
-      ...vsChars.length && { vsChars: vsChars },
-      ...stages.length && { stages: stages },
-      ...standaloneTags.length && { standaloneTags: standaloneTags },
-    });
+    sort: paramToSort(req.query[query.QUERY_SORT]),
+    ...limit && { limit },
+    ...offset && { offset },
+    ...mainChars.length && { mainChars },
+    ...vsChars.length && { vsChars },
+    ...stages.length && { stages },
+    ...standaloneTags.length && { standaloneTags },
+  });
 }
 
 export function createBit(bit) {
   return putBit({
-      author: {
-        name: jsStringEscape(bit.author.name),
-        personId: jsStringEscape(bit.author.person_id)
-      },
-      title: jsStringEscape(bit.title),
-      content: jsStringEscape(bit.content),
-      ...(bit.tags ? { tags: bit.tags.map(tag => jsStringEscape(tag)) } : {}),
-      ...(bit.stages ? { stages: bit.stages.map(stage => jsStringEscape(stage)) } : {}),
-      ...(bit.mainChars ? { mainChars: bit.mainChars.map(char => jsStringEscape(char)) } : {}),
-      ...(bit.vsChars ? { vsChars: bit.vsChars.map(char => jsStringEscape(char)) } : {})
-    })
+    author: {
+      name: jsStringEscape(bit.author.name),
+      personId: jsStringEscape(bit.author.person_id),
+    },
+    title: jsStringEscape(bit.title),
+    content: jsStringEscape(bit.content),
+    ...(bit.tags ? { tags: bit.tags.map(tag => jsStringEscape(tag)) } : {}),
+    ...(bit.stages ? { stages: bit.stages.map(stage => jsStringEscape(stage)) } : {}),
+    ...(bit.mainChars ? { mainChars: bit.mainChars.map(char => jsStringEscape(char)) } : {}),
+    ...(bit.vsChars ? { vsChars: bit.vsChars.map(char => jsStringEscape(char)) } : {}),
+  });
 }
 
 export function getComments(reqParams) {
