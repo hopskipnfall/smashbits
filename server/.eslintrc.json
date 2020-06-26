@@ -16,6 +16,10 @@
     ],
     "rules": {
         "linebreak-style": "off",
-        "arrow-parens": ["warn", "as-needed"]
+        "arrow-parens": ["warn", "as-needed"],
+        "func-names": "off",
+        "prefer-arrow-callback": "warn",
+        "no-use-before-define": "off",
+        "radix": "off"
     }
 }

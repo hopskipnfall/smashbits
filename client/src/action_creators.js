@@ -164,6 +164,14 @@ export function receiveComments(bitId, comments) {
   };
 }
 
+export function fetchProfileIfNeeded() {
+  return function (dispatch, getState) {
+    if (!getState().get('profile')) {
+      dispatch(fetchProfile());
+    }
+  };
+}
+
 export function fetchProfile(successPath) {
   return dispatch => fetchProfileApi(successPath, dispatch);
 }
