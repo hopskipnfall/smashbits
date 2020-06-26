@@ -13,14 +13,7 @@ class CreateBitModal extends Component {
 
   handleSubmit(values) {
     const { createBit } = this.props;
-    // TODO(thenuge): Add the real author once we have accounts.
-    createBit({
-      ...values,
-      author: {
-        name: 'Sakurai',
-        person_id: 'ASDF424242',
-      },
-    });
+    createBit(values);
   }
 
   render() {

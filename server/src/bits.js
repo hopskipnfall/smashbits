@@ -29,11 +29,11 @@ export function getBits(req) {
   });
 }
 
-export function createBit(bit) {
+export function createBit({ bit, author } = {}) {
   return putBit({
     author: {
-      name: jsStringEscape(bit.author.name),
-      personId: jsStringEscape(bit.author.person_id),
+      name: jsStringEscape(author.twitterProfile.get('displayName')),
+      personId: jsStringEscape(author.id),
     },
     title: jsStringEscape(bit.title),
     content: jsStringEscape(bit.content),

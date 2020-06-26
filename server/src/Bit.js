@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 const bitSchema = new mongoose.Schema({
   postId: String,
   dateCreated: Number,
+  author: {
+    name: String,
+    personId: String,
+  },
   upvotes: Number,
   downvotes: Number,
   title: String,
