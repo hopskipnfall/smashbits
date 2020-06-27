@@ -29,3 +29,6 @@ yarn-error.log*
 # System Files
 .DS_Store
 Thumbs.db
+
+*.sass.d.ts
+*.scss.d.ts
