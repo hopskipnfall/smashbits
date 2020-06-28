@@ -3,8 +3,6 @@ import {
 } from 'immutable';
 import * as filters from './shared/filters';
 
-window.fromJS = fromJS;
-
 // TODO(thenuge): Some of these constants should probably go elsewhere.
 export const ACTION_CLEAR_BITS = 'ACTION_CLEAR_BITS';
 export const ACTION_UPVOTE = 'ACTION_UPVOTE';
@@ -27,7 +25,7 @@ export const SORT_SCORE = 'Score';
 
 export const DEFAULT_PAGE_SIZE = 25;
 
-const INITIAL_STATE = fromJS({
+const INITIAL_STATE: any = fromJS({
   bits: OrderedMap(),
   sorts: [SORT_DATE, SORT_SCORE],
   filtering: {
@@ -68,7 +66,7 @@ const INITIAL_STATE = fromJS({
   },
 });
 
-export default function (state = INITIAL_STATE, action) {
+export default function (state = INITIAL_STATE, action: any) {
   switch (action.type) {
     case ACTION_CLEAR_BITS:
       return clearBits(state);
@@ -103,37 +101,37 @@ export default function (state = INITIAL_STATE, action) {
 
 const clearBits = (state = Map()) => state.set('bits', OrderedMap());
 
-const addBit = (state = Map(), bit) => state.setIn(['bits', bit.get('postId')], bit);
+const addBit = (state = Map<string, any>(), bit: Map<string, any>) => state.setIn(['bits', bit.get('postId')], bit);
 
-const upvote = (state = Map(), bitId) => resetVote(state, bitId)
+const upvote = (state = Map<string, any>(), bitId: string) => resetVote(state, bitId)
   .setIn(['bits', bitId, 'userVote'], USER_UPVOTE);
 
-const downvote = (state = Map(), bitId) => resetVote(state, bitId)
+const downvote = (state = Map<string, any>(), bitId: string) => resetVote(state, bitId)
   .setIn(['bits', bitId, 'userVote'], USER_DOWNVOTE);
 
-const resetVote = (state = Map(), bitId) => state
+const resetVote = (state = Map<string, any>(), bitId: string) => state
   .setIn(['bits', bitId, 'userVote'], USER_DEFAULT_VOTE);
 
-const changeSort = (state = Map(), sort) => {
+const changeSort = (state = Map<string, any>(), sort: string) => {
   switch (sort) {
     case SORT_SCORE:
       return state.set('bits',
-        state.get('bits', Map()).sortBy(
-          bit => -1 * (bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0)),
+        state.get('bits', Map<string, any>()).sortBy(
+          (bit: Map<string, any>) => -1 * (bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0)),
         ));
     case SORT_DATE:
       return state.set('bits',
-        state.get('bits', Map()).sortBy(
-          bit => -1 * bit.get('dateCreated', 0),
+        state.get('bits', Map<string, any>()).sortBy(
+          (bit: Map<string, any>) => -1 * bit.get('dateCreated', 0),
         ));
     default:
       return state;
   }
 };
 
-const setProfile = (state = Map(), profile) => state.set('profile', profile);
+const setProfile = (state = Map(), profile: any) => state.set('profile', profile);
 
-const receiveComments = (state = Map(), bitId, newComments) => state
+const receiveComments = (state = Map(), bitId: string, newComments: Map<string, any>) => state
   .mergeIn(['comments'], Map(newComments.map(comment => [comment.get('postId'), comment])))
   .updateIn(['bits', bitId, 'comments'], Set(), comments => comments.union(newComments.map(comment => comment.get('postId'))))
   .setIn(['bits', bitId, 'isRequestingComments'], false);
