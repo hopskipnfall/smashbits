@@ -119,7 +119,7 @@ export function initTwitterLogin() {
   }
 }
 
-export function fetchProfile(successPath: String, dispatch: Function) {
+export function fetchProfile(dispatch: Function, successPath?: string, ) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchProfile();
@@ -138,5 +138,7 @@ export function fetchProfile(successPath: String, dispatch: Function) {
   }
   // TODO(thenuge): Handle errors.
   fetchPromise.then(response => dispatch(setProfile(fromJS(response.user))));
-  history.push(successPath);
+  if (successPath) {
+    history.push(successPath);
+  }
 }
