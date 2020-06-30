@@ -1,12 +1,19 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
 import CreateBitModal from './CreateBitModal';
 import LoginButton from './LoginButton';
 
-class CreateBitButton extends Component {
-  constructor(props, context) {
+type Props = {
+  filtering: any
+  profile: any
+  createBit: any
+}
+
+class CreateBitButton extends Component<Props> {
+  constructor(props: Props, context: Map<string, any>) {
     super(props, context);
 
     this.show = this.show.bind(this);
@@ -33,7 +40,7 @@ class CreateBitButton extends Component {
           Create new bit
         </Button>,
         <CreateBitModal
-          show={this.state.show}
+          show={(this.state as any).show}
           createBit={createBit}
           onHide={this.hide}
           key="create-bit-modal"
@@ -47,7 +54,7 @@ class CreateBitButton extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: Map<string, any>) => ({
   filtering: state.get('filtering'),
   profile: state.get('profile'),
 });

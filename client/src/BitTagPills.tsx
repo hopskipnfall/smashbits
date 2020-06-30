@@ -1,8 +1,8 @@
 import { List, Set } from 'immutable';
-import React from 'react';
-import { Label } from 'react-bootstrap';
+import * as React from 'react';
+import {Label} from 'react-bootstrap';
 
-export default function BitTagPills(props) {
+export default function BitTagPills(props: any) {
   const {
     bit,
     setMainCharFilters,
@@ -12,7 +12,7 @@ export default function BitTagPills(props) {
   } = props;
   return (
     <div className="bit-tag-pills">
-      {bit.get('mainChars', List()).map(tag => (
+      {(bit.get('mainChars', List()) as List<string>).map(tag => (
         <Label
           bsStyle="success"
           className="filter-pill"
@@ -22,7 +22,7 @@ export default function BitTagPills(props) {
           {tag}
         </Label>
       ))}
-      {bit.get('vsChars', List()).map(tag => (
+      {(bit.get('vsChars', List()) as List<string>).map(tag => (
         <Label
           bsStyle="danger"
           className="filter-pill"
@@ -32,7 +32,7 @@ export default function BitTagPills(props) {
           {tag}
         </Label>
       ))}
-      {bit.get('stages', List()).map(tag => (
+      {(bit.get('stages', List()) as List<string>).map(tag => (
         <Label
           bsStyle="primary"
           className="filter-pill"
@@ -42,7 +42,7 @@ export default function BitTagPills(props) {
           {tag}
         </Label>
       ))}
-      {bit.get('standaloneTags', List()).map(tag => (
+      {(bit.get('standaloneTags', List()) as List<string>).map(tag => (
         <Label
           bsStyle="warning"
           className="filter-pill"

@@ -1,9 +1,15 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
 import BitsContainer from './BitsContainer';
 
-class BitPage extends Component {
+type Props = {
+  fetchBit: any
+  match: any
+}
+
+class BitPage extends Component<Props> {
   componentDidMount() {
     const { fetchBit } = this.props;
     fetchBit(this.props.match.params.bitId);

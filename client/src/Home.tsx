@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import { Button, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
@@ -10,8 +11,15 @@ import { DEFAULT_PAGE_SIZE, SORT_DATE } from './reducer';
 import SortingMenu from './SortingMenu';
 import { getFilters, getPageSize, getSort } from './uri_util';
 
-class Home extends Component {
-  constructor(props, context) {
+type Props = {
+  fetchBits: any
+  fetchNextPage: any
+  fetchPreviousPage: any
+  location: any
+}
+
+class Home extends Component<Props> {
+  constructor(props: Props, context: Map<string, any>) {
     super(props, context);
     const { fetchBits } = props;
     fetchBits();

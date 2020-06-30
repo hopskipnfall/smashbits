@@ -1,17 +1,17 @@
 import { Map } from 'immutable';
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
 import Bit from './Bit';
 import { filterBits } from './bits_util';
 
-const BitsContainer = props => (
+const BitsContainer = (props: any) => (
   <div>
-    {props.bits.valueSeq().map(entry => <Bit bit={entry} key={entry} {...props} />)}
+    {props.bits.valueSeq().map((entry: any) => <Bit bit2={entry} key={entry} {...props} />)}
   </div>
 );
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state: Map<string, any>, ownProps: any) => ({
   bits: filterBits(state, ownProps.filters),
   comments: state.get('comments', Map()),
 });

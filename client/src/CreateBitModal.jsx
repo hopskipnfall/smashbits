@@ -1,17 +1,27 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import {
   Button, ControlLabel, FormControl, Modal, ToggleButton, ToggleButtonGroup,
 } from 'react-bootstrap';
 import { Control, LocalForm } from 'react-redux-form';
 
-class CreateBitModal extends Component {
-  constructor(props, context) {
+type Props = {
+  createBit: any
+  show: any
+  onHide: any
+  allChars: any
+  allStages: any
+  allTags: any
+}
+
+class CreateBitModal extends Component<Props> {
+  constructor(props: Props, context: Map<string, any>) {
     super(props, context);
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(values) {
+  handleSubmit(values: any) {
     const { createBit } = this.props;
     createBit(values);
   }
@@ -26,7 +36,9 @@ class CreateBitModal extends Component {
           <h3>Create a Bit!</h3>
         </Modal.Header>
         <Modal.Body>
-          <LocalForm onSubmit={values => this.handleSubmit(values)} id="bit-form">
+          <LocalForm onSubmit={values => this.handleSubmit(values)}
+          //  id="bit-form"
+           >
             <ControlLabel> Title </ControlLabel>
             <Control.text
               model=".title"
@@ -38,7 +50,7 @@ class CreateBitModal extends Component {
             <Control.text
               model=".content"
               component={FormControl}
-              componentClass="textarea"
+              // componentClass="textarea"
               placeholder="Write your bit!"
             />
             <ControlLabel> Main Characters </ControlLabel>
@@ -47,7 +59,7 @@ class CreateBitModal extends Component {
               component={ToggleButtonGroup}
               type="checkbox"
             >
-              {allChars.map(char => (
+              {allChars.map((char: string) => (
                 <ToggleButton
                   value={char}
                   key={char}
@@ -65,7 +77,7 @@ class CreateBitModal extends Component {
               component={ToggleButtonGroup}
               type="checkbox"
             >
-              {allChars.map(char => (
+              {allChars.map((char: string) => (
                 <ToggleButton
                   value={char}
                   key={char}
@@ -83,7 +95,7 @@ class CreateBitModal extends Component {
               component={ToggleButtonGroup}
               type="checkbox"
             >
-              {allStages.map(stage => (
+              {allStages.map((stage: string) => (
                 <ToggleButton
                   value={stage}
                   key={stage}
@@ -101,7 +113,7 @@ class CreateBitModal extends Component {
               component={ToggleButtonGroup}
               type="checkbox"
             >
-              {allTags.map(tag => (
+              {allTags.map((tag: string) => (
                 <ToggleButton
                   value={tag}
                   key={tag}
