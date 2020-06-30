@@ -7,7 +7,7 @@ import { filterBits } from './bits_util';
 
 const BitsContainer = (props: any) => (
   <div>
-    {props.bits.valueSeq().map((entry: any) => <Bit bit2={entry} key={entry} {...props} />)}
+    {props.bits.valueSeq().map((entry: any) => <Bit bit={entry} key={entry} {...props} />)}
   </div>
 );
 

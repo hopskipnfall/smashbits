@@ -36,7 +36,7 @@ class CreateBitButton extends Component<Props> {
     const { filtering, profile, createBit } = this.props;
     if (profile) {
       return ([
-        <Button bsStyle="danger" onClick={this.show} key="create-bit-button">
+        <Button variant="danger" onClick={this.show} key="create-bit-button">
           Create new bit
         </Button>,
         <CreateBitModal
@@ -50,7 +50,7 @@ class CreateBitButton extends Component<Props> {
         />,
       ]);
     }
-    return <LoginButton bsStyle="danger" loginText="Log in to create bits" />;
+    return <LoginButton variant="danger" loginText="Log in to create bits" />;
   }
 }
 

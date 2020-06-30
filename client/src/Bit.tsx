@@ -1,31 +1,32 @@
 import { Map } from 'immutable';
-import React from 'react';
-import { Button, Panel } from 'react-bootstrap';
+import * as React from 'react';
+import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import styles from './Bit.sass';
+import * as styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
 import { USER_DOWNVOTE, USER_UPVOTE } from './reducer';
 
-export default function Bit(props) {
-  const { bit = new Map(), upvote, downvote } = props;
+export default function Bit(props: any) {
+  const { bit = Map<string, any>(), upvote, downvote } = props;
   const header = (
     <h3>
-      <Button bsStyle={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => upvote(bit.get('postId'))}>
+      <Button variant={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => upvote(bit.get('postId'))}>
         <span className="glyphicon glyphicon-thumbs-up" />
       </Button>
       {bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0)}
-      <Button bsStyle={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => downvote(bit.get('postId'))}>
+      <Button variant={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => downvote(bit.get('postId'))}>
         <span className="glyphicon glyphicon-thumbs-down" />
       </Button>
       <span className={styles.title}>{bit.get('title')}</span>
     </h3>
   );
   return (
-    <Panel header={header}>
+    <Card>
+      <Card.Header>{header}</Card.Header>
       <div>
         <BitTagPills bit={bit} {...props} />
         <p>
-          <b>{bit.get('author', new Map()).get('name')}</b>
+          <b>{bit.get('author', Map<string, any>()).get('name')}</b>
           {' '}
           •
           {' '}
@@ -36,10 +37,10 @@ export default function Bit(props) {
           <Link to={`/bits/${bit.get('postId')}`}>permalink</Link>
         </p>
       </div>
-    </Panel>
+    </Card>
   );
 }
 
-const getDownvoteButtonStyle = bit => (bit.get('userVote') === USER_DOWNVOTE ? 'danger' : 'default');
+const getDownvoteButtonStyle = (bit: Map<string, any>) => (bit.get('userVote') === USER_DOWNVOTE ? 'danger' : 'primary');
 
-const getUpvoteButtonStyle = bit => (bit.get('userVote') === USER_UPVOTE ? 'success' : 'default');
+const getUpvoteButtonStyle = (bit: Map<string, any>) => (bit.get('userVote') === USER_UPVOTE ? 'success' : 'primary');

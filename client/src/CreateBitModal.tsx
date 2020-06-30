@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component } from 'react';
 import {
-  Button, ControlLabel, FormControl, Modal, ToggleButton, ToggleButtonGroup,
+  Button, FormLabel, FormControl, Modal, ToggleButton, ToggleButtonGroup,
 } from 'react-bootstrap';
 import { Control, LocalForm } from 'react-redux-form';
 
@@ -38,22 +38,22 @@ class CreateBitModal extends Component<Props> {
         <Modal.Body>
           <LocalForm onSubmit={values => this.handleSubmit(values)}
           //  id="bit-form"
-           >
-            <ControlLabel> Title </ControlLabel>
+          >
+            <FormLabel> Title </FormLabel>
             <Control.text
               model=".title"
               component={FormControl}
               placeholder="Enter title"
             />
             {/* TODO(thenuge): Add a char limit and message when they get close to it */}
-            <ControlLabel> Content </ControlLabel>
+            <FormLabel> Content </FormLabel>
             <Control.text
               model=".content"
               component={FormControl}
-              // componentClass="textarea"
+              as="textarea"
               placeholder="Write your bit!"
             />
-            <ControlLabel> Main Characters </ControlLabel>
+            <FormLabel> Main Characters </FormLabel>
             <Control
               model=".mainChars[]"
               component={ToggleButtonGroup}
@@ -71,7 +71,7 @@ class CreateBitModal extends Component<Props> {
             <br />
             {' '}
             <br />
-            <ControlLabel> Vs. Characters </ControlLabel>
+            <FormLabel> Vs. Characters </FormLabel>
             <Control
               model=".vsChars[]"
               component={ToggleButtonGroup}
@@ -89,7 +89,7 @@ class CreateBitModal extends Component<Props> {
             <br />
             {' '}
             <br />
-            <ControlLabel> On Stages </ControlLabel>
+            <FormLabel> On Stages </FormLabel>
             <Control
               model=".stages[]"
               component={ToggleButtonGroup}
@@ -107,7 +107,7 @@ class CreateBitModal extends Component<Props> {
             <br />
             {' '}
             <br />
-            <ControlLabel> With Tags </ControlLabel>
+            <FormLabel> With Tags </FormLabel>
             <Control
               model=".tags[]"
               component={ToggleButtonGroup}
@@ -128,7 +128,7 @@ class CreateBitModal extends Component<Props> {
           <Button onClick={onHide}>
             Cancel
           </Button>
-          <Button bsStyle="primary" type="submit" form="bit-form">
+          <Button variant="primary" type="submit" form="bit-form">
             Submit
           </Button>
         </Modal.Footer>

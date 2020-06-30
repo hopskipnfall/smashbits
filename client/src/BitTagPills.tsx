@@ -1,6 +1,6 @@
 import { List, Set } from 'immutable';
 import * as React from 'react';
-import {Label} from 'react-bootstrap';
+import { Badge } from 'react-bootstrap';
 
 export default function BitTagPills(props: any) {
   const {
@@ -13,44 +13,44 @@ export default function BitTagPills(props: any) {
   return (
     <div className="bit-tag-pills">
       {(bit.get('mainChars', List()) as List<string>).map(tag => (
-        <Label
-          bsStyle="success"
+        <Badge
+          variant="success"
           className="filter-pill"
           onClick={() => setMainCharFilters(Set.of(tag))}
           key={tag}
         >
           {tag}
-        </Label>
+        </Badge>
       ))}
       {(bit.get('vsChars', List()) as List<string>).map(tag => (
-        <Label
-          bsStyle="danger"
+        <Badge
+          variant="danger"
           className="filter-pill"
           onClick={() => setVsCharFilters(Set.of(tag))}
           key={tag}
         >
           {tag}
-        </Label>
+        </Badge>
       ))}
       {(bit.get('stages', List()) as List<string>).map(tag => (
-        <Label
-          bsStyle="primary"
+        <Badge
+          variant="primary"
           className="filter-pill"
           onClick={() => setStageFilters(Set.of(tag))}
           key={tag}
         >
           {tag}
-        </Label>
+        </Badge>
       ))}
       {(bit.get('standaloneTags', List()) as List<string>).map(tag => (
-        <Label
-          bsStyle="warning"
+        <Badge
+          variant="warning"
           className="filter-pill"
           onClick={() => setStandaloneTagFilters(Set.of(tag))}
           key={tag}
         >
           {tag}
-        </Label>
+        </Badge>
       ))}
     </div>
   );

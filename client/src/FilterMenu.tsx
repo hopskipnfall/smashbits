@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { DropdownButton, Label, MenuItem } from 'react-bootstrap';
+import { DropdownButton, Badge, Dropdown } from 'react-bootstrap';
 
 type Props = {
   title: any
-   bootstrapStyle: any
-   allFilters: any
-   currentFilters: any
-   onClick: (filter: string) => any
+  bootstrapStyle: any
+  allFilters: any
+  currentFilters: any
+  onClick: (filter: string) => any
 }
 
 export default function render(props: Props) {
@@ -15,20 +15,27 @@ export default function render(props: Props) {
   } = props;
   return (
     <div className="panel-body">
-      <DropdownButton bsStyle={bootstrapStyle} title={title} id={`filter-menu-${title}`}>
-        {allFilters.map((filter: string) => (
-          <MenuItem onSelect={() => onClick(filter)} key={filter}>
-            {(currentFilters.includes(filter) ? '\u2713 ' : ' ') + filter}
-          </MenuItem>
-        ))}
-      </DropdownButton>
+      <Dropdown className="dropdown">
+        <Dropdown.Toggle variant={bootstrapStyle} id="dropdown-basic">
+          {title}
+        </Dropdown.Toggle>
+
+        <Dropdown.Menu className="dropdown-menu">
+          {allFilters.map((filter: string) => (
+            <Dropdown.Item onSelect={() => onClick(filter)} key={filter}>
+              {(currentFilters.includes(filter) ? '\u2713 ' : ' ') + filter}
+            </Dropdown.Item>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
+
       <div>
         {currentFilters.map((filter: string) => (
-          <Label bsStyle={bootstrapStyle} className="filter-pill" onClick={() => onClick(filter)} key={filter}>
+          <Badge variant={bootstrapStyle} className="filter-pill" onClick={() => onClick(filter)} key={filter}>
             &#215;
             {' '}
             {filter}
-          </Label>
+          </Badge>
         ))}
       </div>
     </div>
