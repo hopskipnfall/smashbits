@@ -36,9 +36,7 @@ class CreateBitModal extends Component<Props> {
           <h3>Create a Bit!</h3>
         </Modal.Header>
         <Modal.Body>
-          <LocalForm onSubmit={values => this.handleSubmit(values)}
-          //  id="bit-form"
-          >
+          <LocalForm onSubmit={values => this.handleSubmit(values)}>
             <FormLabel> Title </FormLabel>
             <Control.text
               model=".title"
