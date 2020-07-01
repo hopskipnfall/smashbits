@@ -1,17 +1,27 @@
-import React, { Component } from 'react';
+import * as React from 'react';
+import { Component } from 'react';
 import {
-  Button, ControlLabel, FormControl, Modal, ToggleButton, ToggleButtonGroup,
+  Button, FormLabel, FormControl, Modal, ToggleButton, ToggleButtonGroup,
 } from 'react-bootstrap';
 import { Control, LocalForm } from 'react-redux-form';
 
-class CreateBitModal extends Component {
-  constructor(props, context) {
+type Props = {
+  createBit: any
+  show: any
+  onHide: any
+  allChars: any
+  allStages: any
+  allTags: any
+}
+
+class CreateBitModal extends Component<Props> {
+  constructor(props: Props, context: Map<string, any>) {
     super(props, context);
 
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(values) {
+  handleSubmit(values: any) {
     const { createBit } = this.props;
     createBit(values);
   }
@@ -26,28 +36,28 @@ class CreateBitModal extends Component {
           <h3>Create a Bit!</h3>
         </Modal.Header>
         <Modal.Body>
-          <LocalForm onSubmit={values => this.handleSubmit(values)} id="bit-form">
-            <ControlLabel> Title </ControlLabel>
+          <LocalForm onSubmit={values => this.handleSubmit(values)}>
+            <FormLabel> Title </FormLabel>
             <Control.text
               model=".title"
               component={FormControl}
               placeholder="Enter title"
             />
             {/* TODO(thenuge): Add a char limit and message when they get close to it */}
-            <ControlLabel> Content </ControlLabel>
+            <FormLabel> Content </FormLabel>
             <Control.text
               model=".content"
               component={FormControl}
-              componentClass="textarea"
+              as="textarea"
               placeholder="Write your bit!"
             />
-            <ControlLabel> Main Characters </ControlLabel>
+            <FormLabel> Main Characters </FormLabel>
             <Control
               model=".mainChars[]"
               component={ToggleButtonGroup}
               type="checkbox"
             >
-              {allChars.map(char => (
+              {allChars.map((char: string) => (
                 <ToggleButton
                   value={char}
                   key={char}
@@ -59,13 +69,13 @@ class CreateBitModal extends Component {
             <br />
             {' '}
             <br />
-            <ControlLabel> Vs. Characters </ControlLabel>
+            <FormLabel> Vs. Characters </FormLabel>
             <Control
               model=".vsChars[]"
               component={ToggleButtonGroup}
               type="checkbox"
             >
-              {allChars.map(char => (
+              {allChars.map((char: string) => (
                 <ToggleButton
                   value={char}
                   key={char}
@@ -77,13 +87,13 @@ class CreateBitModal extends Component {
             <br />
             {' '}
             <br />
-            <ControlLabel> On Stages </ControlLabel>
+            <FormLabel> On Stages </FormLabel>
             <Control
               model=".stages[]"
               component={ToggleButtonGroup}
               type="checkbox"
             >
-              {allStages.map(stage => (
+              {allStages.map((stage: string) => (
                 <ToggleButton
                   value={stage}
                   key={stage}
@@ -95,13 +105,13 @@ class CreateBitModal extends Component {
             <br />
             {' '}
             <br />
-            <ControlLabel> With Tags </ControlLabel>
+            <FormLabel> With Tags </FormLabel>
             <Control
               model=".tags[]"
               component={ToggleButtonGroup}
               type="checkbox"
             >
-              {allTags.map(tag => (
+              {allTags.map((tag: string) => (
                 <ToggleButton
                   value={tag}
                   key={tag}
@@ -116,7 +126,7 @@ class CreateBitModal extends Component {
           <Button onClick={onHide}>
             Cancel
           </Button>
-          <Button bsStyle="primary" type="submit" form="bit-form">
+          <Button variant="primary" type="submit" form="bit-form">
             Submit
           </Button>
         </Modal.Footer>

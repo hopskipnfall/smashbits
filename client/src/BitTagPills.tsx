@@ -1,8 +1,8 @@
 import { List, Set } from 'immutable';
-import React from 'react';
-import { Label } from 'react-bootstrap';
+import * as React from 'react';
+import { Badge } from 'react-bootstrap';
 
-export default function BitTagPills(props) {
+export default function BitTagPills(props: any) {
   const {
     bit,
     setMainCharFilters,
@@ -12,45 +12,45 @@ export default function BitTagPills(props) {
   } = props;
   return (
     <div className="bit-tag-pills">
-      {bit.get('mainChars', List()).map(tag => (
-        <Label
-          bsStyle="success"
+      {(bit.get('mainChars', List()) as List<string>).map(tag => (
+        <Badge
+          variant="success"
           className="filter-pill"
           onClick={() => setMainCharFilters(Set.of(tag))}
           key={tag}
         >
           {tag}
-        </Label>
+        </Badge>
       ))}
-      {bit.get('vsChars', List()).map(tag => (
-        <Label
-          bsStyle="danger"
+      {(bit.get('vsChars', List()) as List<string>).map(tag => (
+        <Badge
+          variant="danger"
           className="filter-pill"
           onClick={() => setVsCharFilters(Set.of(tag))}
           key={tag}
         >
           {tag}
-        </Label>
+        </Badge>
       ))}
-      {bit.get('stages', List()).map(tag => (
-        <Label
-          bsStyle="primary"
+      {(bit.get('stages', List()) as List<string>).map(tag => (
+        <Badge
+          variant="primary"
           className="filter-pill"
           onClick={() => setStageFilters(Set.of(tag))}
           key={tag}
         >
           {tag}
-        </Label>
+        </Badge>
       ))}
-      {bit.get('standaloneTags', List()).map(tag => (
-        <Label
-          bsStyle="warning"
+      {(bit.get('standaloneTags', List()) as List<string>).map(tag => (
+        <Badge
+          variant="warning"
           className="filter-pill"
           onClick={() => setStandaloneTagFilters(Set.of(tag))}
           key={tag}
         >
           {tag}
-        </Label>
+        </Badge>
       ))}
     </div>
   );

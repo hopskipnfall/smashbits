@@ -1,16 +1,17 @@
 import { fromJS, List, Map } from 'immutable';
-import React from 'react';
-import { Panel } from 'react-bootstrap';
+import * as React from 'react';
+import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
 import FilterMenu from './FilterMenu';
 
-const FilterControl = props => {
+const FilterControl = (props: any) => {
   const {
     filtering = Map(), toggleMainCharFilter, toggleVsCharFilter, toggleStageFilter, toggleStandaloneTagFilter,
   } = props;
   return (
-    <Panel bsStyle="primary" header={<h2> Filtering Options </h2>}>
+    <Card>
+      <Card.Header><h2> Filtering Options </h2></Card.Header>
       <h4> Show me bits about: </h4>
       <FilterMenu
         title="These characters"
@@ -40,11 +41,11 @@ const FilterControl = props => {
         currentFilters={filtering.get('currentStandaloneTags', List())}
         onClick={toggleStandaloneTagFilter}
       />
-    </Panel>
+    </Card>
   );
 };
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state: Map<string, any>, ownProps: any) => ({
   filtering: state.get('filtering').merge(fromJS(ownProps.filters)),
 });
 
