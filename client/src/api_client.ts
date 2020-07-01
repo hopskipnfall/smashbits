@@ -1,7 +1,5 @@
 import * as URI from 'urijs';
-import {
-  addBit, receiveComments, receiveCreateBit, setProfile,
-} from './action_creators';
+import { addBit, receiveComments, receiveCreateBit, setProfile } from './action_creators';
 import * as fakeClient from './fake_api_client';
 import history from './history';
 import { Bit } from './types';
@@ -46,7 +44,7 @@ export function fetchBits(dispatch: Function) {
       });
   }
   // TODO(thenuge): Add actions for initiating requests for bit fetching, as well as errors.
-  fetchPromise.then(response => response.bits.map((bit: Bit) => dispatch(addBit(fromJS(bit)))));
+  fetchPromise.then((response: any) => response.bits.map((bit: { [key: string]: any }) => dispatch(addBit(new Bit(bit)))));
 }
 
 export function fetchBit(bitId: string, dispatch: Function) {
@@ -64,7 +62,7 @@ export function fetchBit(bitId: string, dispatch: Function) {
         throw error;
       });
   }
-  fetchPromise.then(response => dispatch(addBit(fromJS(response.bit))));
+  fetchPromise.then(response => dispatch(addBit(response.bit)));
 }
 
 export function fetchComments(bitId: string, dispatch: Function) {

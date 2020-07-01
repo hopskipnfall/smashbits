@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { Component } from 'react';
-import {
-  Button, FormLabel, FormControl, Modal, ToggleButton, ToggleButtonGroup,
-} from 'react-bootstrap';
+import { Button, FormControl, FormLabel, Modal, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 import { Control, LocalForm } from 'react-redux-form';
+import { createBit } from './action_creators';
 
 type Props = {
-  createBit: any
-  show: any
+  createBit: typeof createBit
+  show: boolean
   onHide: any
   allChars: any
   allStages: any
@@ -31,7 +30,12 @@ class CreateBitModal extends Component<Props> {
       show, onHide, allChars, allStages, allTags,
     } = this.props;
     return (
-      <Modal show={show} onHide={onHide}>
+      <Modal
+        show={show}
+        onHide={onHide}
+        // lol... https://stackoverflow.com/a/49965199/2875073
+        animation={false}
+      >
         <Modal.Header>
           <h3>Create a Bit!</h3>
         </Modal.Header>

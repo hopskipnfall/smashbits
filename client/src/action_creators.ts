@@ -1,42 +1,10 @@
-import {
-  ACTION_CLEAR_BITS,
-  ACTION_ADD_BIT,
-  ACTION_UPVOTE,
-  ACTION_DOWNVOTE,
-  ACTION_RESET_VOTE,
-  ACTION_CHANGE_SORT,
-  ACTION_REQUEST_COMMENTS,
-  ACTION_RECEIVE_COMMENTS,
-  ACTION_REQUEST_CREATE_BIT,
-  ACTION_RECEIVE_CREATE_BIT,
-  ACTION_SET_PROFILE,
-  DEFAULT_PAGE_SIZE,
-} from './reducer';
-import {
-  fetchBit as fetchBitApi,
-  fetchBits as fetchBitsApi,
-  fetchComments as fetchCommentsApi,
-  createBit as createBitApi,
-  fetchProfile as fetchProfileApi,
-} from './api_client';
-import history from './history';
-import {
-  getOffset,
-  getPageSize,
-  setMainCharsQuery,
-  toggleMainCharQuery,
-  setVsCharsQuery,
-  toggleVsCharQuery,
-  setStagesQuery,
-  toggleStageQuery,
-  setStandaloneTagsQuery,
-  toggleStandaloneTagQuery,
-  setSortQuery,
-  setOffsetQuery,
-  setPageSizeQuery,
-} from './uri_util';
+import * as Immutable from 'immutable';
 import { Dispatch } from 'redux';
+import { createBit as createBitApi, fetchBit as fetchBitApi, fetchBits as fetchBitsApi, fetchComments as fetchCommentsApi, fetchProfile as fetchProfileApi } from './api_client';
+import history from './history';
+import { ACTION_ADD_BIT, ACTION_CHANGE_SORT, ACTION_CLEAR_BITS, ACTION_DOWNVOTE, ACTION_RECEIVE_COMMENTS, ACTION_RECEIVE_CREATE_BIT, ACTION_REQUEST_COMMENTS, ACTION_REQUEST_CREATE_BIT, ACTION_RESET_VOTE, ACTION_SET_PROFILE, ACTION_UPVOTE, DEFAULT_PAGE_SIZE } from './reducer';
 import { Bit } from './types';
+import { getOffset, getPageSize, setMainCharsQuery, setOffsetQuery, setPageSizeQuery, setSortQuery, setStagesQuery, setStandaloneTagsQuery, setVsCharsQuery, toggleMainCharQuery, toggleStageQuery, toggleStandaloneTagQuery, toggleVsCharQuery } from './uri_util';
 
 export function clearBits() {
   return {
@@ -44,7 +12,7 @@ export function clearBits() {
   };
 }
 
-export function addBit(bit: Map<string, any>) {
+export function addBit(bit: Bit) {
   return {
     type: ACTION_ADD_BIT,
     data: bit,
@@ -95,7 +63,7 @@ export function changeSort(sort: string) {
   };
 }
 
-export function setMainCharFilters(chars: string[]) {
+export function setMainCharFilters(chars: Immutable.Set<string>) {
   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
     history.push(setMainCharsQuery(chars, history.location.search));
     dispatch(refreshBits());
@@ -109,7 +77,7 @@ export function toggleMainCharFilter(char: string) {
   };
 }
 
-export function setVsCharFilters(chars: string[]) {
+export function setVsCharFilters(chars: Immutable.Set<string>) {
   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
     history.push(setVsCharsQuery(chars, history.location.search));
     dispatch(refreshBits());
@@ -123,7 +91,7 @@ export function toggleVsCharFilter(char: string) {
   };
 }
 
-export function setStageFilters(stages: string[]) {
+export function setStageFilters(stages: Immutable.Set<string>) {
   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
     history.push(setStagesQuery(stages, history.location.search));
     dispatch(refreshBits());
@@ -137,7 +105,7 @@ export function toggleStageFilter(stage: string) {
   };
 }
 
-export function setStandaloneTagFilters(tags: string[]) {
+export function setStandaloneTagFilters(tags: Immutable.Set<string>) {
   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
     history.push(setStandaloneTagsQuery(tags, history.location.search));
     dispatch(refreshBits());
@@ -201,7 +169,7 @@ export function fetchBits() {
 export function fetchNextPage() {
   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
     const offset = (getOffset(history.location.search) || 0)
-        + (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE);
+      + (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE);
     dispatch(setOffset(offset));
     dispatch(refreshBits());
   };
@@ -212,7 +180,7 @@ export function fetchPreviousPage() {
     const offset = Math.max(
       0,
       (getOffset(history.location.search) || 0)
-          - (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE),
+      - (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE),
     );
     dispatch(setOffset(offset));
     dispatch(refreshBits());

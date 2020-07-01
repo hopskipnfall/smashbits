@@ -1,7 +1,7 @@
-import {
-  Map, Set, OrderedMap, fromJS,
-} from 'immutable';
+import * as Immutable from 'immutable';
 import * as filters from './shared/filters';
+import { setBitState } from './state';
+import { Bit, Readonly, Vote } from './types';
 
 // TODO(thenuge): Some of these constants should probably go elsewhere.
 export const ACTION_CLEAR_BITS = 'ACTION_CLEAR_BITS';
@@ -25,8 +25,8 @@ export const SORT_SCORE = 'Score';
 
 export const DEFAULT_PAGE_SIZE = 25;
 
-const INITIAL_STATE: any = fromJS({
-  bits: OrderedMap(),
+const INITIAL_STATE: any = Immutable.fromJS({
+  bits: Immutable.OrderedMap(),
   sorts: [SORT_DATE, SORT_SCORE],
   filtering: {
     chars: [
@@ -85,7 +85,7 @@ export default function (state = INITIAL_STATE, action: any) {
     case ACTION_CHANGE_SORT:
       return changeSort(state, action.data);
     case ACTION_REQUEST_COMMENTS:
-      return state.setIn(['bits', action.data, 'isRequestingComments'], true);
+      return setBitState(state, action.data).cloneAndModify(bit => bit.isRequestingComments = true);
     case ACTION_RECEIVE_COMMENTS:
       return receiveComments(state, action.bitId, action.comments);
     case ACTION_REQUEST_CREATE_BIT:
@@ -99,39 +99,48 @@ export default function (state = INITIAL_STATE, action: any) {
   }
 }
 
-const clearBits = (state = Map()) => state.set('bits', OrderedMap());
+function clearBits(state = Immutable.Map<string, any>()) {
+  return state.set('bits', Immutable.OrderedMap<string, Bit>());
+}
 
-const addBit = (state = Map<string, any>(), bit: Map<string, any>) => state.setIn(['bits', bit.get('postId')], bit);
+function addBit(state = Immutable.Map<string, any>(), bit: Bit) {
+  return setBitState(state, bit.postId).insert(bit);
+}
 
-const upvote = (state = Map<string, any>(), bitId: string) => resetVote(state, bitId)
-  .setIn(['bits', bitId, 'userVote'], USER_UPVOTE);
+function setVote(state = Immutable.Map<string, any>(), bitId: string, vote: Vote) {
+  return setBitState(state, bitId).cloneAndModify(bit => bit.userVote = vote);
+}
 
-const downvote = (state = Map<string, any>(), bitId: string) => resetVote(state, bitId)
-  .setIn(['bits', bitId, 'userVote'], USER_DOWNVOTE);
+const upvote = (state = Immutable.Map<string, any>(), bitId: string) => setVote(state, bitId, USER_UPVOTE);
 
-const resetVote = (state = Map<string, any>(), bitId: string) => state
-  .setIn(['bits', bitId, 'userVote'], USER_DEFAULT_VOTE);
+const downvote = (state = Immutable.Map<string, any>(), bitId: string) => setVote(state, bitId, USER_DOWNVOTE);
 
-const changeSort = (state = Map<string, any>(), sort: string) => {
+const resetVote = (state = Immutable.Map<string, any>(), bitId: string) => setVote(state, bitId, USER_DEFAULT_VOTE);
+
+const changeSort = (state = Immutable.Map<string, any>(), sort: string) => {
   switch (sort) {
     case SORT_SCORE:
       return state.set('bits',
-        state.get('bits', Map<string, any>()).sortBy(
-          (bit: Map<string, any>) => -1 * (bit.get('upvotes', 0) - bit.get('downvotes', 0) + bit.get('userVote', 0)),
+        (state.get('bits', Immutable.OrderedMap()) as Immutable.OrderedMap<string, Readonly<Bit>>).sortBy(
+          bit => -1 * (bit.upvotes - bit.downvotes + bit.userVote)
         ));
     case SORT_DATE:
       return state.set('bits',
-        state.get('bits', Map<string, any>()).sortBy(
-          (bit: Map<string, any>) => -1 * bit.get('dateCreated', 0),
+        (state.get('bits', Immutable.OrderedMap()) as Immutable.OrderedMap<string, Readonly<Bit>>).sortBy(
+          bit => -1 * bit.dateCreated
         ));
     default:
       return state;
   }
 };
 
-const setProfile = (state = Map(), profile: any) => state.set('profile', profile);
+const setProfile = (state = Immutable.Map(), profile: any) => state.set('profile', profile);
 
-const receiveComments = (state = Map(), bitId: string, newComments: Map<string, any>) => state
-  .mergeIn(['comments'], Map(newComments.map(comment => [comment.get('postId'), comment])))
-  .updateIn(['bits', bitId, 'comments'], Set(), comments => comments.union(newComments.map(comment => comment.get('postId'))))
-  .setIn(['bits', bitId, 'isRequestingComments'], false);
+function receiveComments(state = Immutable.Map<string, any>(), bitId: string, newComments: Immutable.Set<any>) {
+  let stateWithComments = state.mergeIn(['comments'], Immutable.Map(newComments.map(comment => [comment.get('postId'), comment])));
+  return setBitState(stateWithComments, bitId)
+    .cloneAndModify(bit => {
+      bit.comments = bit.comments.union(newComments.map(comment => comment.get('postId')));
+      bit.isRequestingComments = false;
+    });
+}

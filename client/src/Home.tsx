@@ -12,9 +12,9 @@ import SortingMenu from './SortingMenu';
 import { getFilters, getPageSize, getSort } from './uri_util';
 
 type Props = {
-  fetchBits: any
-  fetchNextPage: any
-  fetchPreviousPage: any
+  fetchBits: typeof actionCreators.fetchBits
+  fetchNextPage: typeof actionCreators.fetchNextPage
+  fetchPreviousPage: typeof actionCreators.fetchPreviousPage
   location: any
 }
 

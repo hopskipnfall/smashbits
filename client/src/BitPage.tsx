@@ -5,7 +5,7 @@ import * as actionCreators from './action_creators';
 import BitsContainer from './BitsContainer';
 
 type Props = {
-  fetchBit: any
+  fetchBit: typeof actionCreators.fetchBit
   match: any
 }
 
