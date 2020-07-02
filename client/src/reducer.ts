@@ -122,12 +122,12 @@ const changeSort = (state = Immutable.Map<string, any>(), sort: string) => {
     case SORT_SCORE:
       return state.set('bits',
         (state.get('bits', Immutable.OrderedMap()) as Immutable.OrderedMap<string, Readonly<Bit>>).sortBy(
-          bit => -1 * (bit.upvotes - bit.downvotes + bit.userVote)
+          bit => -1 * (bit.upvotes - bit.downvotes + bit.userVote),
         ));
     case SORT_DATE:
       return state.set('bits',
         (state.get('bits', Immutable.OrderedMap()) as Immutable.OrderedMap<string, Readonly<Bit>>).sortBy(
-          bit => -1 * bit.dateCreated
+          bit => -1 * bit.dateCreated,
         ));
     default:
       return state;
@@ -137,7 +137,7 @@ const changeSort = (state = Immutable.Map<string, any>(), sort: string) => {
 const setProfile = (state = Immutable.Map(), profile: any) => state.set('profile', profile);
 
 function receiveComments(state = Immutable.Map<string, any>(), bitId: string, newComments: Immutable.Set<any>) {
-  let stateWithComments = state.mergeIn(['comments'], Immutable.Map(newComments.map(comment => [comment.get('postId'), comment])));
+  const stateWithComments = state.mergeIn(['comments'], Immutable.Map(newComments.map(comment => [comment.get('postId'), comment])));
   return setBitState(stateWithComments, bitId)
     .edit(bit => {
       bit.comments = bit.comments.union(newComments.map(comment => comment.get('postId')));

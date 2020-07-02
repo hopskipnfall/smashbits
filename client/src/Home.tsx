@@ -16,7 +16,7 @@ type Props = {
   fetchNextPage: typeof actionCreators.fetchNextPage
   fetchPreviousPage: typeof actionCreators.fetchPreviousPage
   location: any
-}
+};
 
 class Home extends Component<Props> {
   constructor(props: Props, context: Map<string, any>) {

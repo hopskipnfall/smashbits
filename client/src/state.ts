@@ -14,5 +14,5 @@ export function setBitState(state: Immutable.Map<string, any>, id: string) {
     insert(bit: Bit) {
       return state.setIn(['bits', id], bit);
     },
-  }
+  };
 }
