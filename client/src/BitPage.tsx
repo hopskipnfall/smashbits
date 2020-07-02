@@ -7,7 +7,7 @@ import BitsContainer from './BitsContainer';
 type Props = {
   fetchBit: typeof actionCreators.fetchBit
   match: any
-}
+};
 
 class BitPage extends Component<Props> {
   componentDidMount() {

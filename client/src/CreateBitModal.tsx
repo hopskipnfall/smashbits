@@ -11,7 +11,7 @@ type Props = {
   allChars: any
   allStages: any
   allTags: any
-}
+};
 
 class CreateBitModal extends Component<Props> {
   constructor(props: Props, context: Map<string, any>) {

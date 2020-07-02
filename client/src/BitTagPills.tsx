@@ -10,7 +10,7 @@ type Props = {
   setVsCharFilters: typeof setVsCharFilters
   setStageFilters: typeof setStageFilters
   setStandaloneTagFilters: typeof setStandaloneTagFilters
-}
+};
 
 export default function BitTagPills(props: Props) {
   const {

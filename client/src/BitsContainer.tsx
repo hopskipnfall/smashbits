@@ -10,7 +10,7 @@ type Props = {
   bits?: Immutable.Map<string, BitType>
   filters?: any
   comments?: any
-}
+};
 
 const BitsContainer = (props: Props) => (
   <div>
