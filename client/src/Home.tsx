@@ -2,24 +2,22 @@ import * as React from 'react';
 import { Component } from 'react';
 import { Button, Col } from 'react-bootstrap';
 import { connect, MapDispatchToPropsParam } from 'react-redux';
-import * as actionCreators from './action_creators';
 import BitsContainer from './BitsContainer';
 import CreateBitButton from './CreateBitButton';
 import FilterControl from './FilterControl';
+import history from './history';
 import PageSizeMenu from './PageSizeMenu';
 import { DEFAULT_PAGE_SIZE, SORT_DATE } from './reducer';
 import SortingMenu from './SortingMenu';
-import { getFilters, getPageSize, getSort, getOffset } from './uri_util';
-import history from './history';
+import { PropsFromRedux } from './store';
+import { setOffset } from './store/filtering/actions';
 import { thunkFetchBits } from './thunks';
-import { ProgressPlugin } from 'webpack';
-import { Dispatch } from 'react';
-import { PropsFromRedux, AppState } from './store';
+import { getFilters, getOffset, getPageSize, getSort } from './uri_util';
 
 type Props = PropsFromRedux & {
   thunkFetchBits: typeof thunkFetchBits
   location: any
-  setOffset: typeof actionCreators.setOffset
+  setOffset: typeof setOffset
 };
 
 class Home extends Component<Props> {
@@ -74,4 +72,4 @@ const mapDispatchToProps = (dispatch: MapDispatchToPropsParam<any, Props>, ownPr
   setOffset: (offset: number) => dispatch(ownProps.actions.filtering.setOffset(offset)),
 })
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(null, {setOffset})(Home);

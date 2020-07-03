@@ -6,19 +6,6 @@ import { ACTION_ADD_BIT, ACTION_CHANGE_SORT, ACTION_CLEAR_BITS, ACTION_DOWNVOTE,
 import { Bit } from './types';
 import { getOffset, getPageSize, setMainCharsQuery, setOffsetQuery, setPageSizeQuery, setSortQuery, setStagesQuery, setStandaloneTagsQuery, setVsCharsQuery, toggleMainCharQuery, toggleStageQuery, toggleStandaloneTagQuery, toggleVsCharQuery } from './uri_util';
 
-export function clearBits() {
-  return {
-    type: ACTION_CLEAR_BITS,
-  };
-}
-
-export function addBit(bit: Bit) {
-  return {
-    type: ACTION_ADD_BIT,
-    data: bit,
-  };
-}
-
 export function setMainCharFilters(chars: Immutable.Set<string>) {
   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
     history.push(setMainCharsQuery(chars, history.location.search));

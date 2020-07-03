@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
 import BitsContainer from './BitsContainer';
 import { AppState, PropsFromRedux } from './store';
+import { Bit } from './types';
+import * as Immutable from 'immutable';
 
 type BitPageProps = PropsFromRedux & {
   fetchBit: typeof actionCreators.fetchBit
@@ -11,16 +13,19 @@ type BitPageProps = PropsFromRedux & {
 };
 
 class BitPage extends Component<BitPageProps, AppState> {
+  bits: Immutable.Map<string, Bit>;
+
   componentDidMount() {
+    this.bits = this.state.bits.items;
     const { fetchBit } = this.props;
     fetchBit(this.props.match.params.bitId);
   }
 
   render() {
     return (
-      <BitsContainer />
+      <BitsContainer bits={this.bits} />
     );
   }
 }
 
-export default connector(BitPage);
+export default connect(null, null)(BitPage);
