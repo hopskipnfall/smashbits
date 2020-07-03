@@ -1,30 +1,30 @@
-import React from 'react';
-import { Button, Label } from 'react-bootstrap';
+import * as React from 'react';
+import { Button, Badge } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
 import { initTwitterLogin } from './api_client';
 
-const LoginButton = props => {
+const LoginButton = (props: any) => {
   const {
-    profile, bsStyle = 'default', loginText = 'Log in with Twitter', fetchProfileIfNeeded,
+    profile, variant = 'default', loginText = 'Log in with Twitter', fetchProfileIfNeeded,
   } = props;
   if (profile) {
     return (
-      <Label>
+      <Badge>
         Welcome,
         {' '}
         {profile.getIn(['twitterProfile', 'displayName'])}
         !
-      </Label>
+      </Badge>
     );
   }
   fetchProfileIfNeeded();
   return (
-    <Button bsStyle={bsStyle} onClick={() => initTwitterLogin()}>{loginText}</Button>
+    <Button variant={variant} onClick={() => initTwitterLogin()}>{loginText}</Button>
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: Map<string, any>) => ({
   profile: state.get('profile'),
 });
 

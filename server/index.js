@@ -82,8 +82,12 @@ app.get('/bits', (req, res) => {
 });
 
 app.post('/bits', (req, res) => {
+  if (!req.user) {
+    res.status(401).setHeader('WWW-Authenticate', 'Bearer').send();
+    return;
+  }
   res.setHeader('Access-Control-Expose-Headers', 'location');
-  createBit(req.body.bit)
+  createBit({ bit: req.body.bit, author: req.user })
     .then(result => res.location(`/bits/${result.postId}`).sendStatus(201))
     // TODO(#19): Don't propagate this to clients.
     .catch(error => res.status(500).send(error));
