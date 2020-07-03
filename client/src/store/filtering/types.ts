@@ -29,10 +29,16 @@ export interface SetVsCharactersAction {
   characters: Set<CharacterId>
 }
 
+export const SET_MAIN_CHARACTERS = 'FILTERING_SET_MAIN_CHARACTERS';
+export interface SetMainCharactersAction {
+  type: typeof SET_MAIN_CHARACTERS
+  characters: Set<CharacterId>
+}
+
 export const SET_OFFSET = 'FILTERING_SET_OFFSET';
 export interface SetOffsetAction {
   type: typeof SET_OFFSET
   offset: number
 }
 
-export type FilteringActionTypes = ChangeSortAction | SetVsCharactersAction | SetOffsetAction;
+export type FilteringActionTypes = ChangeSortAction | SetVsCharactersAction | SetOffsetAction | SetMainCharactersAction;

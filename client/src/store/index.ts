@@ -7,6 +7,7 @@ import {filteringReducer} from './filtering/reducers';
 import { connect, ConnectedProps } from 'react-redux';
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import { RouteChildrenProps } from 'react-router-dom';
+import { Component, FunctionComponent } from 'react';
 
 const rootReducer = combineReducers({
   bits: bitsReducer,
@@ -37,3 +38,9 @@ const combinedActions = {
 const connector = connect(null, combinedActions);
 /** Joined type of everything that gets passed to components. */
 export type PropsFromRedux = ConnectedProps<typeof connector> & RouteChildrenProps<any>;
+
+export class AppComponent<RequiredProps, StateToProps extends (...args: any) => any, DispatchToProps extends (...args: any) => any> extends Component<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps> & PropsFromRedux, AppState> {};
+
+export interface AppFunctionComponent<RequiredProps, StateToProps extends (...args: any) => any, DispatchToProps extends (...args: any) => any> extends FunctionComponent<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps> & PropsFromRedux> {};
+
+export type NOOP = () => void;

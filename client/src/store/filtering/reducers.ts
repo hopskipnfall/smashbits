@@ -1,4 +1,4 @@
-import { FilteringState, SortOption, FilteringActionTypes, CHANGE_SORT, SET_VS_CHARACTERS, SET_OFFSET } from "./types";
+import { FilteringState, SortOption, FilteringActionTypes, CHANGE_SORT, SET_VS_CHARACTERS, SET_OFFSET, SET_MAIN_CHARACTERS } from "./types";
 
 const initialState: FilteringState = {
   sort: SortOption.NEWEST,
@@ -20,6 +20,8 @@ export function filteringReducer(
       return {...state, sort: action.sort}
     case SET_VS_CHARACTERS:
       return {...state, vsCharacters: action.characters}
+    case SET_MAIN_CHARACTERS:
+      return {...state, mainCharacters: action.characters}
     case SET_OFFSET:
       return {...state, offset: action.offset}
     default:
