@@ -27,6 +27,7 @@ export function filteringReducer(
     case SET_STAGES:
       return {...state, stages: action.stageIds}
     case SET_LABELS:
+      console.log('labels are being updated', action.labels);
       return {...state, labels: action.labels};
     default:
       return state;

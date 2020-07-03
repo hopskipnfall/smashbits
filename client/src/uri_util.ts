@@ -1,9 +1,12 @@
 // import * as Immutable from 'immutable';
 // import * as _ from 'lodash';
-// import * as URI from 'urijs';
+import * as URI from 'urijs';
 // // import { SORT_DATE, SORT_SCORE } from './reducer';
 // import * as queryParams from './shared/query_params';
-// import { getCharFilterQuery, getCharFilters, getStageFilterQuery, getStageFilters, getTagFilterQuery, getTagFilters } from './shared/query_util';
+
+import { AppState } from "./store";
+import { QUERY_SORT, QUERY_LIMIT, QUERY_MAIN_CHARS, QUERY_OFFSET, QUERY_VS_CHARS, QUERY_STAGES, QUERY_TAGS } from "./shared/query_params";
+import { getCharFilterQuery } from './shared/query_util';
 
 // export const PARAM_TO_CLIENT_SORT: { [key: string]: string } = { [queryParams.SORT_PARAM_DATE]: SORT_DATE, [queryParams.SORT_PARAM_SCORE]: SORT_SCORE };
 // export const CLIENT_SORT_TO_PARAM: { [key: string]: string } = { [SORT_DATE]: queryParams.SORT_PARAM_DATE, [SORT_SCORE]: queryParams.SORT_PARAM_SCORE };
@@ -76,7 +79,7 @@
 //   return uri.search();
 // };
 
-// const displayParamsToQuery = (params: { [key: string]: any }) => _.pickBy({
+// const displayParamsToQuery = (state: AppState) => _.pickBy({
 //   ...params.currentSort && { [queryParams.QUERY_SORT]: CLIENT_SORT_TO_PARAM[params.currentSort] },
 //   ...params.currentPageSize && { [queryParams.QUERY_LIMIT]: params.currentPageSize },
 //   ...params.currentOffset && { [queryParams.QUERY_OFFSET]: params.currentOffset },
@@ -85,3 +88,28 @@
 //   ...params.currentStages && { [queryParams.QUERY_STAGES]: getStageFilterQuery(params.currentStages) },
 //   ...params.currentStandaloneTags && { [queryParams.QUERY_TAGS]: getTagFilterQuery(params.currentStandaloneTags) },
 // }, _.identity);
+
+const defaultToUndefined = (param: any) => {
+  // if (param instanceof Set) {
+  //   return param.size > 0 ? param : undefined;
+  // }
+  return param ? param : undefined;
+}
+
+export const buildUriFromState = (state: AppState) => {
+  console.log('building with state object', state.filtering);
+  const params = {
+    [QUERY_SORT]: defaultToUndefined(state.filtering.sort),
+    [QUERY_LIMIT]: defaultToUndefined(state.filtering.limit),
+    [QUERY_OFFSET]: defaultToUndefined(state.filtering.offset),
+    [QUERY_MAIN_CHARS]: defaultToUndefined(getCharFilterQuery(state.filtering.mainCharacters)),
+    [QUERY_VS_CHARS]: defaultToUndefined(Array.from(state.filtering.vsCharacters)[0]),
+    [QUERY_STAGES]: defaultToUndefined(Array.from(state.filtering.stages)[0]),
+    [QUERY_TAGS]: defaultToUndefined(Array.from(state.filtering.labels)[0]),
+  };
+  console.log(params);
+
+  const uri = URI().addSearch(params);
+  console.log('paramzzz', uri.search());
+  return uri.search();
+};

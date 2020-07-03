@@ -8,8 +8,8 @@ export enum SortOption {
 
 export interface FilteringState {
   sort: SortOption
-  mainCharacters: Set<CharacterId>
-  vsCharacters: Set<CharacterId>
+  mainCharacters: Set<string> // TODO make this ids lol.
+  vsCharacters: Set<string>
   stages: Set<StageId>
   offset: number
   limit: number

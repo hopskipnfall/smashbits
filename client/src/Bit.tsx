@@ -6,13 +6,13 @@ import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import * as styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
-import { AppFunctionComponent, AppState, NOOP, wrapWithDispatch } from './store';
+import { AppFunctionComponent, AppState, NOOP, wrapThunkWithDispatch } from './store';
 import { VOTE_DOWN, VOTE_UP } from './store/bits/types';
 import { thunkChangeVote } from './thunks';
 import { Bit as BitType } from './types';
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, null, AnyAction>) => {
-  return {changeVote: wrapWithDispatch(thunkChangeVote, dispatch),}
+  return {changeVote: wrapThunkWithDispatch(thunkChangeVote, dispatch)}
 };
 
 type InputProps = {

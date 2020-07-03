@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware, combineReducers, AnyAction } from 'redux';
+import { createStore, applyMiddleware, combineReducers, AnyAction, Action } from 'redux';
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { bitsReducer } from './bits/reducers';
 import * as bitsActions from './bits/actions';
@@ -45,6 +45,10 @@ export interface AppFunctionComponent<RequiredProps, StateToProps extends (...ar
 
 export type NOOP = () => {};
 
-export function wrapWithDispatch(thunkActionBuilder: (...args: any) => ThunkAction<void, AppState, unknown, AnyAction>, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
+export function wrapThunkWithDispatch(thunkActionBuilder: (...args: any) => ThunkAction<void, AppState, unknown, AnyAction>, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
+  return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(args));
+}
+
+export function wrapWithDispatch(thunkActionBuilder: (...args: any) => AnyAction, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
   return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(args));
 }

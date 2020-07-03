@@ -8,12 +8,12 @@ import { AppComponent, AppState, PropsFromRedux } from './store';
 import { thunkFetchBit } from './thunks';
 import { Bit } from './types';
 
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, null, AnyAction>) => ({
-  thunkFetchBit: (bitId: string) => dispatch(thunkFetchBit(bitId)),
-});
-
 const mapStateToProps = (state: AppState, ownProps: any) => ({
   bits: state.bits.items,
+});
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, null, AnyAction>) => ({
+  thunkFetchBit: (bitId: string) => dispatch(thunkFetchBit(bitId)),
 });
 
 class BitPage extends AppComponent<PropsFromRedux, typeof mapStateToProps, typeof mapDispatchToProps> {
