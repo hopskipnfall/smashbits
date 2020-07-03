@@ -1,27 +1,30 @@
-import { Dispatch, ActionCreator, Action } from "redux";
+import { Dispatch, ActionCreator, Action, AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { createBit as createBitApi, fetchBits as fetchBitsApi } from './api_client';
+import { createBit as createBitApi, fetchBits as fetchBitsApi, fetchBit as fetchBitApi } from './api_client';
 import { AppState } from "./store";
 import { addBit, changeVote, replaceBits } from './store/bits/actions';
 import { AddBitAction, ChangeVoteAction, ReplaceBitsAction } from './store/bits/types';
 import { Bit, Vote } from "./types";
 
-// type ThunkResult<R> = ThunkAction<Promise<void>,any,null,ReplaceBitsAction>;
+type JonnThunkAction = ActionCreator<ThunkAction<Promise<void>, any, null, AnyAction>>
 
-export const thunkFetchBits
-:ActionCreator<ThunkAction<Promise<void>,any,null,ReplaceBitsAction>>
- = () => {
-  return async (dispatch: Dispatch<ReplaceBitsAction>) => {
-  console.log('dispatch', dispatch);
-  // console.log('b', b);
-  // console.log('c', c);
-  const response = await fetchBitsApi()
-  dispatch(replaceBits(response.bits));
-}
+export const thunkFetchBits: JonnThunkAction = () => {
+  return async dispatch => {
+    console.log('dispatch', dispatch);
+    const response = await fetchBitsApi()
+    dispatch(replaceBits(response.bits));
+  }
+};
+
+export const thunkFetchBit: JonnThunkAction = (bitId: string) => {
+  return async dispatch => {
+    const response = await fetchBitApi(bitId)
+    dispatch(replaceBits([response.bit]));
+  }
 };
 
 export function thunkPostBit(bit: Bit):
- ThunkAction<void, AppState, unknown, AddBitAction> {
+  ThunkAction<void, AppState, unknown, AddBitAction> {
   return async dispatch => {
     const resp = await createBitApi(bit, dispatch);
     if (!resp) {
@@ -35,7 +38,7 @@ export function thunkPostBit(bit: Bit):
 }
 
 export function thunkChangeVote(bitId: string, vote: Vote):
-ThunkAction<void, AppState, unknown, ChangeVoteAction>  {
+  ThunkAction<void, AppState, unknown, ChangeVoteAction> {
   return async dispatch => {
     dispatch(changeVote(bitId, vote));
 

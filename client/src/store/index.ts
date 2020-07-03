@@ -6,6 +6,7 @@ import * as filteringActions from './filtering/actions';
 import {filteringReducer} from './filtering/reducers';
 import { connect, ConnectedProps } from 'react-redux';
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
+import { RouteChildrenProps } from 'react-router-dom';
 
 const rootReducer = combineReducers({
   bits: bitsReducer,
@@ -35,5 +36,4 @@ const combinedActions = {
 
 const connector = connect(null, combinedActions);
 /** Joined type of everything that gets passed to components. */
-export type PropsFromRedux = ConnectedProps<typeof connector>;
-
+export type PropsFromRedux = ConnectedProps<typeof connector> & RouteChildrenProps<any>;

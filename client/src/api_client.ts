@@ -48,7 +48,7 @@ export function fetchBits(): Promise<{bits: Bit[]}> {
   // fetchPromise.then((response: any) => response.bits.map((bit: { [key: string]: any }) => dispatch(addBit(new Bit(bit)))));
 }
 
-export function fetchBit(bitId: string, dispatch: Function) {
+export function fetchBit(bitId: string) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBit(bitId);
@@ -64,7 +64,6 @@ export function fetchBit(bitId: string, dispatch: Function) {
       });
   }
   return fetchPromise;
-  // fetchPromise.then(response => dispatch(addBit(response.bit)));
 }
 
 // export function fetchComments(bitId: string, dispatch: Function) {

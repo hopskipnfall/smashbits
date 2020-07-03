@@ -6,18 +6,17 @@ import Bit from './Bit';
 import { AppState, PropsFromRedux } from './store';
 import { Bit as BitType } from './types';
 
-type Props = PropsFromRedux & {
-  bits: Immutable.Map<string, BitType>
-};
-
-const BitsContainer: FunctionComponent<any> = props => (
-  <div>
-    {props.bits.valueSeq().map((bit: BitType) => <Bit bit={bit} key={bit.postId} {...props} />)}
-  </div>
-);
-
-const mapStateToProps = (state: any, ownProps: any) => ({
+const mapStateToProps = (state: AppState, ownProps: any) => ({
   bits: state.bits.items,
 });
+
+type InputProps = ReturnType<typeof mapStateToProps> & PropsFromRedux  & {
+};
+
+const BitsContainer: FunctionComponent<InputProps> = props => (
+  <div>
+    {props.bits.valueSeq().map(bit => <Bit bit={bit} key={bit.postId} {...props} />)}
+  </div>
+);
 
 export default connect(mapStateToProps, null)(BitsContainer);

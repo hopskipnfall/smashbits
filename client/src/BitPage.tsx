@@ -6,24 +6,32 @@ import BitsContainer from './BitsContainer';
 import { AppState, PropsFromRedux } from './store';
 import { Bit } from './types';
 import * as Immutable from 'immutable';
-import { thunkFetchBits } from './thunks';
+import { thunkFetchBits, thunkFetchBit } from './thunks';
 import { Action } from 'history';
 import {Dispatch} from 'react';
 import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { AnyAction } from 'redux';
+import { RouteChildrenProps } from 'react-router-dom';
 
-type BitPageProps = PropsFromRedux & {
-  fetchBit: typeof thunkFetchBits
-  match: any
+
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, null, AnyAction>) => ({
+  thunkFetchBit: (bitId: string) => dispatch(thunkFetchBit(bitId)),
+});
+
+const mapStateToProps = (state: AppState, ownProps: any) => ({
+  bits: state.bits.items,
+});
+
+type InputProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & PropsFromRedux  & {
 };
 
-class BitPage extends Component<any, any> {
+// class AppComponent<RequiredProps, StateToProps extends () => any, DispatchToProps extends () => any> extends Component<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps>, AppState>{}
+
+class BitPage extends Component<InputProps, AppState> {
   bits: Immutable.Map<string, Bit>;
 
   componentDidMount() {
-    console.log('BitPage', this);
-    // const {thunkFetchBits, dispatch} = this.props
-    this.props.thunkFetchBits(this.props.match.params.bitId);
+    this.props.thunkFetchBit(this.props.match!.params.bitId);
   }
 
   render() {
@@ -33,13 +41,4 @@ class BitPage extends Component<any, any> {
   }
 }
 
-export default connect((state: AppState, ownProps: any) => {
-  console.log('state', state)
-  return {
-    bits: state.bits.items,
-  }
-}, (dispatch: ThunkDispatch<AppState, null, AnyAction>) => {
-  return {
-    thunkFetchBits: () => dispatch(thunkFetchBits()),
-  };
-})(BitPage);
+export default connect(mapStateToProps, mapDispatchToProps)(BitPage);
