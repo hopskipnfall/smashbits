@@ -25,10 +25,10 @@ export class Bit {
   downvotes: number;
   title: string;
   content: string;
-  mainChars: string[];
+  mainChars: CharacterId[];
   standaloneTags: string[];
-  stages: string[];
-  vsChars: string[];
+  stages: StageId[];
+  vsChars: CharacterId[];
   userVote: Vote;
   comments: Immutable.Set<Comment>;
   isRequestingComments: boolean;

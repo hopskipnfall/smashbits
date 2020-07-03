@@ -1,24 +1,19 @@
 import * as React from 'react';
 import { Button, Card } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { AnyAction } from 'redux';
+import { ThunkDispatch } from 'redux-thunk';
 import * as styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
-import { Bit as BitType, Vote } from './types';
-import { FunctionComponent } from 'react';
-import { VOTE_UP, VOTE_DOWN } from './store/bits/types';
-import { PropsFromRedux, AppState, AppFunctionComponent, NOOP } from './store';
+import { AppFunctionComponent, AppState, NOOP, wrapWithDispatch } from './store';
+import { VOTE_DOWN, VOTE_UP } from './store/bits/types';
 import { thunkChangeVote } from './thunks';
-import { connect } from 'react-redux';
-import { ThunkDispatch, ThunkAction } from 'redux-thunk';
-import { AnyAction } from 'redux';
+import { Bit as BitType } from './types';
 
-function wrapWithDispatch(thunkActionBuilder: (...args: any) => ThunkAction<void, AppState, unknown, AnyAction>, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
-  return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(args));
-}
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, null, AnyAction>) => ({
-  changeVote: wrapWithDispatch(thunkChangeVote, dispatch),
-});
+const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, null, AnyAction>) => {
+  return {changeVote: wrapWithDispatch(thunkChangeVote, dispatch),}
+};
 
 type InputProps = {
   bit: BitType
@@ -45,7 +40,7 @@ const Bit: AppFunctionComponent<InputProps, NOOP, typeof mapDispatchToProps> = p
     <Card>
       <Card.Header>{header}</Card.Header>
       <div>
-        <BitTagPills bit={bit} {...props} />
+        <BitTagPills bit={bit} />
         <p>
           <b>{bit.author.name}</b>
           {' '}

@@ -1,5 +1,5 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunkMiddleware from 'redux-thunk';
+import { createStore, applyMiddleware, combineReducers, AnyAction } from 'redux';
+import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { bitsReducer } from './bits/reducers';
 import * as bitsActions from './bits/actions';
 import * as filteringActions from './filtering/actions';
@@ -41,6 +41,10 @@ export type PropsFromRedux = ConnectedProps<typeof connector> & RouteChildrenPro
 
 export class AppComponent<RequiredProps, StateToProps extends (...args: any) => any, DispatchToProps extends (...args: any) => any> extends Component<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps> & PropsFromRedux, AppState> {};
 
-export interface AppFunctionComponent<RequiredProps, StateToProps extends (...args: any) => any, DispatchToProps extends (...args: any) => any> extends FunctionComponent<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps> & PropsFromRedux> {};
+export interface AppFunctionComponent<RequiredProps, StateToProps extends (...args: any) => any, DispatchToProps extends (...args: any) => any> extends FunctionComponent<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps>> {};
 
-export type NOOP = () => void;
+export type NOOP = () => {};
+
+export function wrapWithDispatch(thunkActionBuilder: (...args: any) => ThunkAction<void, AppState, unknown, AnyAction>, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
+  return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(args));
+}
