@@ -74,10 +74,12 @@ const comments: Comment[] = [{
 }];
 
 export function fetchBits() {
+  console.log('Fetching new bits!')
   return Promise.resolve({ bits });
 }
 
 export function fetchBit(bitId: string) {
+  console.log('Fetching new bit!')
   return Promise.resolve({ bit: bits.find(bit => bit.postId === bitId) });
 }
 

@@ -41,4 +41,16 @@ export interface SetOffsetAction {
   offset: number
 }
 
-export type FilteringActionTypes = ChangeSortAction | SetVsCharactersAction | SetOffsetAction | SetMainCharactersAction;
+export const SET_STAGES = 'FILTERING_SET_STAGES';
+export interface SetStagesAction {
+  type: typeof SET_STAGES
+  stageIds: Set<StageId>
+}
+
+export const SET_LABELS = 'FILTERING_SET_LABELS';
+export interface SetLabelsAction {
+  type: typeof SET_LABELS
+  labels: Set<LabelId>
+}
+
+export type FilteringActionTypes = ChangeSortAction | SetVsCharactersAction | SetOffsetAction | SetMainCharactersAction | SetStagesAction | SetLabelsAction;

@@ -1,30 +1,32 @@
-import { SortOption, CHANGE_SORT, SetMainCharactersAction, SET_MAIN_CHARACTERS, SET_VS_CHARACTERS, SetOffsetAction, SET_OFFSET, SetVsCharactersAction, ChangeSortAction } from "./types";
-import { Bit, Vote, CharacterId } from "../../types";
+import { CharacterId, StageId, LabelId } from "../../types";
+import { ChangeSortAction, CHANGE_SORT, SetMainCharactersAction, SetOffsetAction, SetStagesAction, SetVsCharactersAction, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS, SortOption, SetLabelsAction, SET_LABELS } from "./types";
 
-export function changeSort(sort: SortOption): ChangeSortAction {
-  return {
-    type: CHANGE_SORT,
-    sort,
-  }
-}
+export const changeSort = (sort: SortOption) => ({
+  type: CHANGE_SORT,
+  sort,
+} as ChangeSortAction);
 
-export function setVsCharacters(characters: Set<CharacterId>): SetVsCharactersAction {
-  return {
-    type: SET_VS_CHARACTERS,
-    characters,
-  }
-}
+export const setVsCharacters = (characters: Set<CharacterId>) => ({
+  type: SET_VS_CHARACTERS,
+  characters,
+} as SetVsCharactersAction);
 
-export function setMainCharacters(characters: Set<CharacterId>): SetMainCharactersAction {
-  return {
-    type: SET_MAIN_CHARACTERS,
-    characters,
-  }
-}
+export const setMainCharacters = (characters: Set<CharacterId>) => ({
+  type: SET_MAIN_CHARACTERS,
+  characters,
+} as SetMainCharactersAction);
 
-export function setOffset(offset: number): SetOffsetAction {
-  return {
-    type: SET_OFFSET,
-    offset,
-  }
-}
+export const setOffset = (offset: number) => ({
+  type: SET_OFFSET,
+  offset,
+} as SetOffsetAction);
+
+export const setStages = (stageIds: Set<StageId>) => ({
+  type: SET_STAGES,
+  stageIds,
+} as SetStagesAction);
+
+export const setLabels = (labels: Set<LabelId>) => ({
+  type: SET_LABELS,
+  labels,
+} as SetLabelsAction);

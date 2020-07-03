@@ -4,21 +4,32 @@ import { connect } from 'react-redux';
 import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppFunctionComponent, AppState, NOOP, wrapWithDispatch } from './store';
-import { setMainCharacters, setVsCharacters } from './store/filtering/actions';
+import { setMainCharacters, setVsCharacters, setStages, setLabels } from './store/filtering/actions';
 import { thunkFetchBits } from './thunks';
-import { Bit, CharacterId } from './types';
+import { Bit, CharacterId, StageId, LabelId } from './types';
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, null, AnyAction>) => ({
   fetchBits: wrapWithDispatch(thunkFetchBits, dispatch),
 
   setMainCharFilters: (charIds: Set<CharacterId>) => {
     dispatch(setMainCharacters(charIds));
-    dispatch(thunkFetchBits);
+    dispatch(thunkFetchBits());
   },
 
   setVsCharFilters: (charIds: Set<CharacterId>) => {
     dispatch(setVsCharacters(charIds));
-    dispatch(thunkFetchBits);
+    dispatch(thunkFetchBits());
+  },
+
+  setStageFilters: (stageIds: Set<StageId>) => {
+    dispatch(setStages(stageIds));
+    dispatch(thunkFetchBits());
+  },
+
+  setStandaloneTagFilters: (labels: Set<LabelId>) => {
+    console.log('setting labels', labels)
+    dispatch(setLabels(labels));
+    dispatch(thunkFetchBits());
   },
 });
 
@@ -31,8 +42,8 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP, typeof mapDispatchToPr
     bit,
     setMainCharFilters,
     setVsCharFilters,
-    // setStageFilters,
-    // setStandaloneTagFilters,
+    setStageFilters,
+    setStandaloneTagFilters,
   } = props;
   return (
     <div className="bit-tag-pills">
@@ -40,7 +51,7 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP, typeof mapDispatchToPr
         <Badge
           variant="success"
           className="filter-pill"
-          onClick={() => setMainCharFilters(new Set(tag) as Set<CharacterId>)}
+          onClick={() => setMainCharFilters(new Set([tag]) as Set<CharacterId>)}
           key={tag}
         >
           {tag}
@@ -50,17 +61,17 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP, typeof mapDispatchToPr
         <Badge
           variant="danger"
           className="filter-pill"
-          onClick={() => setVsCharFilters(new Set(tag) as Set<CharacterId>)}
+          onClick={() => setVsCharFilters(new Set([tag]) as Set<CharacterId>)}
           key={tag}
         >
           {tag}
         </Badge>
       ))}
-      {/* {bit.stages.map(tag => (
+      {bit.stages.map(tag => (
         <Badge
           variant="primary"
           className="filter-pill"
-          onClick={() => setStageFilters(Set.of(tag))}
+          onClick={() => setStageFilters(new Set([tag]) as Set<StageId>)}
           key={tag}
         >
           {tag}
@@ -70,12 +81,12 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP, typeof mapDispatchToPr
         <Badge
           variant="warning"
           className="filter-pill"
-          onClick={() => setStandaloneTagFilters(Set.of(tag))}
+          onClick={() => setStandaloneTagFilters(new Set([tag]) as Set<LabelId>)}
           key={tag}
         >
           {tag}
         </Badge>
-      ))} */}
+      ))}
     </div>
   );
 }
