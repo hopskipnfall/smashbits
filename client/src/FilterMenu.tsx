@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DropdownButton, Badge, Dropdown } from 'react-bootstrap';
+import { Badge, Dropdown } from 'react-bootstrap';
 
 type Props = {
   title: any
@@ -7,7 +7,7 @@ type Props = {
   allFilters: any
   currentFilters: any
   onClick: (filter: string) => any
-}
+};
 
 export default function render(props: Props) {
   const {

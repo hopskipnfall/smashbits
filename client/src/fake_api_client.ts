@@ -3,7 +3,7 @@
 import * as uuid from 'uuid';
 import { Bit } from './types';
 
-const foxBit: Bit = {
+const foxBit = new Bit({
   postId: 'L3WDO8EL3LEKS',
   author: {
     personId: 'I2L3KFAE9GLREJ3',
@@ -16,8 +16,8 @@ const foxBit: Bit = {
   content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.',
   mainChars: ['Fox'],
   standaloneTags: ['Edgeguarding'],
-};
-const handBit: Bit = {
+});
+const handBit = new Bit({
   postId: 'ME8DU23MNO0S',
   author: {
     personId: '562B3409SLL',
@@ -30,8 +30,8 @@ const handBit: Bit = {
   content: 'It\'s a 1HKO.',
   stages: ['Dream Land', 'Congo Jungle'],
   standaloneTags: ['Approach'],
-};
-const falconPressureBit: Bit = {
+});
+const falconPressureBit = new Bit({
   postId: 'JNHQ98ASKJAK',
   author: {
     personId: '82JS0NG28XL1',
@@ -44,7 +44,7 @@ const falconPressureBit: Bit = {
   content: 'A way to pressure Yoshis that love baiting platform push off by holding shield, especially when you are respawning and have invincibility. Even if you don\'t get the break, they often times get hit trying to escape which can lead to a bunch of combo starters.',
   mainChars: ['Captain Falcon'],
   vsChars: ['Yoshi'],
-};
+});
 const bits = [foxBit, handBit, falconPressureBit];
 
 const foxComment1 = {

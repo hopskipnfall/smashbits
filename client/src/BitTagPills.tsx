@@ -1,8 +1,18 @@
-import { List, Set } from 'immutable';
+import { Set } from 'immutable';
 import * as React from 'react';
 import { Badge } from 'react-bootstrap';
+import { setMainCharFilters, setStageFilters, setStandaloneTagFilters, setVsCharFilters } from './action_creators';
+import { Bit } from './types';
 
-export default function BitTagPills(props: any) {
+type Props = {
+  bit: Bit
+  setMainCharFilters: typeof setMainCharFilters
+  setVsCharFilters: typeof setVsCharFilters
+  setStageFilters: typeof setStageFilters
+  setStandaloneTagFilters: typeof setStandaloneTagFilters
+};
+
+export default function BitTagPills(props: Props) {
   const {
     bit,
     setMainCharFilters,
@@ -12,7 +22,7 @@ export default function BitTagPills(props: any) {
   } = props;
   return (
     <div className="bit-tag-pills">
-      {(bit.get('mainChars', List()) as List<string>).map(tag => (
+      {bit.mainChars.map(tag => (
         <Badge
           variant="success"
           className="filter-pill"
@@ -22,7 +32,7 @@ export default function BitTagPills(props: any) {
           {tag}
         </Badge>
       ))}
-      {(bit.get('vsChars', List()) as List<string>).map(tag => (
+      {bit.vsChars.map(tag => (
         <Badge
           variant="danger"
           className="filter-pill"
@@ -32,7 +42,7 @@ export default function BitTagPills(props: any) {
           {tag}
         </Badge>
       ))}
-      {(bit.get('stages', List()) as List<string>).map(tag => (
+      {bit.stages.map(tag => (
         <Badge
           variant="primary"
           className="filter-pill"
@@ -42,7 +52,7 @@ export default function BitTagPills(props: any) {
           {tag}
         </Badge>
       ))}
-      {(bit.get('standaloneTags', List()) as List<string>).map(tag => (
+      {bit.standaloneTags.map(tag => (
         <Badge
           variant="warning"
           className="filter-pill"

@@ -10,7 +10,7 @@ type Props = {
   filtering: any
   profile: any
   createBit: any
-}
+};
 
 class CreateBitButton extends Component<Props> {
   constructor(props: Props, context: Map<string, any>) {
