@@ -1,29 +1,31 @@
 module.exports = {
-    'env': {
-        'browser': true,
-        'es2020': true
+    env: {
+        browser: true,
+        es2020: true
     },
-    'extends': [
+    extends: [
         'airbnb-typescript',
         'airbnb/hooks',
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking'
     ],
-    'parser': '@typescript-eslint/parser',
-    'parserOptions': {
-        'project': './tsconfig.json',
-        'tsconfigRootDir': __dirname,
-        'ecmaFeatures': {
-            'jsx': true
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+        project: './tsconfig.json',
+        tsconfigRootDir: __dirname,
+        ecmaFeatures: {
+            jsx: true
         },
-        'ecmaVersion': 11,
-        'sourceType': 'module'
+        ecmaVersion: 11,
+        sourceType: 'module'
     },
-    'plugins': [
+    plugins: [
         'react',
-        '@typescript-eslint'
+        '@typescript-eslint',
+        "prettier/@typescript-eslint",
+        "plugin:prettier/recommended" // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
     ],
-    'rules': {
+    rules: {
         'linebreak-style': 'off',
         'arrow-parens': ['warn', 'as-needed'],
         'react/prop-types': 'off',
@@ -39,5 +41,6 @@ module.exports = {
         }],
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "@typescript-eslint/lines-between-class-members": "off",
+        "import/prefer-default-export": "off",
     }
 };
