@@ -1,17 +1,24 @@
-import { Dispatch } from "redux";
+import { Dispatch, ActionCreator, Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { createBit as createBitApi, fetchBits as fetchBitsApi } from './api_client';
 import { AppState } from "./store";
 import { addBit, changeVote, replaceBits } from './store/bits/actions';
-import { AddBitAction, ChangeVoteAction } from './store/bits/types';
+import { AddBitAction, ChangeVoteAction, ReplaceBitsAction } from './store/bits/types';
 import { Bit, Vote } from "./types";
 
-export function thunkFetchBits() {
-  return async (dispatch: Dispatch) => {
-    const response = await fetchBitsApi()
-    dispatch(replaceBits(response.bits));
-  }
+// type ThunkResult<R> = ThunkAction<Promise<void>,any,null,ReplaceBitsAction>;
+
+export const thunkFetchBits
+:ActionCreator<ThunkAction<Promise<void>,any,null,ReplaceBitsAction>>
+ = () => {
+  return async (dispatch: Dispatch<ReplaceBitsAction>) => {
+  console.log('dispatch', dispatch);
+  // console.log('b', b);
+  // console.log('c', c);
+  const response = await fetchBitsApi()
+  dispatch(replaceBits(response.bits));
 }
+};
 
 export function thunkPostBit(bit: Bit):
  ThunkAction<void, AppState, unknown, AddBitAction> {

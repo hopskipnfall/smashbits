@@ -10,13 +10,13 @@ type Props = PropsFromRedux & {
   bits: Immutable.Map<string, BitType>
 };
 
-const BitsContainer: FunctionComponent<Props> = props => (
+const BitsContainer: FunctionComponent<any> = props => (
   <div>
     {props.bits.valueSeq().map((bit: BitType) => <Bit bit={bit} key={bit.postId} {...props} />)}
   </div>
 );
 
-const mapStateToProps = (state: AppState, ownProps: PropsFromRedux) => ({
+const mapStateToProps = (state: any, ownProps: any) => ({
   bits: state.bits.items,
 });
 

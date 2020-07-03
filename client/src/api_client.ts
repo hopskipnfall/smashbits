@@ -1,5 +1,5 @@
 import * as URI from 'urijs';
-import { addBit, receiveComments, receiveCreateBit, setProfile } from './action_creators';
+// import { receiveComments, setProfile } from './action_creators';
 import * as fakeClient from './fake_api_client';
 import history from './history';
 import { Bit } from './types';
@@ -63,26 +63,27 @@ export function fetchBit(bitId: string, dispatch: Function) {
         throw error;
       });
   }
-  fetchPromise.then(response => dispatch(addBit(response.bit)));
+  return fetchPromise;
+  // fetchPromise.then(response => dispatch(addBit(response.bit)));
 }
 
-export function fetchComments(bitId: string, dispatch: Function) {
-  let fetchPromise;
-  if (USE_FAKE_CLIENT) {
-    fetchPromise = fakeClient.fetchComments(bitId);
-  } else {
-    fetchPromise = safeFetch(
-      new URI(BASE_URI).segment([BITS_PATH, bitId, COMMENTS_PATH]).toString(),
-    )
-      .then(result => result.json())
-      .catch(error => {
-        console.log('Error fetching comments', error);
-        // TODO(thenuge): Handle this more gracefully with a message in the UI.
-        throw error;
-      });
-  }
-  fetchPromise.then(response => dispatch(receiveComments(bitId, fromJS(response))));
-}
+// export function fetchComments(bitId: string, dispatch: Function) {
+//   let fetchPromise;
+//   if (USE_FAKE_CLIENT) {
+//     fetchPromise = fakeClient.fetchComments(bitId);
+//   } else {
+//     fetchPromise = safeFetch(
+//       new URI(BASE_URI).segment([BITS_PATH, bitId, COMMENTS_PATH]).toString(),
+//     )
+//       .then(result => result.json())
+//       .catch(error => {
+//         console.log('Error fetching comments', error);
+//         // TODO(thenuge): Handle this more gracefully with a message in the UI.
+//         throw error;
+//       });
+//   }
+//   fetchPromise.then(response => dispatch(receiveComments(bitId, fromJS(response))));
+// }
 
 export function createBit(bit: Bit, dispatch: Dispatch) {
   let fetchPromise;
@@ -119,26 +120,26 @@ export function initTwitterLogin() {
   }
 }
 
-export function fetchProfile(dispatch: Function, successPath?: string) {
-  let fetchPromise;
-  if (USE_FAKE_CLIENT) {
-    fetchPromise = fakeClient.fetchProfile();
-  } else {
-    fetchPromise = safeFetch(
-      new URI(BASE_URI)
-        .path(PROFILE_PATH)
-        .toString(),
-    )
-      .then(result => result.json())
-      .catch(error => {
-        console.log('Error fetching profile', error);
-        // TODO(thenuge): Handle this more gracefully with a message in the UI.
-        throw error;
-      });
-  }
-  // TODO(thenuge): Handle errors.
-  fetchPromise.then(response => dispatch(setProfile(fromJS(response.user))));
-  if (successPath) {
-    history.push(successPath);
-  }
-}
+// export function fetchProfile(dispatch: Function, successPath?: string) {
+//   let fetchPromise;
+//   if (USE_FAKE_CLIENT) {
+//     fetchPromise = fakeClient.fetchProfile();
+//   } else {
+//     fetchPromise = safeFetch(
+//       new URI(BASE_URI)
+//         .path(PROFILE_PATH)
+//         .toString(),
+//     )
+//       .then(result => result.json())
+//       .catch(error => {
+//         console.log('Error fetching profile', error);
+//         // TODO(thenuge): Handle this more gracefully with a message in the UI.
+//         throw error;
+//       });
+//   }
+//   // TODO(thenuge): Handle errors.
+//   fetchPromise.then(response => dispatch(setProfile(fromJS(response.user))));
+//   if (successPath) {
+//     history.push(successPath);
+//   }
+// }

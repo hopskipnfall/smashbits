@@ -2,8 +2,7 @@ import * as React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as styles from './Bit.sass';
-import BitTagPills from './BitTagPills';
-import { USER_DOWNVOTE, USER_UPVOTE } from './reducer';
+// import BitTagPills from './BitTagPills';
 import { Bit as BitType } from './types';
 import { FunctionComponent } from 'react';
 import { VOTE_UP, VOTE_DOWN } from './store/bits/types';
@@ -16,8 +15,8 @@ type BitProps = PropsFromRedux & {
   thunkChangeVote: typeof thunkChangeVote
 }
 
-const getDownvoteButtonStyle = (bit: BitType) => (bit.userVote === USER_DOWNVOTE ? 'danger' : 'primary');
-const getUpvoteButtonStyle = (bit: BitType) => (bit.userVote === USER_UPVOTE ? 'success' : 'primary');
+const getDownvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_DOWN ? 'danger' : 'primary');
+const getUpvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_UP ? 'success' : 'primary');
 
 const Bit : FunctionComponent<BitProps> = props => {
   const { bit, thunkChangeVote } = props;
@@ -37,7 +36,7 @@ const Bit : FunctionComponent<BitProps> = props => {
     <Card>
       <Card.Header>{header}</Card.Header>
       <div>
-        <BitTagPills bit={bit} {...props} />
+        {/* <BitTagPills bit={bit} {...props} /> */}
         <p>
           <b>{bit.author.name}</b>
           {' '}
