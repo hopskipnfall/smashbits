@@ -7,6 +7,14 @@ export interface Author {
   name: string;
 }
 
+export interface Comment {
+  id: string
+  postId: string
+  author: Author
+  dateCreated: number
+  content: string
+}
+
 export type Vote = -1 | 0 | 1;
 
 export class Bit {
@@ -22,7 +30,7 @@ export class Bit {
   stages: string[];
   vsChars: string[];
   userVote: Vote;
-  comments: Immutable.Set<any>;
+  comments: Immutable.Set<Comment>;
   isRequestingComments: boolean;
 
   constructor(data?: { [key: string]: any }) {
@@ -49,3 +57,58 @@ export class Bit {
 export type Readonly<T> = {
   readonly [K in keyof T]: Readonly<T[K]>;
 };
+
+export type CharacterId = 'lu' | 'ma' | 'do' | 'li' | 'sa' | 'ca' | 'ne' | 'yo' | 'ki' | 'fo' | 'pi' | 'pu';
+type Character = {
+  id: CharacterId
+  display: string
+}
+
+export const CHARACTER_MAP = new Map<CharacterId, Character>([
+  ['lu', { id: 'lu', display: 'Luigi' } as const],
+  ['ma', { id: 'ma', display: 'Mario' } as const],
+  ['do', { id: 'do', display: 'Donkey Kong' } as const],
+  ['li', { id: 'li', display: 'Link' } as const],
+  ['sa', { id: 'sa', display: 'Samus' } as const],
+  ['ca', { id: 'ca', display: 'Captain Falcon' } as const],
+  ['ne', { id: 'ne', display: 'Ness' } as const],
+  ['yo', { id: 'yo', display: 'Yoshi' } as const],
+  ['ki', { id: 'ki', display: 'Kirby' } as const],
+  ['fo', { id: 'fo', display: 'Fox' } as const],
+  ['pi', { id: 'pi', display: 'Pikachu' } as const],
+  ['pu', { id: 'pu', display: 'Jigglypuff' } as const],
+]);
+
+export type StageId = 'pc' | 'cj' | 'hc' | 'pz' | 'mk' | 'dl' | 'sz' | 'sc' | 'mc' | 'yi' | 'fd' | 'bf';
+type Stage = {
+  id: StageId
+  display: string
+}
+
+export const STAGE_MAP = new Map<StageId, Stage>([
+  ['pc', {id: 'pc', display: 'Peach\'s Castle'} as const],
+  ['cj', {id: 'cj', display: 'Congo Jungle'} as const],
+  ['hc', {id: 'hc', display: 'Hyrule Castle'} as const],
+  ['pz', {id: 'pz', display: 'Planet Zebes'} as const],
+  ['mk', {id: 'mk', display: 'Mushroom Kingdom'} as const],
+  ['dl', {id: 'dl', display: 'Dream Land'} as const],
+  ['sz', {id: 'sz', display: 'Sector Z'} as const],
+  ['sc', {id: 'sc', display: 'Saffron City'} as const],
+  ['mc', {id: 'mc', display: 'Meta Crystal (19xx)'} as const],
+  ['yi', {id: 'yi', display: 'Yoshi\'s Island (19xx)'} as const],
+  ['fd', {id: 'fd', display: 'Final Destination (19xx)'} as const],
+  ['bf', {id: 'bf', display: 'Battlefield (19xx)'} as const],
+]);
+
+export type LabelId = 'ap' | 'ed' | 'co' | 'es';
+type Label = {
+  id: LabelId
+  display: string
+}
+
+export const LABEL_MAP = new Map<LabelId, Label>([
+  ['ap', {id: 'ap', display: 'Approach'} as const],
+  ['ed', {id: 'ed', display: 'Edge Guarding'} as const],
+  ['co', {id: 'co', display: 'Combos'} as const],
+  ['es', {id: 'es', display: 'Escapes'} as const],
+])

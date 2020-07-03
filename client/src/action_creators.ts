@@ -19,50 +19,6 @@ export function addBit(bit: Bit) {
   };
 }
 
-export function upvote(bitId: string) {
-  return {
-    type: ACTION_UPVOTE,
-    data: bitId,
-  };
-}
-
-export function downvote(bitId: string) {
-  return {
-    type: ACTION_DOWNVOTE,
-    data: bitId,
-  };
-}
-
-export function resetVote(bitId: string) {
-  return {
-    type: ACTION_RESET_VOTE,
-    data: bitId,
-  };
-}
-
-function refreshBits() {
-  return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-    dispatch(clearBits());
-    dispatch(fetchBits());
-  };
-}
-
-export function changeSort(sort: string) {
-  return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-    history.push(setSortQuery(sort, history.location.search));
-
-    // If we have less than 1 page of bits, we can just sort them client-side.
-    if (getState().get('bits').size >= getState().get('pageSize')) {
-      dispatch(refreshBits());
-    } else {
-      dispatch({
-        type: ACTION_CHANGE_SORT,
-        data: sort,
-      });
-    }
-  };
-}
-
 export function setMainCharFilters(chars: Immutable.Set<string>) {
   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
     history.push(setMainCharsQuery(chars, history.location.search));
@@ -160,71 +116,10 @@ export function fetchBit(bitId: string) {
   };
 }
 
-export function fetchBits() {
-  return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-    return fetchBitsApi(dispatch);
-  };
-}
-
-export function fetchNextPage() {
-  return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-    const offset = (getOffset(history.location.search) || 0)
-      + (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE);
-    dispatch(setOffset(offset));
-    dispatch(refreshBits());
-  };
-}
-
-export function fetchPreviousPage() {
-  return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-    const offset = Math.max(
-      0,
-      (getOffset(history.location.search) || 0)
-      - (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE),
-    );
-    dispatch(setOffset(offset));
-    dispatch(refreshBits());
-  };
-}
-
-export function setOffset(offset: number) {
-  return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-    history.push(setOffsetQuery(offset, history.location.search));
-  };
-}
-
-export function setPageSize(pageSize: number) {
-  return function (dispatch: Dispatch<any>) {
-    history.push(setPageSizeQuery(pageSize, setOffsetQuery(0, history.location.search)));
-    dispatch(refreshBits());
-  };
-}
-
 export function fetchComments(bitId: string) {
   return function (dispatch: Dispatch<any>) {
     dispatch(requestComments(bitId));
 
     fetchCommentsApi(bitId, dispatch);
-  };
-}
-
-function requestCreateBit(bit: Bit) {
-  return {
-    type: ACTION_REQUEST_CREATE_BIT,
-    data: bit,
-  };
-}
-
-export function receiveCreateBit(bitUrl: string | null) {
-  return {
-    type: ACTION_RECEIVE_CREATE_BIT,
-    data: bitUrl,
-  };
-}
-
-export function createBit(bit: Bit) {
-  return function (dispatch: Dispatch<any>) {
-    dispatch(requestCreateBit(bit));
-    return createBitApi(bit, dispatch);
   };
 }

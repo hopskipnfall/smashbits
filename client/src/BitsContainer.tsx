@@ -5,11 +5,14 @@ import * as actionCreators from './action_creators';
 import Bit from './Bit';
 import { filterBits } from './bits_util';
 import { Bit as BitType } from './types';
+import { AppState, PropsFromRedux } from './store';
+import { SortOption } from './store/filtering/types';
 
-type Props = {
-  bits?: Immutable.Map<string, BitType>
-  filters?: any
-  comments?: any
+type Props = PropsFromRedux & {
+  bits: Immutable.Map<string, BitType>
+  filters: any
+  comments: Immutable.Set<any>
+  sortMethod: SortOption
 };
 
 const BitsContainer = (props: Props) => (
@@ -18,9 +21,10 @@ const BitsContainer = (props: Props) => (
   </div>
 );
 
-const mapStateToProps = (state: Immutable.Map<string, any>, ownProps: Props) => ({
+const mapStateToProps = (state: AppState, ownProps: PropsFromRedux) => ({
   bits: filterBits(state, ownProps.filters),
-  comments: state.get('comments', Immutable.Map()),
-} as Props);
+  comments: state.bits.comments,
+  sortMethod: state.bits.sort,
+});
 
 export default connect(mapStateToProps, actionCreators)(BitsContainer);

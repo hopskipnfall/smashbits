@@ -3,8 +3,9 @@ import { addBit, receiveComments, receiveCreateBit, setProfile } from './action_
 import * as fakeClient from './fake_api_client';
 import history from './history';
 import { Bit } from './types';
-
-const { fromJS } = require('immutable');
+import { Dispatch } from 'redux';
+import { fromJS } from 'immutable';
+import * as Immutable from 'immutable';
 
 // TODO: Fix this "any" type.
 function safeFetch(url: string, options?: any) {
@@ -25,7 +26,7 @@ const PROFILE_PATH = '/profile';
 // Set this to true in .env to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = (process.env.USE_FAKE_API_CLIENT === 'true') && process.env.NODE_ENV === 'development';
 
-export function fetchBits(dispatch: Function) {
+export function fetchBits(): Promise<{bits: Bit[]}> {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBits();
@@ -34,17 +35,17 @@ export function fetchBits(dispatch: Function) {
       new URI(BASE_URI)
         .path(BITS_PATH)
         .query(history.location.search)
-        .toString(),
-    )
+        .toString())
       .then(result => result.json())
       .catch(error => {
-        console.log('Error fetching bits', error);
+        console.error('Error fetching bits', error);
         // TODO(thenuge): Handle this more gracefully with a message in the UI.
         throw error;
       });
   }
+  return fetchPromise;
   // TODO(thenuge): Add actions for initiating requests for bit fetching, as well as errors.
-  fetchPromise.then((response: any) => response.bits.map((bit: { [key: string]: any }) => dispatch(addBit(new Bit(bit)))));
+  // fetchPromise.then((response: any) => response.bits.map((bit: { [key: string]: any }) => dispatch(addBit(new Bit(bit)))));
 }
 
 export function fetchBit(bitId: string, dispatch: Function) {
@@ -83,7 +84,7 @@ export function fetchComments(bitId: string, dispatch: Function) {
   fetchPromise.then(response => dispatch(receiveComments(bitId, fromJS(response))));
 }
 
-export function createBit(bit: Bit, dispatch: Function) {
+export function createBit(bit: Bit, dispatch: Dispatch) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.createBit(bit);
@@ -104,7 +105,8 @@ export function createBit(bit: Bit, dispatch: Function) {
         throw error;
       });
   }
-  fetchPromise.then(bitUrl => dispatch(receiveCreateBit(bitUrl)));
+  return fetchPromise;
+  // fetchPromise.then(bitUrl => dispatch(receiveCreateBit(bitUrl)));
 }
 
 export function initTwitterLogin() {

@@ -5,16 +5,29 @@ import * as styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
 import { USER_DOWNVOTE, USER_UPVOTE } from './reducer';
 import { Bit as BitType } from './types';
+import { FunctionComponent } from 'react';
+import { VOTE_UP, VOTE_DOWN } from './store/bits/types';
+import { PropsFromRedux } from './store';
+import {thunkChangeVote} from './thunks';
+import { connect } from 'react-redux';
 
-export default function Bit(props: any) {
-  const { bit = new BitType(), upvote, downvote } = props;
+type BitProps = PropsFromRedux & { 
+  bit: BitType
+  thunkChangeVote: typeof thunkChangeVote
+}
+
+const getDownvoteButtonStyle = (bit: BitType) => (bit.userVote === USER_DOWNVOTE ? 'danger' : 'primary');
+const getUpvoteButtonStyle = (bit: BitType) => (bit.userVote === USER_UPVOTE ? 'success' : 'primary');
+
+const Bit : FunctionComponent<BitProps> = props => {
+  const { bit, thunkChangeVote } = props;
   const header = (
     <h3>
-      <Button variant={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => upvote(bit.postId)}>
+      <Button variant={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => thunkChangeVote(bit.postId, VOTE_UP)}>
         <span className="glyphicon glyphicon-thumbs-up" />
       </Button>
       {bit.upvotes - bit.downvotes + bit.userVote}
-      <Button variant={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => downvote(bit.postId)}>
+      <Button variant={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => thunkChangeVote(bit.postId, VOTE_DOWN)}>
         <span className="glyphicon glyphicon-thumbs-down" />
       </Button>
       <span className={styles.title}>{bit.title}</span>
@@ -41,6 +54,4 @@ export default function Bit(props: any) {
   );
 }
 
-const getDownvoteButtonStyle = (bit: BitType) => (bit.userVote === USER_DOWNVOTE ? 'danger' : 'primary');
-
-const getUpvoteButtonStyle = (bit: BitType) => (bit.userVote === USER_UPVOTE ? 'success' : 'primary');
+export default connect(null, {thunkChangeVote})(Bit);

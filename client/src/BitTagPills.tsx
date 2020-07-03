@@ -3,8 +3,10 @@ import * as React from 'react';
 import { Badge } from 'react-bootstrap';
 import { setMainCharFilters, setStageFilters, setStandaloneTagFilters, setVsCharFilters } from './action_creators';
 import { Bit } from './types';
+import { FunctionComponent } from 'react';
+import { PropsFromRedux } from './store';
 
-type Props = {
+type BitTagPillsProps = PropsFromRedux & {
   bit: Bit
   setMainCharFilters: typeof setMainCharFilters
   setVsCharFilters: typeof setVsCharFilters
@@ -12,7 +14,7 @@ type Props = {
   setStandaloneTagFilters: typeof setStandaloneTagFilters
 };
 
-export default function BitTagPills(props: Props) {
+const BitTagPills: FunctionComponent<BitTagPillsProps> = props => {
   const {
     bit,
     setMainCharFilters,
@@ -65,3 +67,5 @@ export default function BitTagPills(props: Props) {
     </div>
   );
 }
+
+export default BitTagPills;

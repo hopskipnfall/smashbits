@@ -3,13 +3,14 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from './action_creators';
 import BitsContainer from './BitsContainer';
+import { AppState, PropsFromRedux } from './store';
 
-type Props = {
+type BitPageProps = PropsFromRedux & {
   fetchBit: typeof actionCreators.fetchBit
   match: any
 };
 
-class BitPage extends Component<Props> {
+class BitPage extends Component<BitPageProps, AppState> {
   componentDidMount() {
     const { fetchBit } = this.props;
     fetchBit(this.props.match.params.bitId);
@@ -22,4 +23,4 @@ class BitPage extends Component<Props> {
   }
 }
 
-export default connect(null, actionCreators)(BitPage);
+export default connector(BitPage);
