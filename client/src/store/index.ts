@@ -1,14 +1,12 @@
-import { createStore, applyMiddleware, combineReducers, AnyAction, Action } from 'redux';
+import { Component, FunctionComponent } from 'react';
+import { connect, ConnectedProps } from 'react-redux';
+import { RouteChildrenProps } from 'react-router-dom';
+import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux';
+import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { bitsReducer } from './bits/reducers';
-import * as bitsActions from './bits/actions';
-import * as filteringActions from './filtering/actions';
-import {filteringReducer} from './filtering/reducers';
-import { connect, ConnectedProps } from 'react-redux';
-import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
-import { RouteChildrenProps } from 'react-router-dom';
-import { Component, FunctionComponent } from 'react';
-import { allActions, allActionTypes } from '../thunks';
+import { filteringReducer } from './filtering/reducers';
+import { allActions } from '../all_actions';
 
 const rootReducer = combineReducers({
   bits: bitsReducer,
@@ -29,19 +27,10 @@ export function configureStore() {
   return createStore(rootReducer, middlewareEnhancer);
 }
 
-const combinedActions = {
-  actions: {
-    bits: bitsActions,
-    filtering: filteringActions,
-  }
-}
-
-const connector = connect(null, combinedActions);
-/** Joined type of everything that gets passed to components. */
+const connector = connect(null, allActions);
 export type PropsFromRedux = ConnectedProps<typeof connector> & RouteChildrenProps<any>;
 
-//                                                                                          Component<InputProps & ReturnType<typeof mapStateToProps> & allActionTypes & typeof allActions & PropsFromRedux, AppState> {
-export class AppComponent<RequiredProps, StateToProps extends (...args: any) => any> extends Component<RequiredProps & ReturnType<StateToProps> & typeof allActions & allActionTypes & PropsFromRedux, AppState> {};
+export class AppComponent<RequiredProps, StateToProps extends (...args: any) => any> extends Component<RequiredProps & ReturnType<StateToProps> & PropsFromRedux, AppState> {};
 
 export interface AppFunctionComponent<RequiredProps, StateToProps extends (...args: any) => any, DispatchToProps extends (...args: any) => any> extends FunctionComponent<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps>> {};
 

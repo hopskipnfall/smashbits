@@ -23,16 +23,3 @@ export const replaceBits = (bits: Bit[]) => ({
     type: REPLACE_BITS,
     bits,
 } as ReplaceBitsAction);
-
-export const bitsActions = {
-  clearBits, changeVote, addBit, replaceBits,
-}
-
-type AppThunkAction = ThunkAction<any, AppState, null, AnyAction>
-
-export type bitsActionTypes = {
-  clearBits: AppThunkAction
-  changeVote:  AppThunkAction
-  addBit:  AppThunkAction
-  replaceBits:  AppThunkAction
-}

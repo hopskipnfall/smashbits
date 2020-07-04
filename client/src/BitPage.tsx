@@ -3,8 +3,8 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import BitsContainer from './BitsContainer';
 import { AppComponent, AppState, PropsFromRedux } from './store';
-import { allActions } from './thunks';
 import { Bit } from './types';
+import { allActions } from './all_actions';
 
 const mapStateToProps = (state: AppState, ownProps: any) => ({
   bits: state.bits.items,

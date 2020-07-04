@@ -33,18 +33,3 @@ export const setLabels = (labels: Set<LabelId>) => ({
   type: SET_LABELS,
   labels,
 } as SetLabelsAction);
-
-export const filteringActions = {
-  changeSort, setVsCharacters, setMainCharacters, setOffset, setStages, setLabels,
-}
-
-type AppThunkAction = ThunkAction<any, AppState, null, AnyAction>
-
-export type filteringActionTypes = {
-  changeSort: AppThunkAction
-  setVsCharacters:  AppThunkAction
-  setMainCharacters: AppThunkAction
-  setOffset: AppThunkAction
-  setStages:  AppThunkAction
-  setLabels:  AppThunkAction
-}
