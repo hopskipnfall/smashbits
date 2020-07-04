@@ -46,7 +46,7 @@ export interface AppFunctionComponent<RequiredProps, StateToProps extends (...ar
 export type NOOP = () => {};
 
 export function wrapThunkWithDispatch(thunkActionBuilder: (...args: any) => ThunkAction<void, AppState, unknown, AnyAction>, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
-  return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(args));
+  return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(...args));
 }
 
 export function wrapWithDispatch(thunkActionBuilder: (...args: any) => AnyAction, dispatch: ThunkDispatch<AppState, null, AnyAction>) {

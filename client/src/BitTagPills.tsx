@@ -5,23 +5,19 @@ import { AnyAction } from 'redux';
 import { ThunkDispatch } from 'redux-thunk';
 import { AppFunctionComponent, AppState, NOOP, wrapThunkWithDispatch, AppComponent, wrapWithDispatch } from './store';
 import { setMainCharacters, setVsCharacters, setStages, setLabels } from './store/filtering/actions';
-import { thunkFetchBits } from './thunks';
+import { thunkFetchBits, thunkSetMainChars } from './thunks';
 import { Bit, CharacterId, StageId, LabelId } from './types';
 import { buildUriFromState } from './uri_util';
 import history from './history';
 
 const mapStateToProps = (state: AppState, ownProps: any) => {
-  console.log('SETTING NEW STATE', state);
   return {state};
 }
-// ({
-//   state
-// });
 
 const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, null, AnyAction>) => ({
   dispatchers: {
     fetchBits: wrapThunkWithDispatch(thunkFetchBits, dispatch),
-    setMainCharacters: wrapWithDispatch(setMainCharacters, dispatch),
+    setMainCharFilters: wrapThunkWithDispatch(thunkSetMainChars, dispatch),
     setVsCharacters: wrapWithDispatch(setVsCharacters, dispatch),
     setStages: wrapWithDispatch(setStages, dispatch),
     setLabels: wrapWithDispatch(setLabels, dispatch),
@@ -36,13 +32,6 @@ class BitTagPills extends AppComponent<InputProps, typeof mapStateToProps, typeo
 
   private getState() {
     return this.props.state;
-  }
-
-  private setMainCharFilters(charIds: Set<CharacterId>) {
-    const dispatchers = this.props.dispatchers;
-    dispatchers.setMainCharacters(charIds);
-    history.push(buildUriFromState(this.props.state));
-    dispatchers.fetchBits();
   }
 
   private setVsCharFilters(charIds: Set<CharacterId>) {
@@ -76,7 +65,7 @@ class BitTagPills extends AppComponent<InputProps, typeof mapStateToProps, typeo
           <Badge
             variant="success"
             className="filter-pill"
-            onClick={() => this.setMainCharFilters(new Set([tag]) as Set<CharacterId>)}
+            onClick={() => {this.props.dispatchers.setMainCharFilters(new Set([tag]) as Set<CharacterId>)}}
             key={tag}
           >
             {tag}
