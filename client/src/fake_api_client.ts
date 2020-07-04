@@ -1,7 +1,8 @@
 // A fake implementation of api_client with test data to avoid making an RPC during development.
 
 import * as uuid from 'uuid';
-import { Bit, Comment } from './types';
+import { Bit, Comment, CharacterId, LabelId, StageId } from './types';
+import { FilteringState, SortOption } from './store/filtering/types';
 
 const bits = [new Bit({
   postId: 'L3WDO8EL3LEKS',
@@ -73,9 +74,48 @@ const comments: Comment[] = [{
   content: 'This is the kind of investigative reporting we need right now.',
 }];
 
-export function fetchBits() {
-  console.log('Fetching new bits!')
-  return Promise.resolve({ bits });
+export function fetchBits(filters: FilteringState) {
+  console.log('Fetching new bits!', filters)
+  const filtered = bits.filter(bit => {
+    if (filters.mainCharacters.size > 0) {
+      for(let char of Array.from(filters.mainCharacters)) {
+        if (bit.mainChars.indexOf(char as CharacterId) == -1) return false;
+      }
+    }
+
+    if (filters.labels.size > 0) {
+      for(let label of Array.from(filters.labels)) {
+        if (bit.standaloneTags.indexOf(label as LabelId) == -1) return false;
+      }
+    }
+
+    if (filters.vsCharacters.size > 0) {
+      for(let char of Array.from(filters.vsCharacters)) {
+        if (bit.vsChars.indexOf(char as CharacterId) == -1) return false;
+      }
+    }
+
+    if (filters.stages.size > 0) {
+      for(let stage of Array.from(filters.stages)) {
+        if (bit.stages.indexOf(stage as StageId) == -1) return false;
+      }
+    }
+    return true;
+  })
+  return Promise.resolve({
+    bits: filtered.sort((a, b) => {
+      switch (filters.sort) {
+        case SortOption.SCORE:
+          return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
+        case SortOption.NEWEST:
+          return b.dateCreated - a.dateCreated;
+        case SortOption.OLDEST:
+          return -1 * (b.dateCreated - a.dateCreated);
+        default:
+          return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
+      }
+    }),
+  });
 }
 
 export function fetchBit(bitId: string) {

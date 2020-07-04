@@ -1,11 +1,10 @@
-import { fromJS, List, Map } from 'immutable';
 import * as React from 'react';
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import FilterMenu from './FilterMenu';
 import { allActions } from './all_actions';
-import { AppFunctionComponent, NOOP, AppState } from './store';
-import { STAGE_MAP, CHARACTER_MAP, LABEL_MAP } from './types';
+import FilterMenu from './FilterMenu';
+import { AppFunctionComponent, AppState } from './store';
+import { ALL_CHARACTERS, ALL_LABELS, ALL_STAGES, CHARACTER_MAP_REVERSE, LABEL_MAP_REVERSE, STAGE_MAP_REVERSE } from './types';
 
 type Parameters = {};
 
@@ -16,7 +15,11 @@ const mapStateToProps = (state: AppState, ownProps: any) => ({
 
 const FilterControl: AppFunctionComponent<Parameters, typeof mapStateToProps> = props => {
   const {
-    filtering
+    filtering,
+    thunkSetMainChars,
+    thunkSetLabels,
+    thunkSetVsChars,
+    thunkSetStagesChars,
     //  toggleMainCharFilter, toggleVsCharFilter, toggleStageFilter, toggleStandaloneTagFilter,
   } = props;
   return (
@@ -26,32 +29,31 @@ const FilterControl: AppFunctionComponent<Parameters, typeof mapStateToProps> = 
       <FilterMenu
         title="These characters"
         bootstrapStyle="success"
-        allFilters={Array.from(CHARACTER_MAP).map(r=> r[1].display)}
-        currentFilters={filtering.mainCharacters}
-        onClick={() => console.log("do toggleMainCharFilter!")}
-        // onClick={toggleMainCharFilter}
+        allFilters={ALL_CHARACTERS}
+        currentFilters={new Set(Array.from(filtering.mainCharacters).map(name => CHARACTER_MAP_REVERSE.get(name)!))}
+        onClick={thunkSetMainChars}
       />
       <FilterMenu
         title="vs. these characters"
         bootstrapStyle="danger"
-        allFilters={Array.from(CHARACTER_MAP).map(r=> r[1].display)}
-        currentFilters={filtering.vsCharacters}
-        onClick={() => console.log("do toggleVsCharFilter!")}
+        allFilters={ALL_CHARACTERS}
+        currentFilters={new Set(Array.from(filtering.vsCharacters).map(name => CHARACTER_MAP_REVERSE.get(name)!))}
+        onClick={thunkSetVsChars}
         // onClick={toggleVsCharFilter}
       />
       <FilterMenu
         title="on these stages"
         bootstrapStyle="primary"
-        allFilters={Array.from(STAGE_MAP).map(r=> r[1].display)}
-        currentFilters={filtering.stages}
+        allFilters={ALL_STAGES}
+        currentFilters={new Set(Array.from(filtering.stages).map(name => STAGE_MAP_REVERSE.get(name)!))}
         onClick={() => console.log("do toggleStageFilter!")}
         // onClick={toggleStageFilter}
       />
       <FilterMenu
         title="with these tags"
         bootstrapStyle="warning"
-        allFilters={Array.from(LABEL_MAP).map(r=> r[1].display)}
-        currentFilters={filtering.labels}
+        allFilters={ALL_LABELS}
+        currentFilters={new Set(Array.from(filtering.labels).map(name => LABEL_MAP_REVERSE.get(name)!))}
         onClick={() => console.log("do toggleStandaloneTagFilter!")}
         // onClick={toggleStandaloneTagFilter}
       />

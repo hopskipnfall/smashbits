@@ -16,7 +16,7 @@ type Props = {
 // class CreateBitButton extends Component<Props> {
 class CreateBitButton extends AppComponent<Props, NOOP> {
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       show: false,
     });

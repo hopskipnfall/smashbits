@@ -2,7 +2,7 @@ import { Component, FunctionComponent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RouteChildrenProps } from 'react-router-dom';
 import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux';
-import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
+import { composeWithDevTools } from "redux-devtools-extension";
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { bitsReducer } from './bits/reducers';
 import { filteringReducer } from './filtering/reducers';

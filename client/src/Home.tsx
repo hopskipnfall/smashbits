@@ -19,7 +19,7 @@ type Props = {
 };
 
 class Home extends AppComponent<Props, NOOP> {
-  componentWillMount() {
+  componentDidMount() {
     const { thunkFetchBits } = this.props;
     thunkFetchBits(); // maybe get rid of this this looks wrong
   }
