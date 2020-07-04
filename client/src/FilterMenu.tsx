@@ -8,7 +8,7 @@ type Parameters = {
   title: any
   bootstrapStyle: any
   allFilters: any
-  currentFilters: any
+  currentFilters: Set<string>
   onClick: (filter: string) => any
 };
 
@@ -26,14 +26,14 @@ const FilterMenu: AppFunctionComponent<Parameters, NOOP> = props => {
         <Dropdown.Menu className="dropdown-menu">
           {allFilters.map((filter: string) => (
             <Dropdown.Item onSelect={() => onClick(filter)} key={filter}>
-              {(currentFilters.includes(filter) ? '\u2713 ' : ' ') + filter}
+              {(currentFilters.has(filter) ? '\u2713 ' : ' ') + filter}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
       </Dropdown>
 
       <div>
-        {currentFilters.map((filter: string) => (
+        {Array.from(currentFilters).map(filter => (
           <Badge variant={bootstrapStyle} className="filter-pill" onClick={() => onClick(filter)} key={filter}>
             &#215;
             {' '}

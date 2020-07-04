@@ -5,7 +5,7 @@ import * as styles from './App.sass';
 import BitPage from './BitPage';
 // import LoginButton from './LoginButton';
 // import LoginTransitionPage from './LoginTransitionPage';
-// import Home from './Home';
+import Home from './Home';
 
 const App = () => (
   <div>
@@ -20,7 +20,7 @@ const App = () => (
       </p>
     </div>
     <Switch>
-      {/* <Route exact path="/" component={Home} /> */}
+      <Route exact path="/" component={Home} />
       <Route path="/bits/:bitId" component={BitPage} />
       {/* <Route path="/login" component={LoginTransitionPage} /> */}
     </Switch>
