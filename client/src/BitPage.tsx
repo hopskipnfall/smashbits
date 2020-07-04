@@ -10,7 +10,7 @@ const mapStateToProps = (state: AppState, ownProps: any) => ({
   bits: state.bits.items,
 });
 
-class BitPage extends AppComponent<PropsFromRedux, typeof mapStateToProps> {
+class BitPage extends AppComponent<{}, typeof mapStateToProps> {
   bits: Immutable.Map<string, Bit>;
 
   componentDidMount() {
