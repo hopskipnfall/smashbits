@@ -2,15 +2,12 @@ import * as React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { AnyAction } from 'redux';
-import { ThunkDispatch } from 'redux-thunk';
+import { allActions } from './all_actions';
 import * as styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
-import { AppFunctionComponent, AppState, NOOP, wrapThunkWithDispatch } from './store';
+import { AppFunctionComponent, NOOP } from './store';
 import { VOTE_DOWN, VOTE_UP } from './store/bits/types';
-import { thunkChangeVote } from './thunks';
 import { Bit as BitType } from './types';
-import { allActions } from './all_actions';
 
 type InputProps = {
   bit: BitType

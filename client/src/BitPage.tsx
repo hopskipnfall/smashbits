@@ -6,11 +6,13 @@ import { AppComponent, AppState, PropsFromRedux } from './store';
 import { Bit } from './types';
 import { allActions } from './all_actions';
 
-const mapStateToProps = (state: AppState, ownProps: any) => ({
+type Parameters = {};
+
+const mapStateToProps = (state: AppState, ownProps: Parameters) => ({
   bits: state.bits.items,
 });
 
-class BitPage extends AppComponent<{}, typeof mapStateToProps> {
+class BitPage extends AppComponent<Parameters, typeof mapStateToProps> {
   bits: Immutable.Map<string, Bit>;
 
   componentDidMount() {

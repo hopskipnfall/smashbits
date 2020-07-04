@@ -4,17 +4,13 @@ import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
 // import CreateBitModal from './CreateBitModal';
 // import LoginButton from './LoginButton';
-import { AppComponent, NOOP } from './store';
+import { AppComponent, NOOP, AppState } from './store';
 import { allActions } from './all_actions';
 
-type Props = {
-  filtering: any
-  profile: any
-  createBit: any
-};
+type Parameters = {};
 
 // class CreateBitButton extends Component<Props> {
-class CreateBitButton extends AppComponent<Props, NOOP> {
+class CreateBitButton extends AppComponent<Parameters, NOOP> {
 
   componentDidMount() {
     this.setState({
@@ -31,7 +27,8 @@ class CreateBitButton extends AppComponent<Props, NOOP> {
   }
 
   render() {
-    const { filtering, profile, createBit } = this.props;
+    // const { filtering, profile, createBit } = this.props;
+    const profile = null;
     if (profile) {
       return ([
         <Button variant="danger" onClick={this.show} key="create-bit-button">
@@ -53,9 +50,4 @@ class CreateBitButton extends AppComponent<Props, NOOP> {
   }
 }
 
-const mapStateToProps = (state: Map<string, any>) => ({
-  filtering: state.get('filtering'),
-  profile: state.get('profile'),
-});
-
-export default connect(mapStateToProps, allActions)(CreateBitButton);
+export default connect(null, allActions)(CreateBitButton);

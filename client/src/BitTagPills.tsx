@@ -5,13 +5,14 @@ import { allActions } from './all_actions';
 import { AppComponent, AppState } from './store';
 import { Bit, CharacterId, LabelId, StageId } from './types';
 
-const mapStateToProps = (state: AppState, ownProps: any) => {
-  return { state };
-}
-
 type InputProps = {
   bit: Bit
 };
+
+// TODO: fix this so it uses types
+const mapStateToProps = (state: AppState, ownProps: any) => {
+  return { state };
+}
 
 class BitTagPills extends AppComponent<InputProps, typeof mapStateToProps> {
   render() {
