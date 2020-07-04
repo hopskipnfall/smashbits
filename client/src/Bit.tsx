@@ -10,10 +10,7 @@ import { AppFunctionComponent, AppState, NOOP, wrapThunkWithDispatch } from './s
 import { VOTE_DOWN, VOTE_UP } from './store/bits/types';
 import { thunkChangeVote } from './thunks';
 import { Bit as BitType } from './types';
-
-const mapDispatchToProps = (dispatch: ThunkDispatch<AppState, null, AnyAction>) => {
-  return {changeVote: wrapThunkWithDispatch(thunkChangeVote, dispatch)}
-};
+import { allActions } from './all_actions';
 
 type InputProps = {
   bit: BitType
@@ -22,15 +19,15 @@ type InputProps = {
 const getDownvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_DOWN ? 'danger' : 'primary');
 const getUpvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_UP ? 'success' : 'primary');
 
-const Bit: AppFunctionComponent<InputProps, NOOP, typeof mapDispatchToProps> = props => {
-  const { bit, changeVote } = props;
+const Bit: AppFunctionComponent<InputProps, NOOP> = props => {
+  const { bit, thunkChangeVote } = props;
   const header = (
     <h3>
-      <Button variant={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => changeVote(bit.postId, VOTE_UP)}>
+      <Button variant={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => thunkChangeVote(bit.postId, VOTE_UP)}>
         <span className="glyphicon glyphicon-thumbs-up" />
       </Button>
       {bit.upvotes - bit.downvotes + bit.userVote}
-      <Button variant={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => changeVote(bit.postId, VOTE_DOWN)}>
+      <Button variant={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => thunkChangeVote(bit.postId, VOTE_DOWN)}>
         <span className="glyphicon glyphicon-thumbs-down" />
       </Button>
       <span className={styles.title}>{bit.title}</span>
@@ -57,4 +54,4 @@ const Bit: AppFunctionComponent<InputProps, NOOP, typeof mapDispatchToProps> = p
   );
 }
 
-export default connect(null, mapDispatchToProps)(Bit);
+export default connect(null, allActions)(Bit);

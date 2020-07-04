@@ -30,9 +30,9 @@ export function configureStore() {
 const connector = connect(null, allActions);
 export type PropsFromRedux = ConnectedProps<typeof connector> & RouteChildrenProps<any>;
 
-export class AppComponent<RequiredProps, StateToProps extends (...args: any) => any, ComponentState = {}> extends Component<RequiredProps & ReturnType<StateToProps> & PropsFromRedux, ComponentState> {};
+export class AppComponent<RequiredProps, StateToProps extends (...args: any) => any, ComponentState = {}>                     extends Component<RequiredProps & ReturnType<StateToProps> & PropsFromRedux, ComponentState> {};
 
-export interface AppFunctionComponent<RequiredProps, StateToProps extends (...args: any) => any, DispatchToProps extends (...args: any) => any> extends FunctionComponent<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps>> {};
+export interface AppFunctionComponent<RequiredProps, StateToProps extends (...args: any) => any, ComponentState = {}> extends FunctionComponent<RequiredProps & ReturnType<StateToProps> & ConnectedProps<typeof connector>> {};
 
 export type NOOP = () => {};
 
