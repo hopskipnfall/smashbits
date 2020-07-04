@@ -8,10 +8,13 @@ import { Bit, Vote, CharacterId } from "./types";
 import { setMainCharacters } from "./store/filtering/actions";
 import history from "./history";
 import { buildUriFromState } from "./uri_util";
+import {bitsActions, bitsActionTypes} from './store/bits/actions';
+import {filteringActions, filteringActionTypes} from './store/filtering/actions';
 
-type AppThunkAction = ActionCreator<ThunkAction<Promise<void>, AppState, null, AnyAction>>
+export type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>
+export type AppThunkActionCreator = ActionCreator<AppThunkAction>
 
-export const thunkFetchBits: AppThunkAction = () => {
+export const thunkFetchBits: AppThunkActionCreator = () => {
   return async (dispatch, getState) => {
     console.log('dispatch', dispatch);
     const response = await fetchBitsApi()
@@ -19,7 +22,7 @@ export const thunkFetchBits: AppThunkAction = () => {
   }
 };
 
-export const thunkFetchBit: AppThunkAction = (bitId: string) => {
+export const thunkFetchBit: AppThunkActionCreator = (bitId: string) => {
   return async (dispatch, getState) => {
     console.log('getState', getState());
     const response = await fetchBitApi(bitId)
@@ -27,14 +30,13 @@ export const thunkFetchBit: AppThunkAction = (bitId: string) => {
   }
 };
 
-export const thunkSetMainChars: AppThunkAction = (characters: Set<CharacterId>) => {
+export const thunkSetMainChars: AppThunkActionCreator = (characters: Set<CharacterId>) => {
   return async (dispatch, getState) => {
     dispatch(setMainCharacters(characters));
     history.push(buildUriFromState(getState()));
     dispatch(thunkFetchBits);
   }
 };
-
 
 export function thunkPostBit(bit: Bit):
   ThunkAction<void, AppState, unknown, AddBitAction> {
@@ -58,3 +60,22 @@ export function thunkChangeVote(bitId: string, vote: Vote):
     // TODO: Make an API call.
   }
 }
+
+export const thunkActions = {
+  thunkChangeVote, thunkFetchBit, thunkPostBit, thunkSetMainChars,
+}
+
+export type thunkActionTypes = {
+  thunkChangeVote: AppThunkAction
+  thunkFetchBit: AppThunkAction
+  thunkPostBit: AppThunkAction
+  thunkSetMainChars: AppThunkAction
+}
+
+export const allActions = {
+  ...bitsActions,
+  ...filteringActions,
+  ...thunkActions,
+}
+
+export type allActionTypes = bitsActionTypes & filteringActionTypes & thunkActionTypes;

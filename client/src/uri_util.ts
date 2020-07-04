@@ -107,9 +107,7 @@ export const buildUriFromState = (state: AppState) => {
     [QUERY_STAGES]: defaultToUndefined(Array.from(state.filtering.stages)[0]),
     [QUERY_TAGS]: defaultToUndefined(Array.from(state.filtering.labels)[0]),
   };
-  console.log(params);
 
-  const uri = URI().addSearch(params);
-  console.log('paramzzz', uri.search());
+  const uri = URI().search(params);
   return uri.search();
 };

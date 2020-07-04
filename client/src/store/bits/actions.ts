@@ -1,28 +1,38 @@
-import { CHANGE_VOTE, CLEAR_BITS, ADD_BIT, REPLACE_BITS, AddBitAction, ChangeVoteAction, ReplaceBitsAction } from "./types";
+import { AnyAction } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { AppState } from "..";
 import { Bit, Vote } from "../../types";
+import { AddBitAction, ADD_BIT, ChangeVoteAction, CHANGE_VOTE, ClearBitsAction, CLEAR_BITS, ReplaceBitsAction, REPLACE_BITS } from "./types";
 
-export function clearBits() {
-  return { type: CLEAR_BITS };
-}
+export const clearBits = () => ({
+  type: CLEAR_BITS,
+} as ClearBitsAction);
 
-export function changeVote(bitId: string, vote: Vote): ChangeVoteAction {
-  return {
-    type: CHANGE_VOTE,
-    bitId,
-    vote,
-  };
-}
+export const changeVote = (bitId: string, vote: Vote) => ({
+  type: CHANGE_VOTE,
+  bitId,
+  vote,
+} as ChangeVoteAction);
 
-export function addBit(bit: Bit): AddBitAction {
-  return {
+export const addBit = (bit: Bit) => ({
     type: ADD_BIT,
     bit,
-  };
-}
+} as  AddBitAction);
 
-export function replaceBits(bits: Bit[]): ReplaceBitsAction {
-  return {
+export const replaceBits = (bits: Bit[]) => ({
     type: REPLACE_BITS,
     bits,
-  };
+} as ReplaceBitsAction);
+
+export const bitsActions = {
+  clearBits, changeVote, addBit, replaceBits,
+}
+
+type AppThunkAction = ThunkAction<any, AppState, null, AnyAction>
+
+export type bitsActionTypes = {
+  clearBits: AppThunkAction
+  changeVote:  AppThunkAction
+  addBit:  AppThunkAction
+  replaceBits:  AppThunkAction
 }

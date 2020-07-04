@@ -1,5 +1,8 @@
-import { CharacterId, StageId, LabelId } from "../../types";
-import { ChangeSortAction, CHANGE_SORT, SetMainCharactersAction, SetOffsetAction, SetStagesAction, SetVsCharactersAction, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS, SortOption, SetLabelsAction, SET_LABELS } from "./types";
+import { AnyAction } from "redux";
+import { ThunkAction } from "redux-thunk";
+import { AppState } from "..";
+import { CharacterId, LabelId, StageId } from "../../types";
+import { ChangeSortAction, CHANGE_SORT, SetLabelsAction, SetMainCharactersAction, SetOffsetAction, SetStagesAction, SetVsCharactersAction, SET_LABELS, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS, SortOption } from "./types";
 
 export const changeSort = (sort: SortOption) => ({
   type: CHANGE_SORT,
@@ -30,3 +33,18 @@ export const setLabels = (labels: Set<LabelId>) => ({
   type: SET_LABELS,
   labels,
 } as SetLabelsAction);
+
+export const filteringActions = {
+  changeSort, setVsCharacters, setMainCharacters, setOffset, setStages, setLabels,
+}
+
+type AppThunkAction = ThunkAction<any, AppState, null, AnyAction>
+
+export type filteringActionTypes = {
+  changeSort: AppThunkAction
+  setVsCharacters:  AppThunkAction
+  setMainCharacters: AppThunkAction
+  setOffset: AppThunkAction
+  setStages:  AppThunkAction
+  setLabels:  AppThunkAction
+}

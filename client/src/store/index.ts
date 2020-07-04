@@ -8,6 +8,7 @@ import { connect, ConnectedProps } from 'react-redux';
 import { composeWithDevTools } from "redux-devtools-extension/developmentOnly";
 import { RouteChildrenProps } from 'react-router-dom';
 import { Component, FunctionComponent } from 'react';
+import { allActions, allActionTypes } from '../thunks';
 
 const rootReducer = combineReducers({
   bits: bitsReducer,
@@ -39,16 +40,18 @@ const connector = connect(null, combinedActions);
 /** Joined type of everything that gets passed to components. */
 export type PropsFromRedux = ConnectedProps<typeof connector> & RouteChildrenProps<any>;
 
-export class AppComponent<RequiredProps, StateToProps extends (...args: any) => any, DispatchToProps extends (...args: any) => any> extends Component<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps> & PropsFromRedux, AppState> {};
+//                                                                                          Component<InputProps & ReturnType<typeof mapStateToProps> & allActionTypes & typeof allActions & PropsFromRedux, AppState> {
+export class AppComponent<RequiredProps, StateToProps extends (...args: any) => any> extends Component<RequiredProps & ReturnType<StateToProps> & typeof allActions & allActionTypes & PropsFromRedux, AppState> {};
 
 export interface AppFunctionComponent<RequiredProps, StateToProps extends (...args: any) => any, DispatchToProps extends (...args: any) => any> extends FunctionComponent<RequiredProps & ReturnType<StateToProps> & ReturnType<DispatchToProps>> {};
 
 export type NOOP = () => {};
 
 export function wrapThunkWithDispatch(thunkActionBuilder: (...args: any) => ThunkAction<void, AppState, unknown, AnyAction>, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
-  return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(...args));
+  return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(args));
 }
 
 export function wrapWithDispatch(thunkActionBuilder: (...args: any) => AnyAction, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
   return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(args));
 }
+
