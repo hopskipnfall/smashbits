@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { allActions } from './all_actions';
+import allActions from './all_actions';
 import FilterMenu from './FilterMenu';
 import { AppFunctionComponent, AppState } from './store';
 import { ALL_CHARACTERS, ALL_LABELS, ALL_STAGES, CHARACTER_MAP_REVERSE, LABEL_MAP_REVERSE, STAGE_MAP_REVERSE } from './types';

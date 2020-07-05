@@ -13,7 +13,7 @@ import { PropsFromRedux, AppComponent, NOOP } from './store';
 import { setOffset } from './store/filtering/actions';
 import { thunkFetchBits } from './thunks';
 // import { getFilters, getOffset, getPageSize, getSort } from './uri_util';
-import { allActions } from './all_actions';
+import allActions from './all_actions';
 
 type Props = {
 };
@@ -30,7 +30,7 @@ class Home extends AppComponent<Props, NOOP> {
         <Col md={4}>
           {/* <CreateBitButton /> */}
           <FilterControl />
-           {/* filters={getFilters(location.search)} /> */}
+          {/* filters={getFilters(location.search)} /> */}
         </Col>
         <Col md={8}>
           <span>

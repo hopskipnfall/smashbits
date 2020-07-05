@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 // import CreateBitModal from './CreateBitModal';
 // import LoginButton from './LoginButton';
 import { AppComponent, NOOP, AppState } from './store';
-import { allActions } from './all_actions';
+import allActions from './all_actions';
 
 type Parameters = {};
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Badge } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { allActions } from './all_actions';
+import allActions from './all_actions';
 import { AppComponent, AppState } from './store';
 import { Bit, CharacterId, LabelId, StageId } from './types';
 

@@ -8,12 +8,22 @@ export interface Author {
   name: string;
 }
 
-export interface Comment {
-  id: string
-  postId: string
-  author: Author
-  dateCreated: number
-  content: string
+export class Comment {
+  id: string;
+  postId: string;
+  author: Author;
+  dateCreated: number;
+  content: string;
+
+  constructor(data?: { [key: string]: any }) {
+    data = data || {};
+
+    this.id = data.id;
+    this.postId = data.postId;
+    this.author = data.author;
+    this.dateCreated = data.dateCreated;
+    this.content = data.content;
+  }
 }
 
 export type Vote = -1 | 0 | 1;

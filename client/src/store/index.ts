@@ -6,7 +6,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { bitsReducer } from './bits/reducers';
 import { filteringReducer } from './filtering/reducers';
-import { allActions } from '../all_actions';
+import allActions from '../all_actions';
 
 const rootReducer = combineReducers({
   bits: bitsReducer,

@@ -6,62 +6,6 @@
 // import { Bit } from './types';
 // import { getOffset, getPageSize, setMainCharsQuery, setOffsetQuery, setPageSizeQuery, setSortQuery, setStagesQuery, setStandaloneTagsQuery, setVsCharsQuery, toggleMainCharQuery, toggleStageQuery, toggleStandaloneTagQuery, toggleVsCharQuery } from './uri_util';
 
-// export function setMainCharFilters(chars: Immutable.Set<string>) {
-//   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-//     history.push(setMainCharsQuery(chars, history.location.search));
-//     dispatch(refreshBits());
-//   };
-// }
-
-// export function toggleMainCharFilter(char: string) {
-//   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-//     history.push(toggleMainCharQuery(char, history.location.search));
-//     dispatch(refreshBits());
-//   };
-// }
-
-// export function setVsCharFilters(chars: Immutable.Set<string>) {
-//   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-//     history.push(setVsCharsQuery(chars, history.location.search));
-//     dispatch(refreshBits());
-//   };
-// }
-
-// export function toggleVsCharFilter(char: string) {
-//   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-//     history.push(toggleVsCharQuery(char, history.location.search));
-//     dispatch(refreshBits());
-//   };
-// }
-
-// export function setStageFilters(stages: Immutable.Set<string>) {
-//   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-//     history.push(setStagesQuery(stages, history.location.search));
-//     dispatch(refreshBits());
-//   };
-// }
-
-// export function toggleStageFilter(stage: string) {
-//   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-//     history.push(toggleStageQuery(stage, history.location.search));
-//     dispatch(refreshBits());
-//   };
-// }
-
-// export function setStandaloneTagFilters(tags: Immutable.Set<string>) {
-//   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-//     history.push(setStandaloneTagsQuery(tags, history.location.search));
-//     dispatch(refreshBits());
-//   };
-// }
-
-// export function toggleStandaloneTagFilter(tag: string) {
-//   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-//     history.push(toggleStandaloneTagQuery(tag, history.location.search));
-//     dispatch(refreshBits());
-//   };
-// }
-
 // function requestComments(bitId: string) {
 //   return {
 //     type: ACTION_REQUEST_COMMENTS,
