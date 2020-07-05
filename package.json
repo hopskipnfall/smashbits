@@ -1,0 +1,22 @@
+{
+  "name": "smashbits",
+  "version": "1.0.0",
+  "description": "",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "install": "npm install --prefix=client/ && npm install --prefix=server/",
+    "run-client": "npm run start --prefix=client/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hopskipnfall/smashbits.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hopskipnfall/smashbits/issues"
+  },
+  "homepage": "https://github.com/hopskipnfall/smashbits#readme"
+}
