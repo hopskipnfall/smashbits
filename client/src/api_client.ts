@@ -2,7 +2,7 @@ import * as URI from 'urijs';
 // import { receiveComments, setProfile } from './action_creators';
 import * as fakeClient from './fake_api_client';
 import history from './history';
-import { Bit } from './types';
+import { Bit, Profile } from './types';
 import { Dispatch } from 'redux';
 import { fromJS } from 'immutable';
 import * as Immutable from 'immutable';
@@ -27,7 +27,7 @@ const PROFILE_PATH = '/profile';
 // Set this to true in .env to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = (process.env.USE_FAKE_API_CLIENT === 'true') && process.env.NODE_ENV === 'development';
 
-export function fetchBits(filters: FilteringState): Promise<{bits: Bit[]}> {
+export function apiFetchBits(filters: FilteringState): Promise<{bits: Bit[]}> {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBits(filters);
@@ -49,7 +49,7 @@ export function fetchBits(filters: FilteringState): Promise<{bits: Bit[]}> {
   // fetchPromise.then((response: any) => response.bits.map((bit: { [key: string]: any }) => dispatch(addBit(new Bit(bit)))));
 }
 
-export function fetchBit(bitId: string) {
+export function apiFetchBit(bitId: string) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBit(bitId);
@@ -85,7 +85,7 @@ export function fetchBit(bitId: string) {
 //   fetchPromise.then(response => dispatch(receiveComments(bitId, fromJS(response))));
 // }
 
-export function createBit(bit: Bit, dispatch: Dispatch) {
+export function apiCreateBit(bit: Bit, dispatch: Dispatch) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.createBit(bit);
@@ -120,26 +120,28 @@ export function initTwitterLogin() {
   }
 }
 
-// export function fetchProfile(dispatch: Function, successPath?: string) {
-//   let fetchPromise;
-//   if (USE_FAKE_CLIENT) {
-//     fetchPromise = fakeClient.fetchProfile();
-//   } else {
-//     fetchPromise = safeFetch(
-//       new URI(BASE_URI)
-//         .path(PROFILE_PATH)
-//         .toString(),
-//     )
-//       .then(result => result.json())
-//       .catch(error => {
-//         console.log('Error fetching profile', error);
-//         // TODO(thenuge): Handle this more gracefully with a message in the UI.
-//         throw error;
-//       });
-//   }
-//   // TODO(thenuge): Handle errors.
-//   fetchPromise.then(response => dispatch(setProfile(fromJS(response.user))));
-//   if (successPath) {
-//     history.push(successPath);
-//   }
-// }
+export function apiFetchProfile(successPath?: string): Promise<Profile> {
+  let fetchPromise;
+  if (USE_FAKE_CLIENT) {
+    fetchPromise = fakeClient.fetchProfile();
+  } else {
+    fetchPromise = safeFetch(
+      new URI(BASE_URI)
+        .path(PROFILE_PATH)
+        .toString(),
+    )
+      .then(result => result.json())
+      .catch(error => {
+        console.log('Error fetching profile', error);
+        // TODO(thenuge): Handle this more gracefully with a message in the UI.
+        throw error;
+      });
+  }
+  fetchPromise.then(data => new Profile(data));
+  return fetchPromise;
+  // TODO(thenuge): Handle errors.
+  // fetchPromise.then(response => dispatch(setProfile(fromJS(response.user))));
+  // if (successPath) {
+  //   history.push(successPath);
+  // }
+}

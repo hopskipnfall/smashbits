@@ -1,12 +1,14 @@
 import { ActionCreator, AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { createBit as createBitApi, fetchBit as fetchBitApi, fetchBits as fetchBitsApi } from './api_client';
+import { apiCreateBit as createBitApi, apiFetchBit as fetchBitApi, apiFetchBits as fetchBitsApi } from './api_client';
 import history from "./history";
 import { AppState } from "./store";
 import { addBit, changeVote, replaceBits } from './store/bits/actions';
 import { setLabels, setMainCharacters, setStages, setVsCharacters } from "./store/filtering/actions";
-import { Bit, CharacterId, LabelId, StageId, Vote } from "./types";
+import { Bit, CharacterId, LabelId, StageId, Vote, Profile } from "./types";
 import { buildUriFromState } from "./uri_util";
+import {apiFetchProfile} from './api_client';
+import { setProfile } from "./store/profile/actions";
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>
 type AppThunkActionCreator = ActionCreator<AppThunkAction>
@@ -77,6 +79,19 @@ export const thunkPostBit: AppThunkActionCreator = (bit: Bit) => {
 export const thunkChangeVote: AppThunkActionCreator = (bitId: string, vote: Vote) => {
   return async (dispatch, getState) => {
     dispatch(changeVote(bitId, vote));
+
+    // TODO: Make an API call.
+  }
+};
+
+export const thunkFetchProfile: AppThunkActionCreator = () => {
+  return async (dispatch, getState) => {
+    if (getState().profile.profile) {
+      return;
+    }
+    const response = await apiFetchProfile();
+    dispatch(setProfile(response));
+    // dispatch(changeVote(bitId, vote));
 
     // TODO: Make an API call.
   }

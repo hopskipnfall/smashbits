@@ -3,6 +3,18 @@ import { AnyAction } from 'redux';
 
 const shallowClone = (a: any[]) => [...a];
 
+user: { twitterProfile: { displayName: 'LD_on_1_frame' } }
+
+export class Profile {
+  twitterProfile: { displayName: string };
+
+  constructor(data?: { [key: string]: any }) {
+    data = data || {};
+
+    this.twitterProfile = data.twitterProfile || { displayName: '' };
+  }
+}
+
 export interface Author {
   personId: string;
   name: string;
@@ -107,18 +119,18 @@ export type Stage = {
 }
 
 export const STAGE_MAP = new Map<StageId, Stage>([
-  ['pc', {id: 'pc', display: 'Peach\'s Castle'} as const],
-  ['cj', {id: 'cj', display: 'Congo Jungle'} as const],
-  ['hc', {id: 'hc', display: 'Hyrule Castle'} as const],
-  ['pz', {id: 'pz', display: 'Planet Zebes'} as const],
-  ['mk', {id: 'mk', display: 'Mushroom Kingdom'} as const],
-  ['dl', {id: 'dl', display: 'Dream Land'} as const],
-  ['sz', {id: 'sz', display: 'Sector Z'} as const],
-  ['sc', {id: 'sc', display: 'Saffron City'} as const],
-  ['mc', {id: 'mc', display: 'Meta Crystal (19xx)'} as const],
-  ['yi', {id: 'yi', display: 'Yoshi\'s Island (19xx)'} as const],
-  ['fd', {id: 'fd', display: 'Final Destination (19xx)'} as const],
-  ['bf', {id: 'bf', display: 'Battlefield (19xx)'} as const],
+  ['pc', { id: 'pc', display: 'Peach\'s Castle' } as const],
+  ['cj', { id: 'cj', display: 'Congo Jungle' } as const],
+  ['hc', { id: 'hc', display: 'Hyrule Castle' } as const],
+  ['pz', { id: 'pz', display: 'Planet Zebes' } as const],
+  ['mk', { id: 'mk', display: 'Mushroom Kingdom' } as const],
+  ['dl', { id: 'dl', display: 'Dream Land' } as const],
+  ['sz', { id: 'sz', display: 'Sector Z' } as const],
+  ['sc', { id: 'sc', display: 'Saffron City' } as const],
+  ['mc', { id: 'mc', display: 'Meta Crystal (19xx)' } as const],
+  ['yi', { id: 'yi', display: 'Yoshi\'s Island (19xx)' } as const],
+  ['fd', { id: 'fd', display: 'Final Destination (19xx)' } as const],
+  ['bf', { id: 'bf', display: 'Battlefield (19xx)' } as const],
 ]);
 export const STAGE_MAP_REVERSE = new Map(
   Array.from(STAGE_MAP).map(e => [e[1].display, e[1]])
@@ -133,10 +145,10 @@ export type Label = {
 }
 
 export const LABEL_MAP = new Map<LabelId, Label>([
-  ['ap', {id: 'ap', display: 'Approach'} as const],
-  ['ed', {id: 'ed', display: 'Edge Guarding'} as const],
-  ['co', {id: 'co', display: 'Combos'} as const],
-  ['es', {id: 'es', display: 'Escapes'} as const],
+  ['ap', { id: 'ap', display: 'Approach' } as const],
+  ['ed', { id: 'ed', display: 'Edge Guarding' } as const],
+  ['co', { id: 'co', display: 'Combos' } as const],
+  ['es', { id: 'es', display: 'Escapes' } as const],
 ])
 export const LABEL_MAP_REVERSE = new Map(
   Array.from(LABEL_MAP).map(e => [e[1].display, e[1]])

@@ -6,13 +6,13 @@ import BitsContainer from './BitsContainer';
 import { AppComponent, AppState } from './store';
 import { Bit } from './types';
 
-type Parameters = {};
+type InputProps = {};
 
-const mapStateToProps = (state: AppState, ownProps: Parameters) => ({
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   bits: state.bits.items,
 });
 
-class BitPage extends AppComponent<Parameters, typeof mapStateToProps> {
+class BitPage extends AppComponent<InputProps, typeof mapStateToProps> {
   bits: Immutable.Map<string, Bit>;
 
   componentDidMount() {

@@ -1,18 +1,17 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import * as styles from './App.sass';
-
 import BitPage from './BitPage';
-// import LoginButton from './LoginButton';
-// import LoginTransitionPage from './LoginTransitionPage';
 import Home from './Home';
+import LoginButton from './LoginButton';
+import LoginTransitionPage from './LoginTransitionPage';
 
 const App = () => (
   <div>
     <div className={styles.container}>
       <div className={styles.header}>
         <h2>Welcome to SmashBits!</h2>
-        {/* <LoginButton /> */}
+        <LoginButton />
       </div>
       <p className={styles.intro}>
         SmashBits is a place to collaborate on and organize game knowledge
@@ -22,7 +21,7 @@ const App = () => (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route path="/bits/:bitId" component={BitPage} />
-      {/* <Route path="/login" component={LoginTransitionPage} /> */}
+      <Route path="/login" component={LoginTransitionPage} />
     </Switch>
   </div>
 );

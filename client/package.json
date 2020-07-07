@@ -40,7 +40,7 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/urijs": "^1.19.9",
     "@types/uuid": "^8.0.0",
-    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/eslint-plugin": "^2.34.0",
     "@typescript-eslint/parser": "^3.3.0",
     "css-loader": "^3.5.3",
     "css-modules-typescript-loader": "^2.0.1",
