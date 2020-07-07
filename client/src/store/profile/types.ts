@@ -1,5 +1,4 @@
-import * as Immutable from 'immutable';
-import { Comment, Profile } from '../../types';
+import { Profile } from '../../types';
 
 const PREFIX = 'PROFILE_';
 

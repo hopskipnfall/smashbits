@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Badge, Dropdown } from 'react-bootstrap';
-import { AppFunctionComponent, NOOP } from './store';
 import { connect } from 'react-redux';
 import allActions from './all_actions';
+import { AppFunctionComponent, NOOP } from './store';
 import { FilterParameter } from './types';
 
 type Parameters = {

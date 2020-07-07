@@ -1,6 +1,6 @@
 import { ProfileActionTypes, ProfileState, SET_PROFILE } from './types';
 
-const initialState : ProfileState = {
+const initialState: ProfileState = {
   profile: null,
 };
 
@@ -8,7 +8,7 @@ export function profileReducer(
   state = initialState,
   action: ProfileActionTypes,
 ): ProfileState {
-  switch(action.type) {
+  switch (action.type) {
     case SET_PROFILE:
       return {
         ...state,

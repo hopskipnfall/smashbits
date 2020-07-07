@@ -1,6 +1,3 @@
-import { AnyAction } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { AppState } from "..";
 import { Bit, Vote } from "../../types";
 import { AddBitAction, ADD_BIT, ChangeVoteAction, CHANGE_VOTE, ClearBitsAction, CLEAR_BITS, ReplaceBitsAction, REPLACE_BITS } from "./types";
 
@@ -15,11 +12,11 @@ export const changeVote = (bitId: string, vote: Vote) => ({
 } as ChangeVoteAction);
 
 export const addBit = (bit: Bit) => ({
-    type: ADD_BIT,
-    bit,
-} as  AddBitAction);
+  type: ADD_BIT,
+  bit,
+} as AddBitAction);
 
 export const replaceBits = (bits: Bit[]) => ({
-    type: REPLACE_BITS,
-    bits,
+  type: REPLACE_BITS,
+  bits,
 } as ReplaceBitsAction);

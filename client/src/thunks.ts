@@ -1,14 +1,13 @@
 import { ActionCreator, AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
-import { apiCreateBit as createBitApi, apiFetchBit as fetchBitApi, apiFetchBits as fetchBitsApi } from './api_client';
+import { apiCreateBit as createBitApi, apiFetchBit as fetchBitApi, apiFetchBits as fetchBitsApi, apiFetchProfile } from './api_client';
 import history from "./history";
 import { AppState } from "./store";
 import { addBit, changeVote, replaceBits } from './store/bits/actions';
 import { setLabels, setMainCharacters, setStages, setVsCharacters } from "./store/filtering/actions";
-import { Bit, CharacterId, LabelId, StageId, Vote, Profile } from "./types";
-import { buildUriFromState } from "./uri_util";
-import {apiFetchProfile} from './api_client';
 import { setProfile } from "./store/profile/actions";
+import { Bit, CharacterId, LabelId, StageId, Vote } from "./types";
+import { buildUriFromState } from "./uri_util";
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>
 type AppThunkActionCreator = ActionCreator<AppThunkAction>

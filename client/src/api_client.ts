@@ -1,12 +1,9 @@
+import { Dispatch } from 'redux';
 import * as URI from 'urijs';
-// import { receiveComments, setProfile } from './action_creators';
 import * as fakeClient from './fake_api_client';
 import history from './history';
-import { Bit, Profile } from './types';
-import { Dispatch } from 'redux';
-import { fromJS } from 'immutable';
-import * as Immutable from 'immutable';
 import { FilteringState } from './store/filtering/types';
+import { Bit, Profile } from './types';
 
 // TODO: Fix this "any" type.
 function safeFetch(url: string, options?: any) {
@@ -27,7 +24,7 @@ const PROFILE_PATH = '/profile';
 // Set this to true in .env to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = (process.env.USE_FAKE_API_CLIENT === 'true') && process.env.NODE_ENV === 'development';
 
-export function apiFetchBits(filters: FilteringState): Promise<{bits: Bit[]}> {
+export function apiFetchBits(filters: FilteringState): Promise<{ bits: Bit[] }> {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeClient.fetchBits(filters);

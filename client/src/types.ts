@@ -1,17 +1,16 @@
 import * as Immutable from 'immutable';
-import { AnyAction } from 'redux';
 
 const shallowClone = (a: any[]) => [...a];
 
-user: { twitterProfile: { displayName: 'LD_on_1_frame' } }
-
 export class Profile {
-  twitterProfile: { displayName: string };
+  user: {
+    twitterProfile: { displayName: string }
+  };
 
   constructor(data?: { [key: string]: any }) {
     data = data || {};
 
-    this.twitterProfile = data.twitterProfile || { displayName: '' };
+    this.user = data.user || { twitterProfile: { displayName: '' } };
   }
 }
 

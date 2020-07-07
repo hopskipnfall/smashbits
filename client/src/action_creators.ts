@@ -21,32 +21,6 @@
 //   };
 // }
 
-// export function fetchProfileIfNeeded() {
-//   return function (dispatch: Dispatch<any>, getState: () => Map<string, any>) {
-//     if (!getState().get('profile')) {
-//       dispatch(fetchProfile());
-//     }
-//   };
-// }
-
-// export function fetchProfile(successPath?: string) {
-//   return (dispatch: Dispatch<any>) => fetchProfileApi(dispatch, successPath);
-// }
-
-// export function setProfile(profile: Map<string, any>) {
-//   return {
-//     type: ACTION_SET_PROFILE,
-//     data: profile,
-//   };
-// }
-
-// export function fetchBit(bitId: string) {
-//   return function (dispatch: Dispatch<any>) {
-//     dispatch(clearBits());
-//     return fetchBitApi(bitId, dispatch);
-//   };
-// }
-
 // export function fetchComments(bitId: string) {
 //   return function (dispatch: Dispatch<any>) {
 //     dispatch(requestComments(bitId));

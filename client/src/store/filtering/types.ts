@@ -1,4 +1,4 @@
-import {LabelId, StageId, CharacterId} from '../../types';
+import { LabelId, StageId, CharacterId } from '../../types';
 
 export enum SortOption {
   NEWEST,

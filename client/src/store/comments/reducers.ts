@@ -8,7 +8,7 @@ export function setCommentState(state: CommentsState, id: string) {
     edit(editFn: (comment: Comment) => void): CommentsState {
       const clonedComment = new Comment(state.items.get(id));
       editFn(clonedComment);
-      
+
       return {
         ...state,
         items: state.items.set(id, clonedComment)
@@ -25,7 +25,7 @@ export function setCommentState(state: CommentsState, id: string) {
   };
 }
 
-const initialState : CommentsState = {
+const initialState: CommentsState = {
   items: Immutable.Map<string, Comment>(),
 };
 
@@ -33,7 +33,7 @@ export function commentsReducer(
   state = initialState,
   action: CommentsActionTypes,
 ): CommentsState {
-  switch(action.type) {
+  switch (action.type) {
     case ADD_COMMENTS:
       return {
         ...state,

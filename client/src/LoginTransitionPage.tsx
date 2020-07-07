@@ -1,11 +1,9 @@
-import { Component } from 'react';
 import { connect } from 'react-redux';
-import { AppComponent, NOOP } from './store';
 import allActions from './all_actions';
+import { AppComponent, NOOP } from './store';
 
 
-type InputProps = {
-};
+type InputProps = {};
 
 /**
  * Serves as a temporary, blank page after a successful OAuth login as we fetch

@@ -1,5 +1,4 @@
-import * as filters from './filters';
-import { CHARACTER_MAP, CharacterId } from '../types';
+import { CHARACTER_MAP } from '../types';
 
 // function paramToFilterList(query: string, filterMap: { [key: string]: string }) {
 //   return Array.from(new Set(query.split(',').map(param => filterMap[param]).filter(Boolean)));

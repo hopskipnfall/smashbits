@@ -1,19 +1,14 @@
 import * as React from 'react';
-import { Component } from 'react';
 import { Button, Col } from 'react-bootstrap';
-import { connect, MapDispatchToPropsParam } from 'react-redux';
+import { connect } from 'react-redux';
+// import { getFilters, getOffset, getPageSize, getSort } from './uri_util';
+import allActions from './all_actions';
 import BitsContainer from './BitsContainer';
-import CreateBitButton from './CreateBitButton';
 import FilterControl from './FilterControl';
-import history from './history';
 // import PageSizeMenu from './PageSizeMenu';
 // import { DEFAULT_PAGE_SIZE, SORT_DATE } from './reducer';
 // import SortingMenu from './SortingMenu';
-import { PropsFromRedux, AppComponent, NOOP } from './store';
-import { setOffset } from './store/filtering/actions';
-import { thunkFetchBits } from './thunks';
-// import { getFilters, getOffset, getPageSize, getSort } from './uri_util';
-import allActions from './all_actions';
+import { AppComponent, NOOP } from './store';
 
 type Props = {
 };

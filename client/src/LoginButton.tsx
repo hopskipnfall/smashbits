@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Button, Badge } from 'react-bootstrap';
+import { Badge, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { initTwitterLogin } from './api_client';
 import allActions from './all_actions';
-import { AppFunctionComponent, NOOP, AppState } from './store';
+import { initTwitterLogin } from './api_client';
+import { AppFunctionComponent, AppState } from './store';
 
-type InputProps = {
-};
+type InputProps = {};
 
 const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   profile: state.profile.profile,
@@ -23,7 +22,7 @@ const LoginButton: AppFunctionComponent<InputProps, typeof mapStateToProps> = pr
       <Badge>
         Welcome,
         {' '}
-        {profile.twitterProfile.displayName}
+        {profile.user.twitterProfile.displayName}
         !
       </Badge>
     );

@@ -8,7 +8,7 @@ export function setBitState(state: BitsState, id: string) {
     edit(editFn: (bit: Bit) => void): BitsState {
       const clonedBit = new Bit(state.items.get(id));
       editFn(clonedBit);
-      
+
       return {
         ...state,
         items: state.items.set(id, clonedBit)
@@ -25,7 +25,7 @@ export function setBitState(state: BitsState, id: string) {
   };
 }
 
-const initialState : BitsState = {
+const initialState: BitsState = {
   items: Immutable.Map<string, Bit>(),
   comments: Immutable.Set<any>(),
 };
@@ -40,7 +40,7 @@ export function bitsReducer(
   state = initialState,
   action: BitsActionTypes,
 ): BitsState {
-  switch(action.type) {
+  switch (action.type) {
     case CLEAR_BITS:
       return {
         ...state,

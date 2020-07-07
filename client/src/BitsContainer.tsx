@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Bit from './Bit';
-import { AppFunctionComponent, AppState, NOOP, PropsFromRedux } from './store';
 import allActions from './all_actions';
+import Bit from './Bit';
+import { AppFunctionComponent, AppState, NOOP } from './store';
 
 type InputProps = {};
 

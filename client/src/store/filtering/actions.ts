@@ -1,6 +1,3 @@
-import { AnyAction } from "redux";
-import { ThunkAction } from "redux-thunk";
-import { AppState } from "..";
 import { CharacterId, LabelId, StageId } from "../../types";
 import { ChangeSortAction, CHANGE_SORT, SetLabelsAction, SetMainCharactersAction, SetOffsetAction, SetStagesAction, SetVsCharactersAction, SET_LABELS, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS, SortOption } from "./types";
 
