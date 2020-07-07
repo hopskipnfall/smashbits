@@ -17,6 +17,8 @@ const rootReducer = combineReducers({
   profile: profileReducer,
 });
 
+// TODO Find a better place for these types.
+
 export type AppState = ReturnType<typeof rootReducer>
 
 export function configureStore() {

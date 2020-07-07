@@ -27,6 +27,7 @@ class Home extends AppRouteComponent<NOOP> {
             <SortingMenu />
             <span style={{ float: 'right' }}>
               <PageSizeMenu />
+              {/* TODO: Put pagination back. */}
               <Button onClick={() => console.log('go to next page!')}> &lt; </Button>
               <Button onClick={() => console.log('go to previous page!')}> &gt; </Button>
             </span>

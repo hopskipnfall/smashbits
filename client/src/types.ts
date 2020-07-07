@@ -1,5 +1,7 @@
 import * as Immutable from 'immutable';
 
+// TODO: Split this file up and put things where they belong.
+
 const shallowClone = (a: any[]) => [...a];
 
 export class Profile {
@@ -41,7 +43,8 @@ export type Vote = -1 | 0 | 1;
 
 export class Bit {
   author: Author;
-  comments: Immutable.Set<Comment>;
+  // TODO rename to commentIds
+  comments: Immutable.Set<string>;
   content: string;
   dateCreated: number;
   downvotes: number;
