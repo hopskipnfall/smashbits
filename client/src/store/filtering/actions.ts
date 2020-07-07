@@ -1,5 +1,5 @@
-import { CharacterId, LabelId, StageId, SortOption } from "../../types";
-import { ChangeSortAction, CHANGE_SORT, SetLabelsAction, SetMainCharactersAction, SetOffsetAction, SetStagesAction, SetVsCharactersAction, SET_LABELS, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS } from "./types";
+import { CharacterId, LabelId, StageId, SortOption, PageSize } from "../../types";
+import { ChangeSortAction, CHANGE_SORT, SetLabelsAction, SetMainCharactersAction, SetOffsetAction, SetStagesAction, SetVsCharactersAction, SET_LABELS, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS, SetPageSizeAction, SET_PAGE_SIZE } from "./types";
 
 export const changeSort = (sort: SortOption) => ({
   type: CHANGE_SORT,
@@ -30,3 +30,8 @@ export const setLabels = (labels: Set<LabelId>) => ({
   type: SET_LABELS,
   labels,
 } as SetLabelsAction);
+
+export const setPageSize = (currentPageSize: PageSize) => ({
+  type: SET_PAGE_SIZE,
+  currentPageSize,
+} as SetPageSizeAction);

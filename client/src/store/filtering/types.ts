@@ -1,4 +1,4 @@
-import { LabelId, StageId, CharacterId, SortOption } from '../../types';
+import { LabelId, StageId, CharacterId, SortOption, PageSize } from '../../types';
 
 export interface FilteringState {
   sort: SortOption
@@ -8,7 +8,7 @@ export interface FilteringState {
   offset: number
   limit: number
   labels: Set<LabelId>
-  currentPageSize: number
+  currentPageSize: PageSize
 }
 
 export const CHANGE_SORT = 'FILTERING_CHANGE_SORT';
@@ -47,4 +47,17 @@ export interface SetLabelsAction {
   labels: Set<LabelId>
 }
 
-export type FilteringActionTypes = ChangeSortAction | SetVsCharactersAction | SetOffsetAction | SetMainCharactersAction | SetStagesAction | SetLabelsAction;
+export const SET_PAGE_SIZE = 'SET_PAGE_SIZE';
+export interface SetPageSizeAction {
+  type: typeof SET_PAGE_SIZE
+  currentPageSize: PageSize
+}
+
+export type FilteringActionTypes =
+  ChangeSortAction
+  | SetVsCharactersAction
+  | SetOffsetAction
+  | SetMainCharactersAction
+  | SetStagesAction
+  | SetLabelsAction
+  | SetPageSizeAction;

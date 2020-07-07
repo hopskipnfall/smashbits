@@ -157,3 +157,6 @@ export const ALL_LABELS = new Set(Array.from(LABEL_MAP).map(entry => entry[1]));
 
 export const SORT_OPTIONS = ['newest', 'oldest', 'score'];
 export type SortOption = typeof SORT_OPTIONS[number];
+
+export const PAGE_SIZES = [10, 25, 42];
+export type PageSize = typeof PAGE_SIZES[number];

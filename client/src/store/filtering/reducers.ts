@@ -1,4 +1,4 @@
-import { CHANGE_SORT, FilteringActionTypes, FilteringState, SET_LABELS, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS } from "./types";
+import { CHANGE_SORT, FilteringActionTypes, FilteringState, SET_LABELS, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS, SET_PAGE_SIZE } from "./types";
 
 const initialState: FilteringState = {
   sort: 'score',
@@ -28,6 +28,8 @@ export function filteringReducer(
       return { ...state, stages: action.stageIds }
     case SET_LABELS:
       return { ...state, labels: action.labels };
+    case SET_PAGE_SIZE:
+      return { ...state, currentPageSize: action.currentPageSize }
     default:
       return state;
   }

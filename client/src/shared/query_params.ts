@@ -5,6 +5,7 @@ export const QUERY_MAIN_CHARS = 'chars';
 export const QUERY_VS_CHARS = 'vs';
 export const QUERY_STAGES = 'stages';
 export const QUERY_TAGS = 'tags';
+export const QUERY_PAGE_SIZE = 'size'
 
 export const SORT_PARAM_DATE = 'date';
 export const SORT_PARAM_SCORE = 'score';

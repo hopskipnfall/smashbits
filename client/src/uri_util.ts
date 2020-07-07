@@ -1,7 +1,7 @@
 // import * as Immutable from 'immutable';
 // import * as _ from 'lodash';
 import * as URI from 'urijs';
-import { QUERY_LIMIT, QUERY_MAIN_CHARS, QUERY_OFFSET, QUERY_SORT, QUERY_STAGES, QUERY_TAGS, QUERY_VS_CHARS } from "./shared/query_params";
+import { QUERY_LIMIT, QUERY_MAIN_CHARS, QUERY_OFFSET, QUERY_SORT, QUERY_STAGES, QUERY_TAGS, QUERY_VS_CHARS, QUERY_PAGE_SIZE } from "./shared/query_params";
 import { getCharFilterQuery } from './shared/query_util';
 // // import { SORT_DATE, SORT_SCORE } from './reducer';
 // import * as queryParams from './shared/query_params';
@@ -105,6 +105,7 @@ export const buildUriFromState = (state: AppState) => {
     [QUERY_VS_CHARS]: defaultToUndefined(Array.from(state.filtering.vsCharacters)[0]),
     [QUERY_STAGES]: defaultToUndefined(Array.from(state.filtering.stages)[0]),
     [QUERY_TAGS]: defaultToUndefined(Array.from(state.filtering.labels)[0]),
+    [QUERY_PAGE_SIZE]: defaultToUndefined(state.filtering.currentPageSize),
   };
 
   const uri = URI().search(params);
