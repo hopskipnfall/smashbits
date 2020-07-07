@@ -54,7 +54,7 @@ export interface SetPageSizeAction {
 }
 
 export type FilteringActionTypes =
-  ChangeSortAction
+  | ChangeSortAction
   | SetVsCharactersAction
   | SetOffsetAction
   | SetMainCharactersAction

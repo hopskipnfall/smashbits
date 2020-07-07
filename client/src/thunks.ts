@@ -4,18 +4,16 @@ import { apiCreateBit as createBitApi, apiFetchBit as fetchBitApi, apiFetchBits 
 import history from "./history";
 import { AppState } from "./store";
 import { addBit, changeVote, replaceBits } from './store/bits/actions';
-import { setLabels, setMainCharacters, setStages, setVsCharacters, changeSort, setPageSize } from "./store/filtering/actions";
+import { changeSort, setLabels, setMainCharacters, setPageSize, setStages, setVsCharacters } from "./store/filtering/actions";
 import { setProfile } from "./store/profile/actions";
-import { Bit, CharacterId, LabelId, StageId, Vote, SortOption, PageSize } from "./types";
+import { Bit, CharacterId, LabelId, PageSize, SortOption, StageId, Vote } from "./types";
 import { buildUriFromState } from "./uri_util";
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>
 type AppThunkActionCreator = ActionCreator<AppThunkAction>
 
 export const thunkFetchBits: AppThunkActionCreator = () => {
-  console.log('dispatch created');
   return async (dispatch, getState) => {
-    console.log('startedcreated');
     const response = await fetchBitsApi(getState().filtering)
     dispatch(replaceBits(response.bits));
   }
@@ -31,9 +29,7 @@ export const thunkFetchBit: AppThunkActionCreator = (bitId: string) => {
 export const thunkSetMainChars: AppThunkActionCreator = (characters: Set<CharacterId>) => {
   return async (dispatch, getState) => {
     dispatch(setMainCharacters(characters));
-    console.log('dispatched main characters');
     history.push(buildUriFromState(getState()));
-    console.log('added to url');
     dispatch(thunkFetchBits());
   }
 };
@@ -63,9 +59,7 @@ export const thunkSetLabels: AppThunkActionCreator = (labels: Set<LabelId>) => {
 };
 
 export const thunkPostBit: AppThunkActionCreator = (bit: Bit) => {
-  console.log('building thunk thing', bit);
   return async (dispatch, getState) => {
-  console.log('running thunk thing', bit);
     const resp = await createBitApi(bit, dispatch);
     if (!resp) {
       console.error('error apparently!');
@@ -92,9 +86,6 @@ export const thunkFetchProfile: AppThunkActionCreator = () => {
     }
     const response = await apiFetchProfile();
     dispatch(setProfile(response));
-    // dispatch(changeVote(bitId, vote));
-
-    // TODO: Make an API call.
   }
 };
 

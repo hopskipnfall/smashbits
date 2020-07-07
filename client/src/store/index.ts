@@ -6,9 +6,9 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import thunkMiddleware from 'redux-thunk';
 import { allActions } from '../all_actions';
 import { bitsReducer } from './bits/reducers';
+import { commentsReducer } from './comments/reducers';
 import { filteringReducer } from './filtering/reducers';
 import { profileReducer } from './profile/reducers';
-import { commentsReducer } from './comments/reducers';
 
 const rootReducer = combineReducers({
   bits: bitsReducer,

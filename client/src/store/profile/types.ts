@@ -12,4 +12,5 @@ export interface SetProfileAction {
   profile: Profile
 }
 
-export type ProfileActionTypes = SetProfileAction;
+export type ProfileActionTypes =
+  | SetProfileAction;

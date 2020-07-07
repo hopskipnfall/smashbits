@@ -13,4 +13,5 @@ export interface AddCommentsAction {
   items: Immutable.Map<string, Comment>
 }
 
-export type CommentsActionTypes = AddCommentsAction;
+export type CommentsActionTypes =
+  | AddCommentsAction;

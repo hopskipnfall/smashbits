@@ -1,11 +1,33 @@
 import * as React from 'react';
-import { Badge, Button } from 'react-bootstrap';
+import { Badge, Button, ButtonProps } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import { initTwitterLogin } from './api_client';
 import { AppFunctionComponent, AppState } from './store';
 
-type InputProps = {};
+type InputProps = {
+  loginText?: string
+
+  // TODO: Figure out how to pull this directly from ButtonProps.variant.
+  variant?:
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'danger'
+  | 'warning'
+  | 'info'
+  | 'dark'
+  | 'light'
+  | 'link'
+  | 'outline-primary'
+  | 'outline-secondary'
+  | 'outline-success'
+  | 'outline-danger'
+  | 'outline-warning'
+  | 'outline-info'
+  | 'outline-dark'
+  | 'outline-light';
+};
 
 const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   profile: state.profile.profile,
@@ -13,10 +35,10 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
 
 const LoginButton: AppFunctionComponent<InputProps, typeof mapStateToProps> = props => {
   const {
-    profile, thunkFetchProfile
+    variant = 'primary',
+    profile, thunkFetchProfile,
+    loginText = 'Log in with Twitter'
   } = props;
-  const variant = 'primary';
-  const loginText = 'Log in with Twitter';
   if (profile) {
     return (
       <Badge>

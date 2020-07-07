@@ -21,7 +21,6 @@ class Home extends AppRouteComponent<NOOP> {
         <Col md={4}>
           <CreateBitButton />
           <FilterControl />
-          {/* filters={getFilters(location.search)} /> */}
         </Col>
         <Col md={8}>
           <span>

@@ -35,7 +35,7 @@ export interface ReplaceBitsAction {
 }
 
 export type BitsActionTypes =
-  ClearBitsAction |
-  ChangeVoteAction |
-  AddBitAction |
-  ReplaceBitsAction;
+  | ClearBitsAction
+  | ChangeVoteAction
+  | AddBitAction
+  | ReplaceBitsAction;

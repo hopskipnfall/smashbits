@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { connect, ConnectedProps } from 'react-redux';
 import { allActions } from './all_actions';
 import CreateBitModal from './CreateBitModal';
-// import LoginButton from './LoginButton';
+import LoginButton from './LoginButton';
 import { AppComponent, NOOP, AppState } from './store';
 
 type InputProps = {};
@@ -41,8 +41,7 @@ class CreateBitButton extends AppComponent<InputProps, typeof mapStateToProps> {
         />,
       ]);
     }
-    return <div>hello world!</div>
-    // return <LoginButton variant="danger" loginText="Log in to create bits" />;
+    return <LoginButton variant="danger" loginText="Log in to create bits" />;
   }
 }
 
