@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import allActions from './all_actions';
+import { allActions } from './all_actions';
 import Bit from './Bit';
 import { AppFunctionComponent, AppState, NOOP } from './store';
 

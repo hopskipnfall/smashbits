@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Badge, Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import allActions from './all_actions';
+import { allActions } from './all_actions';
 import { initTwitterLogin } from './api_client';
 import { AppFunctionComponent, AppState } from './store';
 

@@ -4,7 +4,7 @@ import { RouteChildrenProps } from 'react-router-dom';
 import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
-import allActions from '../all_actions';
+import { allActions } from '../all_actions';
 import { bitsReducer } from './bits/reducers';
 import { filteringReducer } from './filtering/reducers';
 import { profileReducer } from './profile/reducers';

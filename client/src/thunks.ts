@@ -4,9 +4,9 @@ import { apiCreateBit as createBitApi, apiFetchBit as fetchBitApi, apiFetchBits 
 import history from "./history";
 import { AppState } from "./store";
 import { addBit, changeVote, replaceBits } from './store/bits/actions';
-import { setLabels, setMainCharacters, setStages, setVsCharacters } from "./store/filtering/actions";
+import { setLabels, setMainCharacters, setStages, setVsCharacters, changeSort } from "./store/filtering/actions";
 import { setProfile } from "./store/profile/actions";
-import { Bit, CharacterId, LabelId, StageId, Vote } from "./types";
+import { Bit, CharacterId, LabelId, StageId, Vote, SortOption } from "./types";
 import { buildUriFromState } from "./uri_util";
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>
@@ -93,5 +93,13 @@ export const thunkFetchProfile: AppThunkActionCreator = () => {
     // dispatch(changeVote(bitId, vote));
 
     // TODO: Make an API call.
+  }
+};
+
+export const thunkChangeSort: AppThunkActionCreator = (sort: SortOption) => {
+  return async (dispatch, getState) => {
+    dispatch(changeSort(sort));
+    history.push(buildUriFromState(getState()));
+    dispatch(thunkFetchBits());
   }
 };

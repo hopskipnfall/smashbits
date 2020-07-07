@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import * as URI from 'urijs';
-import * as fakeClient from './fake_api_client';
+import { fakeApiClient } from './fake_api_client';
 import history from './history';
 import { FilteringState } from './store/filtering/types';
 import { Bit, Profile } from './types';
@@ -27,7 +27,7 @@ const USE_FAKE_CLIENT = (process.env.USE_FAKE_API_CLIENT === 'true') && process.
 export function apiFetchBits(filters: FilteringState): Promise<{ bits: Bit[] }> {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
-    fetchPromise = fakeClient.fetchBits(filters);
+    fetchPromise = fakeApiClient.fetchBits(filters);
   } else {
     fetchPromise = safeFetch(
       new URI(BASE_URI)
@@ -49,7 +49,7 @@ export function apiFetchBits(filters: FilteringState): Promise<{ bits: Bit[] }> 
 export function apiFetchBit(bitId: string) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
-    fetchPromise = fakeClient.fetchBit(bitId);
+    fetchPromise = fakeApiClient.fetchBit(bitId);
   } else {
     fetchPromise = safeFetch(
       new URI(BASE_URI).segment([BITS_PATH, bitId]).toString(),
@@ -67,7 +67,7 @@ export function apiFetchBit(bitId: string) {
 // export function fetchComments(bitId: string, dispatch: Function) {
 //   let fetchPromise;
 //   if (USE_FAKE_CLIENT) {
-//     fetchPromise = fakeClient.fetchComments(bitId);
+//     fetchPromise = fakeApiClient.fetchComments(bitId);
 //   } else {
 //     fetchPromise = safeFetch(
 //       new URI(BASE_URI).segment([BITS_PATH, bitId, COMMENTS_PATH]).toString(),
@@ -85,7 +85,7 @@ export function apiFetchBit(bitId: string) {
 export function apiCreateBit(bit: Bit, dispatch: Dispatch) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
-    fetchPromise = fakeClient.createBit(bit);
+    fetchPromise = fakeApiClient.createBit(bit);
   } else {
     fetchPromise = safeFetch(new URI(BASE_URI).path(BITS_PATH).toString(), {
       body: JSON.stringify({ bit }),
@@ -120,7 +120,7 @@ export function initTwitterLogin() {
 export function apiFetchProfile(successPath?: string): Promise<Profile> {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
-    fetchPromise = fakeClient.fetchProfile();
+    fetchPromise = fakeApiClient.fetchProfile();
   } else {
     fetchPromise = safeFetch(
       new URI(BASE_URI)

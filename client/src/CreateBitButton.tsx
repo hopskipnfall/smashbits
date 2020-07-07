@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import allActions from './all_actions';
+import { allActions } from './all_actions';
 // import CreateBitModal from './CreateBitModal';
 // import LoginButton from './LoginButton';
 import { AppComponent, NOOP } from './store';

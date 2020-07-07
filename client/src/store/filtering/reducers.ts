@@ -1,7 +1,7 @@
-import { CHANGE_SORT, FilteringActionTypes, FilteringState, SET_LABELS, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS, SortOption } from "./types";
+import { CHANGE_SORT, FilteringActionTypes, FilteringState, SET_LABELS, SET_MAIN_CHARACTERS, SET_OFFSET, SET_STAGES, SET_VS_CHARACTERS } from "./types";
 
 const initialState: FilteringState = {
-  sort: SortOption.NEWEST,
+  sort: 'score',
   mainCharacters: new Set(),
   vsCharacters: new Set(),
   stages: new Set(),

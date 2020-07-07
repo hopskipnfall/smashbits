@@ -4,7 +4,7 @@ import * as commentsActions from './store/comments/actions';
 import * as filteringActions from './store/filtering/actions';
 import * as thunkActions from './thunks';
 
-export default {
+export const allActions = {
   ...bitsActions,
   ...commentsActions,
   ...filteringActions,

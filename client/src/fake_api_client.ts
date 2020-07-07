@@ -1,7 +1,7 @@
 // A fake implementation of api_client with test data to avoid making an RPC during development.
 
 import * as uuid from 'uuid';
-import { FilteringState, SortOption } from './store/filtering/types';
+import { FilteringState } from './store/filtering/types';
 import { Bit, CharacterId, Comment, LabelId, StageId } from './types';
 
 const bits: Bit[] = [
@@ -78,67 +78,70 @@ const comments: Comment[] = [
   }),
 ];
 
-export function fetchBits(filters: FilteringState) {
-  const filtered = bits.filter(bit => {
-    if (filters.mainCharacters.size > 0) {
-      for (let char of Array.from(filters.mainCharacters)) {
-        if (bit.mainChars.indexOf(char as CharacterId) == -1) return false;
+export const fakeApiClient = {
+
+  fetchBits(filters: FilteringState) {
+    const filtered = bits.filter(bit => {
+      if (filters.mainCharacters.size > 0) {
+        for (let char of Array.from(filters.mainCharacters)) {
+          if (bit.mainChars.indexOf(char as CharacterId) == -1) return false;
+        }
       }
-    }
 
-    if (filters.labels.size > 0) {
-      for (let label of Array.from(filters.labels)) {
-        if (bit.standaloneTags.indexOf(label as LabelId) == -1) return false;
+      if (filters.labels.size > 0) {
+        for (let label of Array.from(filters.labels)) {
+          if (bit.standaloneTags.indexOf(label as LabelId) == -1) return false;
+        }
       }
-    }
 
-    if (filters.vsCharacters.size > 0) {
-      for (let char of Array.from(filters.vsCharacters)) {
-        if (bit.vsChars.indexOf(char as CharacterId) == -1) return false;
+      if (filters.vsCharacters.size > 0) {
+        for (let char of Array.from(filters.vsCharacters)) {
+          if (bit.vsChars.indexOf(char as CharacterId) == -1) return false;
+        }
       }
-    }
 
-    if (filters.stages.size > 0) {
-      for (let stage of Array.from(filters.stages)) {
-        if (bit.stages.indexOf(stage as StageId) == -1) return false;
+      if (filters.stages.size > 0) {
+        for (let stage of Array.from(filters.stages)) {
+          if (bit.stages.indexOf(stage as StageId) == -1) return false;
+        }
       }
-    }
-    return true;
-  })
-  return Promise.resolve({
-    bits: filtered.sort((a, b) => {
-      switch (filters.sort) {
-        case SortOption.SCORE:
-          return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
-        case SortOption.NEWEST:
-          return b.dateCreated - a.dateCreated;
-        case SortOption.OLDEST:
-          return -1 * (b.dateCreated - a.dateCreated);
-        default:
-          return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
-      }
-    }),
-  });
-}
+      return true;
+    })
+    return Promise.resolve({
+      bits: filtered.sort((a, b) => {
+        switch (filters.sort) {
+          case 'score':
+            return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
+          case 'newest':
+            return b.dateCreated - a.dateCreated;
+          case 'oldest':
+            return -1 * (b.dateCreated - a.dateCreated);
+          default:
+            return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
+        }
+      }),
+    });
+  },
 
-export function fetchBit(bitId: string) {
-  return Promise.resolve({ bit: bits.find(bit => bit.postId === bitId) });
-}
+  fetchBit(bitId: string) {
+    return Promise.resolve({ bit: bits.find(bit => bit.postId === bitId) });
+  },
 
-export function fetchComments(bitId: string) {
-  return Promise.resolve(comments.filter(comment => comment.postId === bitId));
-}
+  fetchComments(bitId: string) {
+    return Promise.resolve(comments.filter(comment => comment.postId === bitId));
+  },
 
-export function createBit(bit: Bit) {
-  bits.push({
-    ...bit,
-    postId: uuid.v1(),
-    dateCreated: new Date().getTime(),
-  });
-  return Promise.resolve(`/bits${bits.slice(-1)[0]}`);
-  // TODO: Return a 201 response
-}
+  createBit(bit: Bit) {
+    bits.push({
+      ...bit,
+      postId: uuid.v1(),
+      dateCreated: new Date().getTime(),
+    });
+    return Promise.resolve(`/bits${bits.slice(-1)[0]}`);
+    // TODO: Return a 201 response
+  },
 
-export function fetchProfile() {
-  return Promise.resolve({ user: { twitterProfile: { displayName: 'LD_on_1_frame' } } });
-}
+  fetchProfile() {
+    return Promise.resolve({ user: { twitterProfile: { displayName: 'LD_on_1_frame' } } });
+  },
+};

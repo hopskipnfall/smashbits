@@ -1,10 +1,4 @@
-import { LabelId, StageId, CharacterId } from '../../types';
-
-export enum SortOption {
-  NEWEST,
-  OLDEST,
-  SCORE,
-};
+import { LabelId, StageId, CharacterId, SortOption } from '../../types';
 
 export interface FilteringState {
   sort: SortOption

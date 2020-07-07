@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Button, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 // import { getFilters, getOffset, getPageSize, getSort } from './uri_util';
-import allActions from './all_actions';
+import { allActions } from './all_actions';
 import BitsContainer from './BitsContainer';
 import FilterControl from './FilterControl';
 // import PageSizeMenu from './PageSizeMenu';
 // import { DEFAULT_PAGE_SIZE, SORT_DATE } from './reducer';
-// import SortingMenu from './SortingMenu';
+import SortingMenu from './SortingMenu';
 import { AppComponent, NOOP } from './store';
 
 type Props = {
@@ -29,7 +29,7 @@ class Home extends AppComponent<Props, NOOP> {
         </Col>
         <Col md={8}>
           <span>
-            {/* <SortingMenu sort={getSort(location.search) || SORT_DATE} /> */}
+            <SortingMenu />
             <span style={{ float: 'right' }}>
               {/* <PageSizeMenu pageSize={getPageSize(location.search) || DEFAULT_PAGE_SIZE} /> */}
               <Button onClick={() => console.log('go to next page!')}> &lt; </Button>

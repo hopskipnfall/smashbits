@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import allActions from './all_actions';
+import { allActions } from './all_actions';
 import * as styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
 import { AppFunctionComponent, NOOP } from './store';
