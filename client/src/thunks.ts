@@ -63,7 +63,9 @@ export const thunkSetLabels: AppThunkActionCreator = (labels: Set<LabelId>) => {
 };
 
 export const thunkPostBit: AppThunkActionCreator = (bit: Bit) => {
+  console.log('building thunk thing', bit);
   return async (dispatch, getState) => {
+  console.log('running thunk thing', bit);
     const resp = await createBitApi(bit, dispatch);
     if (!resp) {
       console.error('error apparently!');

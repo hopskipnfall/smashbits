@@ -1,47 +1,44 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { allActions } from './all_actions';
-// import CreateBitModal from './CreateBitModal';
+import CreateBitModal from './CreateBitModal';
 // import LoginButton from './LoginButton';
-import { AppComponent, NOOP } from './store';
+import { AppComponent, NOOP, AppState } from './store';
 
-type Parameters = {};
+type InputProps = {};
 
-// class CreateBitButton extends Component<Props> {
-class CreateBitButton extends AppComponent<Parameters, NOOP> {
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
+  profile: state.profile.profile,
+});
 
+class CreateBitButton extends AppComponent<InputProps, typeof mapStateToProps> {
   componentDidMount() {
+    // TODO: Make this typed somehow..
     this.setState({
       show: false,
     });
   }
 
-  show() {
+  private show() {
     this.setState({ show: true });
   }
 
-  hide() {
+  private hide() {
     this.setState({ show: false });
   }
 
   render() {
-    // const { filtering, profile, createBit } = this.props;
-    const profile = null;
-    if (profile) {
+    if (this.props.profile) {
       return ([
-        <Button variant="danger" onClick={this.show} key="create-bit-button">
+        <Button variant="danger" onClick={() => this.show()} key="create-bit-button">
           Create new bit
         </Button>,
-        // <CreateBitModal
-        //   show={(this.state as any).show}
-        //   createBit={createBit}
-        //   onHide={this.hide}
-        //   key="create-bit-modal"
-        //   allChars={filtering.get('chars')}
-        //   allStages={filtering.get('stages')}
-        //   allTags={filtering.get('standaloneTags')}
-        // />,
+        <CreateBitModal
+          show={(this.state as {show: boolean}).show}
+          onHide={() => this.hide()}
+          key="create-bit-modal"
+        />,
       ]);
     }
     return <div>hello world!</div>
@@ -49,4 +46,4 @@ class CreateBitButton extends AppComponent<Parameters, NOOP> {
   }
 }
 
-export default connect(null, allActions)(CreateBitButton);
+export default connect(mapStateToProps, allActions)(CreateBitButton);

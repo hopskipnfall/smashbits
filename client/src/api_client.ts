@@ -85,6 +85,7 @@ export function apiFetchBit(bitId: string) {
 export function apiCreateBit(bit: Bit, dispatch: Dispatch) {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
+    console.log('POSTING BIT', bit);
     fetchPromise = fakeApiClient.createBit(bit);
   } else {
     fetchPromise = safeFetch(new URI(BASE_URI).path(BITS_PATH).toString(), {

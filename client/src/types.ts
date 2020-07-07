@@ -40,20 +40,20 @@ export class Comment {
 export type Vote = -1 | 0 | 1;
 
 export class Bit {
-  postId: string;
   author: Author;
-  dateCreated: number;
-  upvotes: number;
-  downvotes: number;
-  title: string;
-  content: string;
-  mainChars: CharacterId[];
-  standaloneTags: string[];
-  stages: StageId[];
-  vsChars: CharacterId[];
-  userVote: Vote;
   comments: Immutable.Set<Comment>;
+  content: string;
+  dateCreated: number;
+  downvotes: number;
   isRequestingComments: boolean;
+  mainChars: CharacterId[];
+  postId: string;
+  stages: StageId[];
+  standaloneTags: string[];
+  title: string;
+  upvotes: number;
+  userVote: Vote;
+  vsChars: CharacterId[];
 
   constructor(data?: { [key: string]: any }) {
     data = data || {};

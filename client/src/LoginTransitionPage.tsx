@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import { AppComponent, NOOP } from './store';
 
-
 type InputProps = {};
 
 /**

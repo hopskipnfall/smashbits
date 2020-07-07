@@ -3,16 +3,13 @@ import { Button, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import BitsContainer from './BitsContainer';
+import CreateBitButton from './CreateBitButton';
 import FilterControl from './FilterControl';
 import PageSizeMenu from './PageSizeMenu';
 import SortingMenu from './SortingMenu';
-import { AppComponent, NOOP } from './store';
-// import { getFilters, getOffset, getPageSize, getSort } from './uri_util';
+import { AppRouteComponent, NOOP } from './store';
 
-type Props = {
-};
-
-class Home extends AppComponent<Props, NOOP> {
+class Home extends AppRouteComponent<NOOP> {
   componentDidMount() {
     this.props.thunkFetchBits(); // maybe get rid of this this looks wrong
   }
@@ -22,7 +19,7 @@ class Home extends AppComponent<Props, NOOP> {
     return (
       <div>
         <Col md={4}>
-          {/* <CreateBitButton /> */}
+          <CreateBitButton />
           <FilterControl />
           {/* filters={getFilters(location.search)} /> */}
         </Col>

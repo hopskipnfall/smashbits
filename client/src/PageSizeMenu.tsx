@@ -5,13 +5,13 @@ import { allActions } from './all_actions';
 import { AppState, AppFunctionComponent } from './store';
 import { PAGE_SIZES } from './types';
 
-type Parameters = {};
+type InputProps = {};
 
-const mapStateToProps = (state: AppState, ownProps: Parameters) => ({
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   pageSize: state.filtering.currentPageSize,
 });
 
-const PageSizeMenu: AppFunctionComponent<Parameters, typeof mapStateToProps> = props => {
+const PageSizeMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = props => {
   const { pageSize, thunkChangePageSize } = props;
   return (
     <span>

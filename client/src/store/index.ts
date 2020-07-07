@@ -1,16 +1,18 @@
 import { Component, FunctionComponent } from 'react';
 import { connect, ConnectedProps } from 'react-redux';
 import { RouteChildrenProps } from 'react-router-dom';
-import { AnyAction, applyMiddleware, combineReducers, createStore } from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import { composeWithDevTools } from "redux-devtools-extension";
-import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import thunkMiddleware from 'redux-thunk';
 import { allActions } from '../all_actions';
 import { bitsReducer } from './bits/reducers';
 import { filteringReducer } from './filtering/reducers';
 import { profileReducer } from './profile/reducers';
+import { commentsReducer } from './comments/reducers';
 
 const rootReducer = combineReducers({
   bits: bitsReducer,
+  comments: commentsReducer,
   filtering: filteringReducer,
   profile: profileReducer,
 });
@@ -30,23 +32,36 @@ export function configureStore() {
 }
 
 const connector = connect(null, allActions);
-export type PropsFromRedux = ConnectedProps<typeof connector> & RouteChildrenProps<any>;
 
-export class AppComponent<RequiredProps, StateToProps extends (...args: any) => any, ComponentState = {}> extends Component<RequiredProps & ReturnType<StateToProps> & PropsFromRedux, ComponentState> { };
 
-export interface AppFunctionComponent<RequiredProps, StateToProps extends (...args: any) => any, ComponentState = {}>
-  extends FunctionComponent<RequiredProps & ReturnType<StateToProps> & ConnectedProps<typeof connector>> { };
+/**
+ * Component class.
+ * 
+ * @param <InputParams> parameters passed directly in JSX file
+ * @param <StateToProps> "typeof mapStateToProps". Use {@link NOOP} if N/A.
+ * @param <ComponentState> // TODO(jonnjonn): Use this to type the state object.
+ */
+export class AppComponent<InputParams, StateToProps extends (...args: any) => any, ComponentState = {}>
+  extends Component<InputParams & ReturnType<StateToProps> & ConnectedProps<typeof connector>> { }
 
-export type AppMapStateToProps<InputProps> = (state: AppState, ownProps: InputProps) => unknown;
+/**
+ * Component class arranged by a router.
+ * 
+ * This class will have additional properties (see {@link RouteChildrenProps}).
+ * 
+ * @param <StateToProps> "typeof mapStateToProps". Use {@link NOOP} if N/A.
+ * @param <ComponentState> // TODO(jonnjonn): Use this to type the state object.
+ */
+export class AppRouteComponent<StateToProps extends (...args: any) => any, ComponentState = {}>
+  extends AppComponent<RouteChildrenProps, StateToProps, ComponentState> { }
+
+/**
+ * Component defined as a single function.
+ * 
+ * @param <InputParams> parameters passed directly in JSX file
+ * @param <StateToProps> "typeof mapStateToProps". Use {@link NOOP} if N/A.
+ */
+export interface AppFunctionComponent<InputParams, StateToProps extends (...args: any) => any, ComponentState = {}>
+  extends FunctionComponent<InputParams & ReturnType<StateToProps> & ConnectedProps<typeof connector>> { };
 
 export type NOOP = () => {};
-
-export function wrapThunkWithDispatch(thunkActionBuilder:
-  (...args: any) => ThunkAction<void, AppState, unknown, AnyAction>, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
-  return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(args));
-}
-
-export function wrapWithDispatch(thunkActionBuilder:
-  (...args: any) => AnyAction, dispatch: ThunkDispatch<AppState, null, AnyAction>) {
-  return (...args: Parameters<typeof thunkActionBuilder>) => dispatch(thunkActionBuilder(args));
-}
