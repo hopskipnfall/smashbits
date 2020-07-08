@@ -5,7 +5,7 @@ import { allActions } from './all_actions';
 import { AppFunctionComponent, NOOP } from './store';
 import { FilterParameter } from './types';
 
-type Parameters = {
+type InputProps = {
   title: any
   bootstrapStyle: any
   allFilters: Set<FilterParameter>
@@ -13,7 +13,7 @@ type Parameters = {
   onClick: (filter: Set<string>) => void
 };
 
-const FilterMenu: AppFunctionComponent<Parameters, NOOP> = props => {
+const FilterMenu: AppFunctionComponent<InputProps, NOOP> = props => {
   const {
     title, bootstrapStyle, allFilters, currentFilters, onClick,
   } = props;
