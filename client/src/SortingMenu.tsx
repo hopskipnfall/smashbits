@@ -1,14 +1,22 @@
 import * as React from 'react';
-import { DropdownButton, Dropdown } from 'react-bootstrap';
+import { Dropdown, DropdownButton } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import * as actionCreators from './action_creators';
+import { allActions } from './all_actions';
+import { AppFunctionComponent, AppState } from './store';
+import { SORT_OPTIONS, SortOption } from './types';
 
-const SortingMenu = (props: any) => {
-  const { sorts, currentSort, changeSort } = props;
+type InputProps = {};
+
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
+  currentSort: state.filtering.sort,
+});
+
+const SortingMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = props => {
+  const { currentSort, thunkChangeSort } = props;
   return (
     <DropdownButton variant="info" title={`Sorting: ${currentSort}`} id="sorting-menu">
-      {sorts.map((sort: string) => (
-        <Dropdown.Item onSelect={() => changeSort(sort)} key={sort}>
+      {SORT_OPTIONS.map((sort: SortOption) => (
+        <Dropdown.Item onSelect={() => thunkChangeSort(sort)} key={sort}>
           {sort}
         </Dropdown.Item>
       ))}
@@ -16,9 +24,4 @@ const SortingMenu = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: Map<string, any>, ownProps: any) => ({
-  sorts: state.get('sorts'),
-  currentSort: ownProps.sort,
-});
-
-export default connect(mapStateToProps, actionCreators)(SortingMenu);
+export default connect(mapStateToProps, allActions)(SortingMenu);

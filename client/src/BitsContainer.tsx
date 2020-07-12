@@ -1,26 +1,19 @@
-import * as Immutable from 'immutable';
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from './action_creators';
+import { allActions } from './all_actions';
 import Bit from './Bit';
-import { filterBits } from './bits_util';
-import { Bit as BitType } from './types';
+import { AppFunctionComponent, AppState, NOOP } from './store';
 
-type Props = {
-  bits?: Immutable.Map<string, BitType>
-  filters?: any
-  comments?: any
-};
+type InputProps = {};
 
-const BitsContainer = (props: Props) => (
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
+  bits: state.bits.items,
+});
+
+const BitsContainer: AppFunctionComponent<InputProps, typeof mapStateToProps, NOOP> = props => (
   <div>
-    {props.bits!.valueSeq().map((bit: BitType) => <Bit bit={bit} key={bit.postId} {...props} />)}
+    {props.bits.valueSeq().map(bit => <Bit bit={bit} key={bit.postId} />)}
   </div>
 );
 
-const mapStateToProps = (state: Immutable.Map<string, any>, ownProps: Props) => ({
-  bits: filterBits(state, ownProps.filters),
-  comments: state.get('comments', Immutable.Map()),
-} as Props);
-
-export default connect(mapStateToProps, actionCreators)(BitsContainer);
+export default connect(mapStateToProps, allActions)(BitsContainer);

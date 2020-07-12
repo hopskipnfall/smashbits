@@ -1,22 +1,35 @@
-import { Map, Set } from 'immutable';
+import * as Immutable from 'immutable';
 import * as React from 'react';
+import { connect } from 'react-redux';
+import { allActions } from './all_actions';
+import { AppFunctionComponent, NOOP } from './store';
+import { Bit, Comment } from './types';
 
-export default function CommentsContainer(props: any) {
-  const { bit, comments = Map() } = props;
+type InputProps = {
+  bit: Bit
+  comments: Immutable.Map<string, Comment>
+}
+
+// NOTE: This component isn't used anywhere yet, who knows if it works.
+
+const CommentsContainer: AppFunctionComponent<InputProps, NOOP> = props => {
+  const { bit, comments } = props;
   return (
     <div>
-      {bit.get('comments', Set()).map((commentId: string) => {
-        const comment = comments.get(commentId, Map());
+      {bit.comments.map(id => {
+        const comment = comments.get(id, new Comment());
         return (
-          <div key={commentId}>
+          <div key={id}>
             <p>
-              <b>{`${comment.getIn(['author', 'name'])} • `}</b>
-              <i>{new Date(comment.get('dateCreated')).toDateString()}</i>
+              <b>{`${comment.author.name} • `}</b>
+              <i>{new Date(comment.dateCreated).toDateString()}</i>
             </p>
-            {comment.get('content')}
+            {comment.content}
           </div>
         );
       })}
     </div>
   );
 }
+
+export default connect(null, allActions)(CommentsContainer);

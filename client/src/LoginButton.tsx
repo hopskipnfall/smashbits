@@ -1,31 +1,58 @@
 import * as React from 'react';
-import { Button, Badge } from 'react-bootstrap';
+import { Badge, Button, ButtonProps } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import * as actionCreators from './action_creators';
+import { allActions } from './all_actions';
 import { initTwitterLogin } from './api_client';
+import { AppFunctionComponent, AppState } from './store';
 
-const LoginButton = (props: any) => {
+type InputProps = {
+  loginText?: string
+
+  // TODO: Figure out how to pull this directly from ButtonProps.variant.
+  variant?:
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'danger'
+  | 'warning'
+  | 'info'
+  | 'dark'
+  | 'light'
+  | 'link'
+  | 'outline-primary'
+  | 'outline-secondary'
+  | 'outline-success'
+  | 'outline-danger'
+  | 'outline-warning'
+  | 'outline-info'
+  | 'outline-dark'
+  | 'outline-light';
+};
+
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
+  profile: state.profile.profile,
+});
+
+const LoginButton: AppFunctionComponent<InputProps, typeof mapStateToProps> = props => {
   const {
-    profile, variant = 'default', loginText = 'Log in with Twitter', fetchProfileIfNeeded,
+    variant = 'primary',
+    profile, thunkFetchProfile,
+    loginText = 'Log in with Twitter'
   } = props;
   if (profile) {
     return (
       <Badge>
         Welcome,
         {' '}
-        {profile.getIn(['twitterProfile', 'displayName'])}
+        {profile.user.twitterProfile.displayName}
         !
       </Badge>
     );
   }
-  fetchProfileIfNeeded();
+  thunkFetchProfile();
   return (
     <Button variant={variant} onClick={() => initTwitterLogin()}>{loginText}</Button>
   );
 };
 
-const mapStateToProps = (state: Map<string, any>) => ({
-  profile: state.get('profile'),
-});
-
-export default connect(mapStateToProps, actionCreators)(LoginButton);
+export default connect(mapStateToProps, allActions)(LoginButton);
