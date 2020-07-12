@@ -1,52 +1,43 @@
 import * as React from 'react';
-import { Component } from 'react';
 import { Button } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import * as actionCreators from './action_creators';
+import { connect, ConnectedProps } from 'react-redux';
+import { allActions } from './all_actions';
 import CreateBitModal from './CreateBitModal';
 import LoginButton from './LoginButton';
+import { AppComponent, NOOP, AppState } from './store';
 
-type Props = {
-  filtering: any
-  profile: any
-  createBit: any
-};
+type InputProps = {};
 
-class CreateBitButton extends Component<Props> {
-  constructor(props: Props, context: Map<string, any>) {
-    super(props, context);
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
+  profile: state.profile.profile,
+});
 
-    this.show = this.show.bind(this);
-    this.hide = this.hide.bind(this);
-
-    this.state = {
+class CreateBitButton extends AppComponent<InputProps, typeof mapStateToProps> {
+  componentDidMount() {
+    // TODO: Make this typed somehow..
+    this.setState({
       show: false,
-    };
+    });
   }
 
-  show() {
+  private show() {
     this.setState({ show: true });
   }
 
-  hide() {
+  private hide() {
     this.setState({ show: false });
   }
 
   render() {
-    const { filtering, profile, createBit } = this.props;
-    if (profile) {
+    if (this.props.profile) {
       return ([
-        <Button variant="danger" onClick={this.show} key="create-bit-button">
+        <Button variant="danger" onClick={() => this.show()} key="create-bit-button">
           Create new bit
         </Button>,
         <CreateBitModal
-          show={(this.state as any).show}
-          createBit={createBit}
-          onHide={this.hide}
+          show={(this.state as {show: boolean}).show}
+          onHide={() => this.hide()}
           key="create-bit-modal"
-          allChars={filtering.get('chars')}
-          allStages={filtering.get('stages')}
-          allTags={filtering.get('standaloneTags')}
         />,
       ]);
     }
@@ -54,9 +45,4 @@ class CreateBitButton extends Component<Props> {
   }
 }
 
-const mapStateToProps = (state: Map<string, any>) => ({
-  filtering: state.get('filtering'),
-  profile: state.get('profile'),
-});
-
-export default connect(mapStateToProps, actionCreators)(CreateBitButton);
+export default connect(mapStateToProps, allActions)(CreateBitButton);

@@ -1,15 +1,19 @@
 import * as React from 'react';
 import { Badge, Dropdown } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { allActions } from './all_actions';
+import { AppFunctionComponent, NOOP } from './store';
+import { FilterParameter } from './types';
 
-type Props = {
+type InputProps = {
   title: any
   bootstrapStyle: any
-  allFilters: any
-  currentFilters: any
-  onClick: (filter: string) => any
+  allFilters: Set<FilterParameter>
+  currentFilters: Set<FilterParameter>
+  onClick: (filter: Set<string>) => void
 };
 
-export default function render(props: Props) {
+const FilterMenu: AppFunctionComponent<InputProps, NOOP> = props => {
   const {
     title, bootstrapStyle, allFilters, currentFilters, onClick,
   } = props;
@@ -21,23 +25,25 @@ export default function render(props: Props) {
         </Dropdown.Toggle>
 
         <Dropdown.Menu className="dropdown-menu">
-          {allFilters.map((filter: string) => (
-            <Dropdown.Item onSelect={() => onClick(filter)} key={filter}>
-              {(currentFilters.includes(filter) ? '\u2713 ' : ' ') + filter}
+          {Array.from(allFilters).map(filter => (
+            <Dropdown.Item onSelect={() => onClick(new Set([filter.display]))} key={filter.id}>
+              {(currentFilters.has(filter) ? '\u2713 ' : ' ') + filter.display}
             </Dropdown.Item>
           ))}
         </Dropdown.Menu>
       </Dropdown>
 
       <div>
-        {currentFilters.map((filter: string) => (
-          <Badge variant={bootstrapStyle} className="filter-pill" onClick={() => onClick(filter)} key={filter}>
+        {Array.from(currentFilters).map(filter => (
+          <Badge variant={bootstrapStyle} className="filter-pill" onClick={() => onClick(new Set([filter.display]))} key={filter.id}>
             &#215;
             {' '}
-            {filter}
+            {filter.display}
           </Badge>
         ))}
       </div>
     </div>
   );
 }
+
+export default connect(null, allActions)(FilterMenu);

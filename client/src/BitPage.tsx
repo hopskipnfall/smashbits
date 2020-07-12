@@ -1,18 +1,20 @@
+import * as Immutable from 'immutable';
 import * as React from 'react';
-import { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actionCreators from './action_creators';
+import { allActions } from './all_actions';
 import BitsContainer from './BitsContainer';
+import { AppComponent, AppState, AppRouteComponent } from './store';
+import { Bit } from './types';
 
-type Props = {
-  fetchBit: typeof actionCreators.fetchBit
-  match: any
-};
+const mapStateToProps = (state: AppState) => ({
+  bits: state.bits.items,
+});
 
-class BitPage extends Component<Props> {
+class BitPage extends AppRouteComponent<typeof mapStateToProps> {
+  bits: Immutable.Map<string, Bit>;
+
   componentDidMount() {
-    const { fetchBit } = this.props;
-    fetchBit(this.props.match.params.bitId);
+    this.props.thunkFetchBit((this.props.match!.params as any).bitId);
   }
 
   render() {
@@ -22,4 +24,4 @@ class BitPage extends Component<Props> {
   }
 }
 
-export default connect(null, actionCreators)(BitPage);
+export default connect(mapStateToProps, allActions)(BitPage);

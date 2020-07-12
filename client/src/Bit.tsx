@@ -1,20 +1,30 @@
 import * as React from 'react';
 import { Button, Card } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { allActions } from './all_actions';
 import * as styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
-import { USER_DOWNVOTE, USER_UPVOTE } from './reducer';
+import { AppFunctionComponent, NOOP } from './store';
+import { VOTE_DOWN, VOTE_UP } from './store/bits/types';
 import { Bit as BitType } from './types';
 
-export default function Bit(props: any) {
-  const { bit = new BitType(), upvote, downvote } = props;
+type InputProps = {
+  bit: BitType
+};
+
+const getDownvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_DOWN ? 'danger' : 'primary');
+const getUpvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_UP ? 'success' : 'primary');
+
+const Bit: AppFunctionComponent<InputProps, NOOP> = props => {
+  const { bit, thunkChangeVote } = props;
   const header = (
     <h3>
-      <Button variant={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => upvote(bit.postId)}>
+      <Button variant={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => thunkChangeVote(bit.postId, VOTE_UP)}>
         <span className="glyphicon glyphicon-thumbs-up" />
       </Button>
       {bit.upvotes - bit.downvotes + bit.userVote}
-      <Button variant={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => downvote(bit.postId)}>
+      <Button variant={getDownvoteButtonStyle(bit)} className="thumbs-down-button" onClick={() => thunkChangeVote(bit.postId, VOTE_DOWN)}>
         <span className="glyphicon glyphicon-thumbs-down" />
       </Button>
       <span className={styles.title}>{bit.title}</span>
@@ -24,7 +34,7 @@ export default function Bit(props: any) {
     <Card>
       <Card.Header>{header}</Card.Header>
       <div>
-        <BitTagPills bit={bit} {...props} />
+        <BitTagPills bit={bit} />
         <p>
           <b>{bit.author.name}</b>
           {' '}
@@ -41,6 +51,4 @@ export default function Bit(props: any) {
   );
 }
 
-const getDownvoteButtonStyle = (bit: BitType) => (bit.userVote === USER_DOWNVOTE ? 'danger' : 'primary');
-
-const getUpvoteButtonStyle = (bit: BitType) => (bit.userVote === USER_UPVOTE ? 'success' : 'primary');
+export default connect(null, allActions)(Bit);

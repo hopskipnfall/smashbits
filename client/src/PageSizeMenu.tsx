@@ -1,18 +1,24 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
-import * as actionCreators from './action_creators';
+import { allActions } from './all_actions';
+import { AppState, AppFunctionComponent } from './store';
+import { PAGE_SIZES } from './types';
 
-const SIZES = [10, 25, 50];
+type InputProps = {};
 
-const PageSizeMenu = (props: any) => {
-  const { pageSize, setPageSize } = props;
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
+  pageSize: state.filtering.currentPageSize,
+});
+
+const PageSizeMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = props => {
+  const { pageSize, thunkChangePageSize } = props;
   return (
     <span>
       Results per page:
       <DropdownButton variant="info" title={`${pageSize}`} id="page-size-menu">
-        {SIZES.map(size => (
-          <Dropdown.Item onSelect={() => setPageSize(size)} key={size}>
+        {PAGE_SIZES.map(size => (
+          <Dropdown.Item onSelect={() => thunkChangePageSize(size)} key={size}>
             {size}
           </Dropdown.Item>
         ))}
@@ -21,8 +27,4 @@ const PageSizeMenu = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: Map<string, any>, ownProps: any) => ({
-  pageSize: ownProps.pageSize,
-});
-
-export default connect(mapStateToProps, actionCreators)(PageSizeMenu);
+export default connect(mapStateToProps, allActions)(PageSizeMenu);

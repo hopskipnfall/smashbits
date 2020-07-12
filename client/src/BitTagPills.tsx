@@ -1,24 +1,25 @@
-import { Set } from 'immutable';
 import * as React from 'react';
 import { Badge } from 'react-bootstrap';
-import { setMainCharFilters, setStageFilters, setStandaloneTagFilters, setVsCharFilters } from './action_creators';
-import { Bit } from './types';
+import { connect } from 'react-redux';
+import { allActions } from './all_actions';
+import { AppFunctionComponent, AppState, NOOP } from './store';
+import { Bit, CharacterId, LabelId, StageId } from './types';
 
-type Props = {
+type InputProps = {
   bit: Bit
-  setMainCharFilters: typeof setMainCharFilters
-  setVsCharFilters: typeof setVsCharFilters
-  setStageFilters: typeof setStageFilters
-  setStandaloneTagFilters: typeof setStandaloneTagFilters
 };
 
-export default function BitTagPills(props: Props) {
+const mapStateToProps = (state: AppState, ownProps: any) => {
+  return { state };
+}
+
+const BitTagPills: AppFunctionComponent<InputProps, NOOP> = props => {
   const {
     bit,
-    setMainCharFilters,
-    setVsCharFilters,
-    setStageFilters,
-    setStandaloneTagFilters,
+    thunkSetMainChars,
+    thunkSetVsChars,
+    thunkSetStagesChars,
+    thunkSetLabels,
   } = props;
   return (
     <div className="bit-tag-pills">
@@ -26,7 +27,7 @@ export default function BitTagPills(props: Props) {
         <Badge
           variant="success"
           className="filter-pill"
-          onClick={() => setMainCharFilters(Set.of(tag))}
+          onClick={() => { thunkSetMainChars(new Set([tag]) as Set<CharacterId>) }}
           key={tag}
         >
           {tag}
@@ -36,7 +37,7 @@ export default function BitTagPills(props: Props) {
         <Badge
           variant="danger"
           className="filter-pill"
-          onClick={() => setVsCharFilters(Set.of(tag))}
+          onClick={() => thunkSetVsChars(new Set([tag]) as Set<CharacterId>)}
           key={tag}
         >
           {tag}
@@ -46,7 +47,7 @@ export default function BitTagPills(props: Props) {
         <Badge
           variant="primary"
           className="filter-pill"
-          onClick={() => setStageFilters(Set.of(tag))}
+          onClick={() => thunkSetStagesChars(new Set([tag]) as Set<StageId>)}
           key={tag}
         >
           {tag}
@@ -56,7 +57,7 @@ export default function BitTagPills(props: Props) {
         <Badge
           variant="warning"
           className="filter-pill"
-          onClick={() => setStandaloneTagFilters(Set.of(tag))}
+          onClick={() => thunkSetLabels(new Set([tag]) as Set<LabelId>)}
           key={tag}
         >
           {tag}
@@ -65,3 +66,5 @@ export default function BitTagPills(props: Props) {
     </div>
   );
 }
+
+export default connect(mapStateToProps, allActions)(BitTagPills);
