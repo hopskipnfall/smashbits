@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import * as styles from './App.sass';
-
 import BitPage from './BitPage';
+import Home from './Home';
 import LoginButton from './LoginButton';
 import LoginTransitionPage from './LoginTransitionPage';
-import Home from './Home';
 
 const App = () => (
   <div>

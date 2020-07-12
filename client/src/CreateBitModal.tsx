@@ -1,142 +1,139 @@
 import * as React from 'react';
-import { Component } from 'react';
 import { Button, FormControl, FormLabel, Modal, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import { connect } from 'react-redux';
 import { Control, LocalForm } from 'react-redux-form';
-import { createBit } from './action_creators';
+import { allActions } from './all_actions';
+import { AppFunctionComponent, NOOP, AppState } from './store';
+import { CHARACTER_MAP, LABEL_MAP, STAGE_MAP, Bit } from './types';
 
-type Props = {
-  createBit: typeof createBit
+type InputProps = {
   show: boolean
   onHide: any
-  allChars: any
-  allStages: any
-  allTags: any
 };
 
-class CreateBitModal extends Component<Props> {
-  constructor(props: Props, context: Map<string, any>) {
-    super(props, context);
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
+  profile: state.profile.profile,
+});
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleSubmit(values: any) {
-    const { createBit } = this.props;
-    createBit(values);
-  }
-
-  render() {
-    const {
-      show, onHide, allChars, allStages, allTags,
-    } = this.props;
-    return (
-      <Modal
-        show={show}
-        onHide={onHide}
-        // lol... https://stackoverflow.com/a/49965199/2875073
-        animation={false}
+const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> = props => {
+  const {
+    show, onHide, thunkPostBit, profile
+  } = props;
+  const initialState = {
+    postId: `fakeId${new Date().getMilliseconds()}`,
+    author: { name: profile?.user.twitterProfile }
+  };
+  return (
+    <Modal
+      show={show}
+      onHide={onHide}
+      // lol... https://stackoverflow.com/a/49965199/2875073
+      animation={false}
+    >
+      <LocalForm
+        initialState={initialState}
+        onSubmit={values => thunkPostBit(new Bit(values))}
       >
         <Modal.Header>
           <h3>Create a Bit!</h3>
         </Modal.Header>
         <Modal.Body>
-          <LocalForm onSubmit={values => this.handleSubmit(values)}>
-            <FormLabel> Title </FormLabel>
-            <Control.text
-              model=".title"
-              component={FormControl}
-              placeholder="Enter title"
-            />
-            {/* TODO(thenuge): Add a char limit and message when they get close to it */}
-            <FormLabel> Content </FormLabel>
-            <Control.text
-              model=".content"
-              component={FormControl}
-              as="textarea"
-              placeholder="Write your bit!"
-            />
-            <FormLabel> Main Characters </FormLabel>
-            <Control
-              model=".mainChars[]"
-              component={ToggleButtonGroup}
-              type="checkbox"
-            >
-              {allChars.map((char: string) => (
-                <ToggleButton
-                  value={char}
-                  key={char}
-                >
-                  {char}
-                </ToggleButton>
-              ))}
-            </Control>
-            <br />
-            {' '}
-            <br />
-            <FormLabel> Vs. Characters </FormLabel>
-            <Control
-              model=".vsChars[]"
-              component={ToggleButtonGroup}
-              type="checkbox"
-            >
-              {allChars.map((char: string) => (
-                <ToggleButton
-                  value={char}
-                  key={char}
-                >
-                  {char}
-                </ToggleButton>
-              ))}
-            </Control>
-            <br />
-            {' '}
-            <br />
-            <FormLabel> On Stages </FormLabel>
-            <Control
-              model=".stages[]"
-              component={ToggleButtonGroup}
-              type="checkbox"
-            >
-              {allStages.map((stage: string) => (
-                <ToggleButton
-                  value={stage}
-                  key={stage}
-                >
-                  {stage}
-                </ToggleButton>
-              ))}
-            </Control>
-            <br />
-            {' '}
-            <br />
-            <FormLabel> With Tags </FormLabel>
-            <Control
-              model=".tags[]"
-              component={ToggleButtonGroup}
-              type="checkbox"
-            >
-              {allTags.map((tag: string) => (
-                <ToggleButton
-                  value={tag}
-                  key={tag}
-                >
-                  {tag}
-                </ToggleButton>
-              ))}
-            </Control>
-          </LocalForm>
+          <FormLabel> Title </FormLabel>
+          <Control.text
+            model=".title"
+            component={FormControl}
+            placeholder="Enter title"
+          />
+          {/* TODO(thenuge): Add a char limit and message when they get close to it */}
+          <FormLabel> Content </FormLabel>
+          <Control.text
+            model=".content"
+            component={FormControl}
+            as="textarea"/*  */
+            placeholder="Write your bit!"
+          />
+          <FormLabel> Main Characters </FormLabel>
+          <Control
+            model=".mainChars[]"
+            component={ToggleButtonGroup}
+            type="checkbox"
+          >
+            {Array.from(CHARACTER_MAP.values()).map(char => (
+              <ToggleButton
+                value={char.id}
+                key={'main' + char.id}
+              >
+                {char.display}
+              </ToggleButton>
+            ))}
+          </Control>
+          <br />
+          {' '}
+          <br />
+          <FormLabel> Vs. Characters </FormLabel>
+          <Control
+            model=".vsChars[]"
+            component={ToggleButtonGroup}
+            type="checkbox"
+          >
+            {Array.from(CHARACTER_MAP.values()).map(char => (
+              <ToggleButton
+                value={char.id}
+                key={'vs' + char.id}
+              >
+                {char.display}
+              </ToggleButton>
+            ))}
+          </Control>
+          <br />
+          {' '}
+          <br />
+          <FormLabel> On Stages </FormLabel>
+          <Control
+            model=".stages[]"
+            component={ToggleButtonGroup}
+            type="checkbox"
+          >
+            {Array.from(STAGE_MAP.values()).map(stage => (
+              <ToggleButton
+                value={stage.id}
+                key={'stage' + stage.id}
+              >
+                {stage.display}
+              </ToggleButton>
+            ))}
+          </Control>
+          <br />
+          {' '}
+          <br />
+          <FormLabel> With Tags </FormLabel>
+          <Control
+            model=".standaloneTags[]"
+            component={ToggleButtonGroup}
+            type="checkbox"
+          >
+            {Array.from(LABEL_MAP.values()).map(label => (
+              <ToggleButton
+                value={label.id}
+                key={'tag' + label.id}
+              >
+                {label.display}
+              </ToggleButton>
+            ))}
+          </Control>
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>
             Cancel
           </Button>
-          <Button variant="primary" type="submit" form="bit-form">
+          <Button variant="primary" type="submit">
+            {/* FIXME: Submitting works... but fails to render the page afterward. */}
             Submit
-          </Button>
+        </Button>
         </Modal.Footer>
-      </Modal>
-    );
-  }
+      </LocalForm>
+    </Modal>
+  );
 }
 
-export default CreateBitModal;
+export default connect(mapStateToProps, allActions)(CreateBitModal);

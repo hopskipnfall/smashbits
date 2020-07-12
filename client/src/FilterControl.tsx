@@ -1,13 +1,24 @@
-import { fromJS, List, Map } from 'immutable';
 import * as React from 'react';
 import { Card } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import * as actionCreators from './action_creators';
+import { allActions } from './all_actions';
 import FilterMenu from './FilterMenu';
+import { AppFunctionComponent, AppState } from './store';
+import { ALL_CHARACTERS, ALL_LABELS, ALL_STAGES, CHARACTER_MAP_REVERSE, LABEL_MAP_REVERSE, STAGE_MAP_REVERSE } from './types';
 
-const FilterControl = (props: any) => {
+type Parameters = {};
+
+const mapStateToProps = (state: AppState, ownProps: Parameters) => ({
+  filtering: state.filtering,
+});
+
+const FilterControl: AppFunctionComponent<Parameters, typeof mapStateToProps> = props => {
   const {
-    filtering = Map(), toggleMainCharFilter, toggleVsCharFilter, toggleStageFilter, toggleStandaloneTagFilter,
+    filtering,
+    thunkSetMainChars,
+    thunkSetLabels,
+    thunkSetVsChars,
+    thunkSetStagesChars,
   } = props;
   return (
     <Card>
@@ -16,37 +27,33 @@ const FilterControl = (props: any) => {
       <FilterMenu
         title="These characters"
         bootstrapStyle="success"
-        allFilters={filtering.get('chars')}
-        currentFilters={filtering.get('currentMainChars', List())}
-        onClick={toggleMainCharFilter}
+        allFilters={ALL_CHARACTERS}
+        currentFilters={new Set(Array.from(filtering.mainCharacters).map(name => CHARACTER_MAP_REVERSE.get(name)!))}
+        onClick={thunkSetMainChars}
       />
       <FilterMenu
         title="vs. these characters"
         bootstrapStyle="danger"
-        allFilters={filtering.get('chars')}
-        currentFilters={filtering.get('currentVsChars', List())}
-        onClick={toggleVsCharFilter}
+        allFilters={ALL_CHARACTERS}
+        currentFilters={new Set(Array.from(filtering.vsCharacters).map(name => CHARACTER_MAP_REVERSE.get(name)!))}
+        onClick={thunkSetVsChars}
       />
       <FilterMenu
         title="on these stages"
         bootstrapStyle="primary"
-        allFilters={filtering.get('stages')}
-        currentFilters={filtering.get('currentStages', List())}
-        onClick={toggleStageFilter}
+        allFilters={ALL_STAGES}
+        currentFilters={new Set(Array.from(filtering.stages).map(name => STAGE_MAP_REVERSE.get(name)!))}
+        onClick={thunkSetStagesChars}
       />
       <FilterMenu
         title="with these tags"
         bootstrapStyle="warning"
-        allFilters={filtering.get('standaloneTags')}
-        currentFilters={filtering.get('currentStandaloneTags', List())}
-        onClick={toggleStandaloneTagFilter}
+        allFilters={ALL_LABELS}
+        currentFilters={new Set(Array.from(filtering.labels).map(name => LABEL_MAP_REVERSE.get(name)!))}
+        onClick={thunkSetLabels}
       />
     </Card>
   );
 };
 
-const mapStateToProps = (state: Map<string, any>, ownProps: any) => ({
-  filtering: state.get('filtering').merge(fromJS(ownProps.filters)),
-});
-
-export default connect(mapStateToProps, actionCreators)(FilterControl);
+export default connect(mapStateToProps, allActions)(FilterControl);
