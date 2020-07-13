@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import FilterMenu from './FilterMenu';
 import { AppFunctionComponent, AppState } from './store';
-import { ALL_CHARACTERS, ALL_LABELS, ALL_STAGES, CHARACTER_MAP_REVERSE, LABEL_MAP_REVERSE, STAGE_MAP_REVERSE } from './types';
+import { ALL_CHARACTERS, ALL_LABELS, ALL_STAGES, CHARACTER_MAP, LABEL_MAP, STAGE_MAP } from './types';
 
 type Parameters = {};
 
@@ -15,10 +15,10 @@ const mapStateToProps = (state: AppState, ownProps: Parameters) => ({
 const FilterControl: AppFunctionComponent<Parameters, typeof mapStateToProps> = props => {
   const {
     filtering,
-    thunkSetMainChars,
-    thunkSetLabels,
-    thunkSetVsChars,
-    thunkSetStagesChars,
+    thunkToggleMainChar,
+    thunkToggleVsChar,
+    thunkToggleLabel,
+    thunkToggleStage
   } = props;
   return (
     <Card>
@@ -28,29 +28,29 @@ const FilterControl: AppFunctionComponent<Parameters, typeof mapStateToProps> = 
         title="These characters"
         bootstrapStyle="success"
         allFilters={ALL_CHARACTERS}
-        currentFilters={new Set(Array.from(filtering.mainCharacters).map(name => CHARACTER_MAP_REVERSE.get(name)!))}
-        onClick={thunkSetMainChars}
+        currentFilters={filtering.mainCharacters}
+        onClick={thunkToggleMainChar}
       />
       <FilterMenu
         title="vs. these characters"
         bootstrapStyle="danger"
         allFilters={ALL_CHARACTERS}
-        currentFilters={new Set(Array.from(filtering.vsCharacters).map(name => CHARACTER_MAP_REVERSE.get(name)!))}
-        onClick={thunkSetVsChars}
+        currentFilters={filtering.vsCharacters}
+        onClick={thunkToggleVsChar}
       />
       <FilterMenu
         title="on these stages"
         bootstrapStyle="primary"
         allFilters={ALL_STAGES}
-        currentFilters={new Set(Array.from(filtering.stages).map(name => STAGE_MAP_REVERSE.get(name)!))}
-        onClick={thunkSetStagesChars}
+        currentFilters={filtering.stages}
+        onClick={thunkToggleStage}
       />
       <FilterMenu
         title="with these tags"
         bootstrapStyle="warning"
         allFilters={ALL_LABELS}
-        currentFilters={new Set(Array.from(filtering.labels).map(name => LABEL_MAP_REVERSE.get(name)!))}
-        onClick={thunkSetLabels}
+        currentFilters={filtering.labels}
+        onClick={thunkToggleLabel}
       />
     </Card>
   );

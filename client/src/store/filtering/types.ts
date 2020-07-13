@@ -1,13 +1,13 @@
-import { LabelId, StageId, CharacterId, SortOption, PageSize } from '../../types';
+import { Character, Label, PageSize, SortOption, Stage } from '../../types';
 
 export interface FilteringState {
   sort: SortOption
-  mainCharacters: Set<string> // TODO make this ids lol.
-  vsCharacters: Set<string>
-  stages: Set<StageId>
+  mainCharacters: Set<Character>
+  vsCharacters: Set<Character>
+  stages: Set<Stage>
   offset: number
   limit: number
-  labels: Set<LabelId>
+  labels: Set<Label>
   currentPageSize: PageSize
 }
 
@@ -20,13 +20,13 @@ export interface ChangeSortAction {
 export const SET_VS_CHARACTERS = 'FILTERING_SET_VS_CHARACTERS';
 export interface SetVsCharactersAction {
   type: typeof SET_VS_CHARACTERS
-  characters: Set<CharacterId>
+  characters: Set<Character>
 }
 
 export const SET_MAIN_CHARACTERS = 'FILTERING_SET_MAIN_CHARACTERS';
 export interface SetMainCharactersAction {
   type: typeof SET_MAIN_CHARACTERS
-  characters: Set<CharacterId>
+  characters: Set<Character>
 }
 
 export const SET_OFFSET = 'FILTERING_SET_OFFSET';
@@ -38,13 +38,13 @@ export interface SetOffsetAction {
 export const SET_STAGES = 'FILTERING_SET_STAGES';
 export interface SetStagesAction {
   type: typeof SET_STAGES
-  stageIds: Set<StageId>
+  stageIds: Set<Stage>
 }
 
 export const SET_LABELS = 'FILTERING_SET_LABELS';
 export interface SetLabelsAction {
   type: typeof SET_LABELS
-  labels: Set<LabelId>
+  labels: Set<Label>
 }
 
 export const SET_PAGE_SIZE = 'SET_PAGE_SIZE';

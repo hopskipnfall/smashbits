@@ -1,18 +1,9 @@
-import * as Immutable from 'immutable';
-import { AppState } from './store';
+import { Bit, CHARACTER_MAP, LABEL_MAP, STAGE_MAP, CharacterId, StageId, LabelId } from './types';
 
-export const filterBits = (state: AppState, filters: any = {}) => {
-    const mainChars = Immutable.Set<string>(filters.currentMainChars || []);
-    const vsChars = Immutable.Set<string>(filters.currentVsChars || []);
-    const stages = Immutable.Set<string>(filters.currentStages || []);
-    const standaloneTags = Immutable.Set<string>(filters.currentStandaloneTags || []);
-
-    return state.bits.items.filter(bit => (mainChars.size === 0
-        || mainChars.intersect(bit.mainChars).size !== 0)
-        && (vsChars.size === 0
-            || vsChars.intersect(bit.vsChars).size !== 0)
-        && (stages.size === 0
-            || stages.intersect(bit.stages).size !== 0)
-        && (standaloneTags.size === 0
-            || standaloneTags.intersect(bit.standaloneTags).size !== 0));
-};
+export const decorateBit = (bit:{ [key: string]: any}): Bit => new Bit({
+    ...bit,
+    mainChars: bit.mainChars && bit.mainChars.map((char: CharacterId) => CHARACTER_MAP.get(char)),
+    vsChars: bit.vsChars && bit.vsChars.map((char: CharacterId) => CHARACTER_MAP.get(char)),
+    stages: bit.stages && bit.stages.map((stage: StageId) => STAGE_MAP.get(stage)),
+    standaloneTags: bit.standaloneTags && bit.standaloneTags.map((tag: LabelId) => LABEL_MAP.get(tag)),
+})

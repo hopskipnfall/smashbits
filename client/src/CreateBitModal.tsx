@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Control, LocalForm } from 'react-redux-form';
 import { allActions } from './all_actions';
 import { AppFunctionComponent, NOOP, AppState } from './store';
-import { CHARACTER_MAP, LABEL_MAP, STAGE_MAP, Bit } from './types';
+import { ALL_CHARACTERS, LABEL_MAP, STAGE_MAP, Bit } from './types';
 
 type InputProps = {
   show: boolean
@@ -58,7 +58,7 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
             component={ToggleButtonGroup}
             type="checkbox"
           >
-            {Array.from(CHARACTER_MAP.values()).map(char => (
+            {Array.from(ALL_CHARACTERS).map(char => (
               <ToggleButton
                 value={char.id}
                 key={'main' + char.id}
@@ -76,7 +76,7 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
             component={ToggleButtonGroup}
             type="checkbox"
           >
-            {Array.from(CHARACTER_MAP.values()).map(char => (
+            {Array.from(ALL_CHARACTERS).map(char => (
               <ToggleButton
                 value={char.id}
                 key={'vs' + char.id}
