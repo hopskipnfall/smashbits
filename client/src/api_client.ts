@@ -4,6 +4,7 @@ import { fakeApiClient } from './fake_api_client';
 import history from './history';
 import { FilteringState } from './store/filtering/types';
 import { Bit, Profile } from './types';
+import { decorateBit } from './bits_util';
 
 // TODO: Fix this "any" type.
 function safeFetch(url: string, options?: any) {
@@ -24,8 +25,8 @@ const PROFILE_PATH = '/profile';
 // Set this to true in .env to use local, fake data instead of making any RPCs.
 const USE_FAKE_CLIENT = (process.env.USE_FAKE_API_CLIENT === 'true') && process.env.NODE_ENV === 'development';
 
-export function apiFetchBits(filters: FilteringState): Promise<{ bits: Bit[] }> {
-  let fetchPromise;
+export function apiFetchBits(filters: FilteringState): Promise<Bit[]> {
+  let fetchPromise: Promise<Response>;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeApiClient.fetchBits(filters);
   } else {
@@ -39,9 +40,9 @@ export function apiFetchBits(filters: FilteringState): Promise<{ bits: Bit[] }> 
         console.error('Error fetching bits', error);
         // TODO(thenuge): Handle this more gracefully with a message in the UI.
         throw error;
-      });
+      })
   }
-  return fetchPromise;
+  return fetchPromise.then(response => response.json().then(json => json.bits.map((bit: { [key: string]: any }) => decorateBit(bit))));
   // TODO(thenuge): Add actions for initiating requests for bit fetching, as well as errors.
   // fetchPromise.then((response: any) => response.bits.map((bit: { [key: string]: any }) => dispatch(addBit(new Bit(bit)))));
 }

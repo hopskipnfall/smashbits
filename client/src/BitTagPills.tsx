@@ -3,7 +3,7 @@ import { Badge } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import { AppFunctionComponent, AppState, NOOP } from './store';
-import { Bit, CharacterId, LabelId, StageId } from './types';
+import { Bit } from './types';
 
 type InputProps = {
   bit: Bit
@@ -18,7 +18,7 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = props => {
     bit,
     thunkSetMainChars,
     thunkSetVsChars,
-    thunkSetStagesChars,
+    thunkSetStages,
     thunkSetLabels,
   } = props;
   return (
@@ -27,40 +27,40 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = props => {
         <Badge
           variant="success"
           className="filter-pill"
-          onClick={() => { thunkSetMainChars(new Set([tag]) as Set<CharacterId>) }}
-          key={tag}
+          onClick={() => { thunkSetMainChars(new Set([tag])) }}
+          key={tag.id}
         >
-          {tag}
+          {tag.display}
         </Badge>
       ))}
       {bit.vsChars.map(tag => (
         <Badge
           variant="danger"
           className="filter-pill"
-          onClick={() => thunkSetVsChars(new Set([tag]) as Set<CharacterId>)}
-          key={tag}
+          onClick={() => { thunkSetVsChars(new Set([tag])) }}
+          key={tag.id}
         >
-          {tag}
+          {tag.display}
         </Badge>
       ))}
       {bit.stages.map(tag => (
         <Badge
           variant="primary"
           className="filter-pill"
-          onClick={() => thunkSetStagesChars(new Set([tag]) as Set<StageId>)}
-          key={tag}
+          onClick={() => { thunkSetStages(new Set([tag])) }}
+          key={tag.id}
         >
-          {tag}
+          {tag.display}
         </Badge>
       ))}
       {bit.standaloneTags.map(tag => (
         <Badge
           variant="warning"
           className="filter-pill"
-          onClick={() => thunkSetLabels(new Set([tag]) as Set<LabelId>)}
-          key={tag}
+          onClick={() => { thunkSetLabels(new Set([tag])) }}
+          key={tag.id}
         >
-          {tag}
+          {tag.display}
         </Badge>
       ))}
     </div>
