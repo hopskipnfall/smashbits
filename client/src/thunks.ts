@@ -15,7 +15,7 @@ type AppThunkActionCreator = ActionCreator<AppThunkAction>
 
 export const thunkFetchBits: AppThunkActionCreator = () => {
   return async (dispatch, getState) => {
-    const bits: Bit[] = await fetchBitsApi(getState().filtering);
+    const bits = await fetchBitsApi(getState().filtering);
     dispatch(replaceBits(bits));
   }
 };
