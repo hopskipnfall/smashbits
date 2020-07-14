@@ -1,9 +1,9 @@
-import { Bit, CHARACTER_MAP, LABEL_MAP, STAGE_MAP, CharacterId, StageId, LabelId } from './types';
+import { notEmpty, Bit, CHARACTER_MAP, LABEL_MAP, STAGE_MAP, CharacterId, StageId, LabelId } from './types';
 
 export const decorateBit = (bit:{ [key: string]: any}): Bit => new Bit({
     ...bit,
-    mainChars: bit.mainChars && bit.mainChars.map((char: CharacterId) => CHARACTER_MAP.get(char)),
-    vsChars: bit.vsChars && bit.vsChars.map((char: CharacterId) => CHARACTER_MAP.get(char)),
-    stages: bit.stages && bit.stages.map((stage: StageId) => STAGE_MAP.get(stage)),
-    standaloneTags: bit.standaloneTags && bit.standaloneTags.map((tag: LabelId) => LABEL_MAP.get(tag)),
+    mainChars: bit.mainChars && bit.mainChars.map((char: CharacterId) => CHARACTER_MAP.get(char)).filter(notEmpty),
+    vsChars: bit.vsChars && bit.vsChars.map((char: CharacterId) => CHARACTER_MAP.get(char)).filter(notEmpty),
+    stages: bit.stages && bit.stages.map((stage: StageId) => STAGE_MAP.get(stage)).filter(notEmpty),
+    standaloneTags: bit.standaloneTags && bit.standaloneTags.map((tag: LabelId) => LABEL_MAP.get(tag)).filter(notEmpty),
 })
