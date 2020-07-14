@@ -49,14 +49,14 @@ export class Bit {
   dateCreated: number;
   downvotes: number;
   isRequestingComments: boolean;
-  mainChars: CharacterId[];
+  mainChars: Character[];
   postId: string;
-  stages: StageId[];
-  standaloneTags: string[];
+  stages: Stage[];
+  standaloneTags: Label[];
   title: string;
   upvotes: number;
   userVote: Vote;
-  vsChars: CharacterId[];
+  vsChars: Character[];
 
   constructor(data?: { [key: string]: any }) {
     data = data || {};

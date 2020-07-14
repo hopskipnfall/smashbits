@@ -6,6 +6,7 @@ import { getCharFilterQuery } from './shared/query_util';
 // // import { SORT_DATE, SORT_SCORE } from './reducer';
 // import * as queryParams from './shared/query_params';
 import { AppState } from "./store";
+import { Character } from './types';
 
 // export const PARAM_TO_CLIENT_SORT: { [key: string]: string } = { [queryParams.SORT_PARAM_DATE]: SORT_DATE, [queryParams.SORT_PARAM_SCORE]: SORT_SCORE };
 // export const CLIENT_SORT_TO_PARAM: { [key: string]: string } = { [SORT_DATE]: queryParams.SORT_PARAM_DATE, [SORT_SCORE]: queryParams.SORT_PARAM_SCORE };
@@ -101,7 +102,7 @@ export const buildUriFromState = (state: AppState) => {
     [QUERY_SORT]: defaultToUndefined(state.filtering.sort),
     [QUERY_LIMIT]: defaultToUndefined(state.filtering.limit),
     [QUERY_OFFSET]: defaultToUndefined(state.filtering.offset),
-    [QUERY_MAIN_CHARS]: defaultToUndefined(getCharFilterQuery(state.filtering.mainCharacters)),
+    [QUERY_MAIN_CHARS]: defaultToUndefined(getCharFilterQuery(new Set(Array.from(state.filtering.mainCharacters).map(char => char.id)))),
     [QUERY_VS_CHARS]: defaultToUndefined(Array.from(state.filtering.vsCharacters)[0]),
     [QUERY_STAGES]: defaultToUndefined(Array.from(state.filtering.stages)[0]),
     [QUERY_TAGS]: defaultToUndefined(Array.from(state.filtering.labels)[0]),

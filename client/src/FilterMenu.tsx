@@ -10,7 +10,7 @@ type InputProps = {
   bootstrapStyle: any
   allFilters: Set<FilterParameter>
   currentFilters: Set<FilterParameter>
-  onClick: (filter: Set<string>) => void
+  onClick: (filter: FilterParameter) => void
 };
 
 const FilterMenu: AppFunctionComponent<InputProps, NOOP> = props => {
@@ -26,7 +26,7 @@ const FilterMenu: AppFunctionComponent<InputProps, NOOP> = props => {
 
         <Dropdown.Menu className="dropdown-menu">
           {Array.from(allFilters).map(filter => (
-            <Dropdown.Item onSelect={() => onClick(new Set([filter.display]))} key={filter.id}>
+            <Dropdown.Item onSelect={() => onClick(filter)} key={filter.id}>
               {(currentFilters.has(filter) ? '\u2713 ' : ' ') + filter.display}
             </Dropdown.Item>
           ))}
@@ -35,7 +35,7 @@ const FilterMenu: AppFunctionComponent<InputProps, NOOP> = props => {
 
       <div>
         {Array.from(currentFilters).map(filter => (
-          <Badge variant={bootstrapStyle} className="filter-pill" onClick={() => onClick(new Set([filter.display]))} key={filter.id}>
+          <Badge variant={bootstrapStyle} className="filter-pill" onClick={() => onClick(filter)} key={filter.id}>
             &#215;
             {' '}
             {filter.display}
