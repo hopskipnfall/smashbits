@@ -1,6 +1,5 @@
 node_modules/
 npm-debug.log
-.vscode/
 
 # System Files
 .DS_Store

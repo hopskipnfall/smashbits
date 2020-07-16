@@ -36,7 +36,7 @@ const Bit: AppFunctionComponent<InputProps, NOOP> = props => {
       <div>
         <BitTagPills bit={bit} />
         <p>
-          <b>{bit.author?.name || ''}</b>
+          <b>{bit.author.name}</b>
           {' '}
           •
           {' '}

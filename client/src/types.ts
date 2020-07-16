@@ -16,10 +16,6 @@ export class Profile {
   }
 }
 
-export function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
-  return value !== null && value !== undefined;
-}
-
 export interface Author {
   personId: string;
   name: string;
@@ -66,7 +62,7 @@ export class Bit {
     data = data || {};
 
     this.postId = data.postId;
-    this.author = data.author;
+    this.author = data.author || { personId: '', name: ''};
     this.dateCreated = data.dateCreated;
     this.upvotes = data.upvotes || 0;
     this.downvotes = data.downvotes;

@@ -1,10 +1,10 @@
 // import * as Immutable from 'immutable';
 // import * as _ from 'lodash';
 import * as URI from 'urijs';
-import { QUERY_LIMIT, QUERY_MAIN_CHARS, QUERY_OFFSET, QUERY_PAGE_SIZE, QUERY_SORT, QUERY_STAGES, QUERY_TAGS, QUERY_VS_CHARS } from "./shared/query_params";
+import { QUERY_LIMIT, QUERY_MAIN_CHARS, QUERY_OFFSET, QUERY_PAGE_SIZE, QUERY_SORT, QUERY_STAGES, QUERY_TAGS, QUERY_VS_CHARS } from './shared/query_params';
 // // import { SORT_DATE, SORT_SCORE } from './reducer';
 // import * as queryParams from './shared/query_params';
-import { AppState } from "./store";
+import { AppState } from './store';
 
 // export const PARAM_TO_CLIENT_SORT: { [key: string]: string } = { [queryParams.SORT_PARAM_DATE]: SORT_DATE, [queryParams.SORT_PARAM_SCORE]: SORT_SCORE };
 // export const CLIENT_SORT_TO_PARAM: { [key: string]: string } = { [SORT_DATE]: queryParams.SORT_PARAM_DATE, [SORT_SCORE]: queryParams.SORT_PARAM_SCORE };
