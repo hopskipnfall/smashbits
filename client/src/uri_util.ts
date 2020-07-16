@@ -1,12 +1,10 @@
 // import * as Immutable from 'immutable';
 // import * as _ from 'lodash';
 import * as URI from 'urijs';
-import { QUERY_LIMIT, QUERY_MAIN_CHARS, QUERY_OFFSET, QUERY_SORT, QUERY_STAGES, QUERY_TAGS, QUERY_VS_CHARS, QUERY_PAGE_SIZE } from "./shared/query_params";
-import { getCharFilterQuery } from './shared/query_util';
+import { QUERY_LIMIT, QUERY_MAIN_CHARS, QUERY_OFFSET, QUERY_PAGE_SIZE, QUERY_SORT, QUERY_STAGES, QUERY_TAGS, QUERY_VS_CHARS } from './shared/query_params';
 // // import { SORT_DATE, SORT_SCORE } from './reducer';
 // import * as queryParams from './shared/query_params';
-import { AppState } from "./store";
-import { Character } from './types';
+import { AppState } from './store';
 
 // export const PARAM_TO_CLIENT_SORT: { [key: string]: string } = { [queryParams.SORT_PARAM_DATE]: SORT_DATE, [queryParams.SORT_PARAM_SCORE]: SORT_SCORE };
 // export const CLIENT_SORT_TO_PARAM: { [key: string]: string } = { [SORT_DATE]: queryParams.SORT_PARAM_DATE, [SORT_SCORE]: queryParams.SORT_PARAM_SCORE };
@@ -97,15 +95,14 @@ const defaultToUndefined = (param: any) => {
 }
 
 export const buildUriFromState = (state: AppState) => {
-  console.log('building with state object', state.filtering);
   const params = {
     [QUERY_SORT]: defaultToUndefined(state.filtering.sort),
     [QUERY_LIMIT]: defaultToUndefined(state.filtering.limit),
     [QUERY_OFFSET]: defaultToUndefined(state.filtering.offset),
-    [QUERY_MAIN_CHARS]: defaultToUndefined(getCharFilterQuery(new Set(Array.from(state.filtering.mainCharacters).map(char => char.id)))),
-    [QUERY_VS_CHARS]: defaultToUndefined(Array.from(state.filtering.vsCharacters)[0]),
-    [QUERY_STAGES]: defaultToUndefined(Array.from(state.filtering.stages)[0]),
-    [QUERY_TAGS]: defaultToUndefined(Array.from(state.filtering.labels)[0]),
+    [QUERY_MAIN_CHARS]: defaultToUndefined(Array.from(state.filtering.mainCharacters).map(char => char.id)),
+    [QUERY_VS_CHARS]: defaultToUndefined(Array.from(state.filtering.vsCharacters).map(char => char.id)),
+    [QUERY_STAGES]: defaultToUndefined(Array.from(state.filtering.stages).map(stage => stage.id)),
+    [QUERY_TAGS]: defaultToUndefined(Array.from(state.filtering.labels).map(label => label.id)),
     [QUERY_PAGE_SIZE]: defaultToUndefined(state.filtering.currentPageSize),
   };
 
