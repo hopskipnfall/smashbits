@@ -35,7 +35,6 @@ export function apiFetchBits(filters: FilteringState): Promise<Bit[]> {
         .path(BITS_PATH)
         .query(history.location.search)
         .toString())
-      .then(result => result.json())
       .catch(error => {
         console.error('Error fetching bits', error);
         // TODO(thenuge): Handle this more gracefully with a message in the UI.
