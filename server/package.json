@@ -11,7 +11,8 @@
     "test_debug:all": "npm run test:all -- --inspect-brk",
     "test_debug": "npm run test -- --inspect-brk",
     "serverless": "serverless offline start",
-    "serverless:print": "serverless print"
+    "serverless:print": "serverless print",
+    "debug": "export SLS_DEBUG=* && node --inspect-brk ./node_modules/.bin/serverless offline -s dev"
   },
   "repository": {
     "type": "git",
