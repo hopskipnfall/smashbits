@@ -8,6 +8,6 @@ const paramToFilterList = (queryString, filterAllowList) => {
   if (!queryString || queryString === 'undefined') {
     return [];
   }
-
-  return [...new Set(queryString.split(',').filter(param => filterAllowList.has(param)))];
+  return Array.from(filterAllowList).filter(v => queryString.split(',').includes(v));
+  // return [...new Set(queryString.split(',').filter(param => filterAllowList.has(param)))];
 };
