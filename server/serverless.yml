@@ -1,14 +1,15 @@
 service: smashbits
 
 plugins:
-  - serverless-webpack # Use serverless-webpack plugin to transpile ES6/ES7
+  - serverless-plugin-typescript
   - serverless-offline # serverless-offline needs to be last in the list
 
 # Enable auto-packing of external modules
 custom:
-  webpackIncludeModules: true
+  # webpackIncludeModules: true
   serverless-offline:
-    port: 3001
+    httpPort: 3001
+    noPrependStageInUrl: true
 
 provider:
   name: aws

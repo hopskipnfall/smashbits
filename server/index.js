@@ -1,13 +1,14 @@
-import serverless from 'serverless-http';
-import express from 'express';
-import helmet from 'helmet';
-import cors from 'cors';
-import passport from 'passport';
-import TwitterStrategy from 'passport-twitter';
-import session from 'express-session';
-import ConnectMongo from 'connect-mongo';
+import * as serverless from 'serverless-http';
+import * as express from 'express';
+import * as helmet from 'helmet';
+import * as cors from 'cors';
+import * as passport from 'passport';
+import * as TwitterStrategy from 'passport-twitter';
+import * as session from 'express-session';
+import * as ConnectMongo from 'connect-mongo';
 import crypto from 'crypto';
 import { getMongooseConnection, queryUser, putTwitterUser } from './src/store';
+import 'source-map-support/register';
 
 import {
   getBit, getBits, getComments, createBit,
@@ -129,7 +130,8 @@ app.get('/profile', (req, res) => {
       cookies: req.cookies,
     });
   } else {
-    res.status(401).setHeader('WWW-Authenticate', 'Bearer').send();
+    res.status(401).setHeader('WWW-Authenticate', 'Bearer');
+    res.send();
   }
 });
 
