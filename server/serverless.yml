@@ -6,7 +6,6 @@ plugins:
 
 # Enable auto-packing of external modules
 custom:
-  # webpackIncludeModules: true
   serverless-offline:
     httpPort: 3001
     noPrependStageInUrl: true # GET /bits instead of GET /dev/bits 
