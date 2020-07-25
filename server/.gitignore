@@ -1,3 +1,13 @@
 .serverless/
 .webpack/
-secret/
+secret/*
+
+# package directories	
+node_modules	
+jspm_packages	
+
+# Serverless directories	
+.serverless	
+
+# Generated	
+.build

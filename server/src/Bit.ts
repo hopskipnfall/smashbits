@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import { Schema, model } from 'mongoose';
 
-const bitSchema = new mongoose.Schema({
+const bitSchema = new Schema({
   postId: String,
   dateCreated: Number,
   author: {
@@ -19,5 +19,5 @@ const bitSchema = new mongoose.Schema({
 
 // Hack to prevent us from initializing the model multiple times. See
 // https://github.com/dherault/serverless-offline/issues/258.
-global.Bit = global.Bit || mongoose.model('Post', bitSchema);
+global.Bit = global.Bit || model('Post', bitSchema);
 export default global.Bit;

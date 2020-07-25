@@ -1,6 +1,6 @@
-import jsStringEscape from 'js-string-escape';
-import * as query from 'Shared/query_params';
-import { getCharFilters, getStageFilters, getTagFilters } from 'Shared/query_util';
+import * as jsStringEscape from 'js-string-escape';
+import * as query from './shared/query_params';
+import { getCharFilters, getStageFilters, getTagFilters } from './shared/query_util';
 import {
   queryBit, queryBits, putBit, queryComments,
 } from './store';
@@ -12,12 +12,12 @@ export function getBit(req) {
 }
 
 export function getBits(req) {
-  const limit = parseInt(jsStringEscape(req.query[query.QUERY_LIMIT]));
-  const offset = parseInt(jsStringEscape(req.query[query.QUERY_OFFSET]));
-  const mainChars = getCharFilters(jsStringEscape(req.query[query.QUERY_MAIN_CHARS]));
-  const vsChars = getCharFilters(jsStringEscape(req.query[query.QUERY_VS_CHARS]));
-  const stages = getStageFilters(jsStringEscape(req.query[query.QUERY_STAGES]));
-  const standaloneTags = getTagFilters(jsStringEscape(req.query[query.QUERY_TAGS]));
+  const limit = parseInt(jsStringEscape(req.query[query.QUERY_LIMIT] || ''));
+  const offset = parseInt(jsStringEscape(req.query[query.QUERY_OFFSET] || ''));
+  const mainChars = getCharFilters(jsStringEscape(req.query[query.QUERY_MAIN_CHARS] || ''));
+  const vsChars = getCharFilters(jsStringEscape(req.query[query.QUERY_VS_CHARS] || ''));
+  const stages = getStageFilters(jsStringEscape(req.query[query.QUERY_STAGES] || ''));
+  const standaloneTags = getTagFilters(jsStringEscape(req.query[query.QUERY_TAGS] || ''));
   return queryBits({
     sort: paramToSort(req.query[query.QUERY_SORT]),
     ...limit && { limit },
