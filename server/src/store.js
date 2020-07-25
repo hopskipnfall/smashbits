@@ -1,16 +1,16 @@
 import uuid from 'uuid';
-import mongoose from 'mongoose';
-import { SORT_PARAM_DATE, SORT_PARAM_SCORE } from 'Shared/query_params';
+import {connect, connection} from 'mongoose';
+import { SORT_PARAM_DATE, SORT_PARAM_SCORE } from './shared/query_params';
 import Bit from './Bit';
 import User from './User';
 
 const DEFAULT_PAGE_SIZE = 25;
 
-mongoose.Promise = global.Promise;
-mongoose.connect(process.env.STORE_URI);
+// mongoose.Promise = global.Promise;
+connect(process.env.STORE_URI);
 
 export function getMongooseConnection() {
-  return mongoose.connection;
+  return connection;
 }
 
 export function queryBit({ bitId }) {

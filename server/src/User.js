@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import {Schema, model} from 'mongoose';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   id: String,
   twitterProfile: {
     type: Map,
@@ -10,5 +10,5 @@ const userSchema = new mongoose.Schema({
 
 // Hack to prevent us from initializing the model multiple times. See
 // https://github.com/dherault/serverless-offline/issues/258.
-global.User = global.User || mongoose.model('User', userSchema);
+global.User = global.User || model('User', userSchema);
 export default global.User;
