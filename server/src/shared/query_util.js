@@ -9,5 +9,4 @@ const paramToFilterList = (queryString, filterAllowList) => {
     return [];
   }
   return Array.from(filterAllowList).filter(v => queryString.split(',').includes(v));
-  // return [...new Set(queryString.split(',').filter(param => filterAllowList.has(param)))];
 };

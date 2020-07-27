@@ -1,6 +1,6 @@
-import { Schema, Document, Model, model } from "mongoose";
-import * as statics from "./bits.statics";
+import { Document, Model, model, Schema } from "mongoose";
 import * as methods from './bits.methods';
+import * as statics from "./bits.statics";
 
 export interface Bit {
   postId: string,
