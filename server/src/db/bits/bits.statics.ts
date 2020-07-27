@@ -1,27 +1,33 @@
-import {BitModel} from './bits.types';
-import { BitDocument } from './bits.types';
+/**
+ * "Static" methods on the table.
+ * @packageDocumentation
+ */
+
 import { SORT_PARAM_DATE, SORT_PARAM_SCORE } from '../../shared/query_params';
+import { BitDocument } from './bits.schema';
+import { Model } from 'mongoose';
 
 const DEFAULT_PAGE_SIZE = 25;
 
+// Not using BitModel here as that would cause a circular dependency.
+// Statics is marked as unknown instead of any to prevent untyped usage.
+type AbbreviatedModel = Model<BitDocument> & { statics: unknown, methods: unknown };
+
 export function queryBits(
-  this: BitModel,
-  sort,// = SORT_PARAM_DATE,
+  this: AbbreviatedModel,
+  sort = SORT_PARAM_DATE,
   offset = 0,
-  limit,// = DEFAULT_PAGE_SIZE,
+  limit = DEFAULT_PAGE_SIZE,
   mainChars,
   vsChars,
   stages,
   standaloneTags)
-: Promise<BitDocument[] | null> {
-
+  : Promise<BitDocument[] | null> {
   mainChars = mainChars.length === 0 ? undefined : mainChars;
   vsChars = vsChars.length === 0 ? undefined : vsChars;
   stages = stages.length === 0 ? undefined : stages;
   standaloneTags = standaloneTags.length === 0 ? undefined : standaloneTags;
-  
-  sort = sort || SORT_PARAM_DATE;
-  limit = limit || DEFAULT_PAGE_SIZE;
+
   // Don't expose the DB ID to clients.
   const projectionParams = { _id: 0 };
   let sortParams = {};
@@ -46,4 +52,4 @@ export function queryBits(
       break;
   }
   return query.sort(sortParams).skip(offset).limit(limit).exec();
-}
+};
