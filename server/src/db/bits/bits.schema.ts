@@ -44,4 +44,5 @@ export type BitDocument = Bit & Document & typeof methods;
 /** Type for the bit model (table, as opposed to document). */
 type IBitsModel = Model<BitDocument> & typeof statics;
 
+/** Bits model to interact with (represents a table). */
 export const BitsModel = model<BitDocument>('Post', BitsSchema) as IBitsModel;

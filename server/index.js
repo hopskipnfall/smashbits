@@ -1,20 +1,14 @@
-import * as serverless from 'serverless-http';
+import * as cors from 'cors';
 import * as express from 'express';
 import * as helmet from 'helmet';
-import * as cors from 'cors';
 import * as passport from 'passport';
 import * as TwitterStrategy from 'passport-twitter';
-import * as session from 'express-session';
-import * as ConnectMongo from 'connect-mongo';
-import crypto from 'crypto';
-import { getMongooseConnection, queryUser, putTwitterUser } from './src/store';
+import * as serverless from 'serverless-http';
 import 'source-map-support/register';
-import {
-  getBit, getBits, getComments, createBit,
-} from './src/bits';
+import { createBit, getBit, getBits, getComments } from './src/bits';
 import { connect } from './src/db/db';
+import { putTwitterUser, queryUser } from './src/store';
 
-// const MongoStore = ConnectMongo(session);
 connect();
 
 passport.use(
@@ -47,14 +41,6 @@ app.use(
     },
   }),
 );
-// app.use(
-//   session({
-//     // If the environment var wasn't set, fall back to a randomly generated secret. This will effectively log everyone out each time the server restarts.
-//     secret: `${process.env.SESSION_SECRET}` || crypto.randomBytes(20).toString('hex'),
-//     store: new MongoStore({ mongooseConnection: getMongooseConnection() }),
-//     cookie: { secure: false },
-//   }),
-// );
 app.use(passport.initialize());
 app.use(passport.session());
 
