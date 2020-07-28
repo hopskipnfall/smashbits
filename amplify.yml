@@ -1,0 +1,22 @@
+version: 1
+backend:
+  phases:
+    # IMPORTANT - Please verify your build commands
+    build:
+      commands:
+        - '# Execute Amplify CLI with the helper script'
+        - amplifyPush --simple
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - 'cd client; npm install; cd -;'
+    build:
+      commands:
+        - 'npm run build --prefix=client/'
+  artifacts:
+    baseDirectory: client/dist
+    files:
+      - '**/*'
+  cache:
+    paths:
