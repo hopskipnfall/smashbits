@@ -65,7 +65,7 @@ export class Bit {
     this.author = data.author || { personId: '', name: ''};
     this.dateCreated = data.dateCreated;
     this.upvotes = data.upvotes || 0;
-    this.downvotes = data.downvotes;
+    this.downvotes = data.downvotes || 0;
     this.title = data.title;
     this.content = data.content;
     this.mainChars = shallowClone(data.mainChars || []);

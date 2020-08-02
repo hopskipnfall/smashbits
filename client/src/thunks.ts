@@ -2,6 +2,7 @@ import * as _ from "lodash";
 import { ActionCreator, AnyAction } from "redux";
 import { ThunkAction } from "redux-thunk";
 import { apiCreateBit as createBitApi, apiFetchBit as fetchBitApi, apiFetchBits as fetchBitsApi, apiFetchProfile } from './api_client';
+import { decorateBit } from "./bits_util";
 import history from "./history";
 import { AppState } from "./store";
 import { addBit, changeVote, replaceBits } from './store/bits/actions';
@@ -92,7 +93,7 @@ export const thunkPostBit: AppThunkActionCreator = (bit: Bit) => {
 
     // TODO: Make that request return the fully-formed bit and use that
     // instead of the one passed to this function.
-    dispatch(addBit(bit));
+    dispatch(addBit(decorateBit(bit)));
   }
 };
 

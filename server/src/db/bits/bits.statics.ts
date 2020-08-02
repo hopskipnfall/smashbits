@@ -6,10 +6,10 @@
  * @packageDocumentation
  */
 
-import uuid from 'uuid';
 import { Model } from 'mongoose';
+import * as uuid from 'uuid';
 import { SORT_PARAM_DATE, SORT_PARAM_SCORE } from '../../shared/query_params';
-import { BitDocument, Bit } from './bits.schema';
+import { Bit, BitDocument } from './bits.schema';
 
 const DEFAULT_PAGE_SIZE = 25;
 
