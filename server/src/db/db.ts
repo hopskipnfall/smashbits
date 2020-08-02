@@ -22,3 +22,7 @@ export const disconnect = () => {
   
   Mongoose.disconnect();
 }
+
+export const getConnection = ():Mongoose.Connection => {
+  return db;
+}

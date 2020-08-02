@@ -1,15 +1,20 @@
+import * as ConnectMongo from 'connect-mongo';
 import * as cors from 'cors';
+import crypto from 'crypto';
 import * as express from 'express';
+import * as session from 'express-session';
 import * as helmet from 'helmet';
 import * as passport from 'passport';
 import * as TwitterStrategy from 'passport-twitter';
 import * as serverless from 'serverless-http';
 import 'source-map-support/register';
 import { createBit, getBit, getBits, getComments } from './src/bits';
-import { connect } from './src/db/db';
+import { connect, getConnection } from './src/db/db';
 import { putTwitterUser, queryUser } from './src/store';
 
 connect();
+// Prepare the connection between Mongo and express-session.
+const MongoStore = ConnectMongo(session);
 
 passport.use(
   new TwitterStrategy(
@@ -39,6 +44,15 @@ app.use(
     noCache: {
       action: 'deny',
     },
+  }),
+);
+app.use(
+  session({
+    // If the environment var wasn't set, fall back to a randomly generated secret.
+    // This will effectively log everyone out each time the server restarts.
+    secret: `${process.env.SESSION_SECRET}` || crypto.randomBytes(20).toString('hex'),
+    store: new MongoStore({ mongooseConnection: getConnection() }),
+    cookie: { secure: false },
   }),
 );
 app.use(passport.initialize());
@@ -100,8 +114,8 @@ app.get('/login/twitter', passport.authenticate('twitter'));
 app.get(
   '/oauth/twitter/callback',
   passport.authenticate('twitter', {
-    failureRedirect: `${process.env.BASE_CLIENT_URL}/login?success=false`,
-    successRedirect: `${process.env.BASE_CLIENT_URL}/login?success=true`,
+    failureRedirect: `${process.env.BASE_CLIENT_URL}?success=false`,
+    successRedirect: `${process.env.BASE_CLIENT_URL}?success=true`,
   }),
   (req, res) => {
     res.redirect('/');
