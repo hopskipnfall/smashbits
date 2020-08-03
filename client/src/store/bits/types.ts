@@ -1,7 +1,8 @@
 import * as Immutable from 'immutable';
-import { Bit, Vote } from '../../types';
+import { Bit, Vote, Status } from '../../types';
 
 export interface BitsState {
+  optimisticItems: Immutable.Map<string, Bit>
   items: Immutable.Map<string, Bit>
   comments: Immutable.Set<any>
 }
@@ -26,6 +27,9 @@ export const ADD_BIT = 'BITS_ADD_BIT';
 export interface AddBitAction {
   type: typeof ADD_BIT
   bit: Bit
+  // Whether we're adding this bit optimistically after creation,
+  // while waiting for the server response.
+  optimistic: boolean
 }
 
 export const REPLACE_BITS = 'BITS_REPLACE_BITS';
@@ -34,8 +38,16 @@ export interface ReplaceBitsAction {
   bits: Bit[]
 }
 
+export const SET_OPTIMISTIC_BIT_STATUS = 'BITS_SET_OPTIMISTIC_BIT_STATUS';
+export interface SetOptimisticBitStatusAction {
+  type: typeof SET_OPTIMISTIC_BIT_STATUS
+  bitId: string
+  status: Status
+}
+
 export type BitsActionTypes =
   | ClearBitsAction
   | ChangeVoteAction
   | AddBitAction
+  | SetOptimisticBitStatusAction
   | ReplaceBitsAction;
