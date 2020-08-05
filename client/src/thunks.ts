@@ -5,10 +5,10 @@ import { apiCreateBit as createBitApi, apiFetchBit as fetchBitApi, apiFetchBits 
 import { decorateBit } from "./bits_util";
 import history from "./history";
 import { AppState } from "./store";
-import { addBit, changeVote, replaceBits } from './store/bits/actions';
+import { addOptimisticBit, changeVote, replaceBits, setOptimisticBitStatus } from './store/bits/actions';
 import { changeSort, setLabels, setMainCharacters, setPageSize, setStages, setVsCharacters } from "./store/filtering/actions";
 import { setProfile } from "./store/profile/actions";
-import { Bit, Character, Label, PageSize, SortOption, Stage, Vote } from "./types";
+import { Bit, Character, Label, PageSize, SortOption, Stage, Vote, Status } from "./types";
 import { buildUriFromState } from "./uri_util";
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>
@@ -86,14 +86,16 @@ export const thunkSetLabels: AppThunkActionCreator = (labels: Set<Label>) => {
 
 export const thunkPostBit: AppThunkActionCreator = (bit: Bit) => {
   return async (dispatch, getState) => {
-    const resp = await createBitApi(bit, dispatch);
-    if (!resp) {
-      console.error('error apparently!');
-    }
+    createBitApi(bit, dispatch)
+        .then(res => dispatch(setOptimisticBitStatus(bit.postId, Status.Saved)))
+        .catch(e => {
+          console.error('error apparently!', e);
+          dispatch(setOptimisticBitStatus(bit.postId, Status.Error));
+        });
 
-    // TODO: Make that request return the fully-formed bit and use that
-    // instead of the one passed to this function.
-    dispatch(addBit(decorateBit(bit)));
+    const optimisticBit = decorateBit(bit);
+    optimisticBit.status = Status.Saving;
+    dispatch(addOptimisticBit(optimisticBit));
   }
 };
 

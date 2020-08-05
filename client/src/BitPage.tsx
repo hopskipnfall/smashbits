@@ -19,7 +19,7 @@ class BitPage extends AppRouteComponent<typeof mapStateToProps> {
 
   render() {
     return (
-      <BitsContainer />
+      <BitsContainer bits={this.bits} />
     );
   }
 }

@@ -41,6 +41,12 @@ export class Comment {
 
 export type Vote = -1 | 0 | 1;
 
+export enum Status {
+  Saving = 'Saving...',
+  Saved = 'Saved!',
+  Error = 'Error',
+}
+
 export class Bit {
   author: Author;
   // TODO rename to commentIds
@@ -57,6 +63,7 @@ export class Bit {
   upvotes: number;
   userVote: Vote;
   vsChars: Character[];
+  status: Status;
 
   constructor(data?: { [key: string]: any }) {
     data = data || {};
@@ -75,6 +82,7 @@ export class Bit {
     this.userVote = data.userVote || 0;
     this.comments = Immutable.Set();
     this.isRequestingComments = data.isRequestingComments || false;
+    this.status = Status.Saved;
   }
 }
 

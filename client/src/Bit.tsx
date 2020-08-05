@@ -1,23 +1,34 @@
 import * as React from 'react';
-import { Button, Card } from 'react-bootstrap';
+import { Button, Card, Spinner } from 'react-bootstrap';
+import { FcHighPriority, FcOk } from 'react-icons/fc';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { allActions } from './all_actions';
 import * as styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
-import { AppFunctionComponent, NOOP } from './store';
+import { AppFunctionComponent, AppState } from './store';
 import { VOTE_DOWN, VOTE_UP } from './store/bits/types';
-import { Bit as BitType } from './types';
+import { Bit as BitType, Status } from './types';
 
 type InputProps = {
   bit: BitType
 };
 
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
+  optimistic: state.bits.optimisticItems.get(ownProps.bit.postId) != undefined,
+});
+
 const getDownvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_DOWN ? 'danger' : 'primary');
 const getUpvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_UP ? 'success' : 'primary');
 
-const Bit: AppFunctionComponent<InputProps, NOOP> = props => {
-  const { bit, thunkChangeVote } = props;
+const STATUS_TO_ICON = new Map([
+  [Status.Saving, <Spinner animation="border" variant="primary" />],
+  [Status.Saved, <FcOk />],
+  [Status.Error, <FcHighPriority />],
+]);
+
+const Bit: AppFunctionComponent<InputProps, typeof mapStateToProps> = props => {
+  const { bit, optimistic, thunkChangeVote } = props;
   const header = (
     <h3>
       <Button variant={getUpvoteButtonStyle(bit)} className="thumbs-up-button" onClick={() => thunkChangeVote(bit.postId, VOTE_UP)}>
@@ -35,13 +46,20 @@ const Bit: AppFunctionComponent<InputProps, NOOP> = props => {
       <Card.Header>{header}</Card.Header>
       <div>
         <BitTagPills bit={bit} />
-        <p>
-          <b>{bit.author.name}</b>
-          {' '}
-          •
-          {' '}
-          <i>{new Date(bit.dateCreated).toDateString()}</i>
-        </p>
+        {optimistic
+          ? (<div>
+            {STATUS_TO_ICON.get(bit.status)}
+            {' '}
+            <b>{bit.status}</b>
+          </div>)
+          : (<p>
+            <b>{bit.author.name}</b>
+            {' '}
+        •
+            {' '}
+            <i>{new Date(bit.dateCreated).toDateString()}</i>
+          </p>)
+        }
         {bit.content}
         <p>
           <Link to={`/bits/${bit.postId}`}>permalink</Link>
@@ -51,4 +69,4 @@ const Bit: AppFunctionComponent<InputProps, NOOP> = props => {
   );
 }
 
-export default connect(null, allActions)(Bit);
+export default connect(mapStateToProps, allActions)(Bit);
