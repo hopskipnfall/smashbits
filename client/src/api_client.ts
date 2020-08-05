@@ -110,7 +110,7 @@ export function apiCreateBit(bit: Bit, dispatch: Dispatch) {
 
 export function initTwitterLogin() {
   if (USE_FAKE_CLIENT) {
-    history.push('/login?success=true');
+    history.push('/?success=true');
   } else {
     window.location.href = new URI(BASE_URI)
       .path(OAUTH_PATH + TWITTER_PATH)
@@ -118,7 +118,7 @@ export function initTwitterLogin() {
   }
 }
 
-export function apiFetchProfile(successPath?: string): Promise<Profile> {
+export function apiFetchProfile(): Promise<Profile> {
   let fetchPromise;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeApiClient.fetchProfile();
@@ -137,9 +137,4 @@ export function apiFetchProfile(successPath?: string): Promise<Profile> {
   }
   fetchPromise.then(data => new Profile(data));
   return fetchPromise;
-  // TODO(thenuge): Handle errors.
-  // fetchPromise.then(response => dispatch(setProfile(fromJS(response.user))));
-  // if (successPath) {
-  //   history.push(successPath);
-  // }
 }
