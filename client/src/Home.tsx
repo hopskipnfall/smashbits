@@ -7,9 +7,16 @@ import CreateBitButton from './CreateBitButton';
 import FilterControl from './FilterControl';
 import PageSizeMenu from './PageSizeMenu';
 import SortingMenu from './SortingMenu';
-import { AppRouteComponent, NOOP } from './store';
+import { AppRouteComponent, AppState, NOOP } from './store';
 
-class Home extends AppRouteComponent<NOOP> {
+interface InputProps { }
+
+const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
+  bits: state.bits.items,
+  optimisticBits: state.bits.optimisticItems,
+});
+
+class Home extends AppRouteComponent<typeof mapStateToProps> {
   componentDidMount() {
     this.props.thunkFetchBits(); // maybe get rid of this this looks wrong
   }
@@ -32,7 +39,8 @@ class Home extends AppRouteComponent<NOOP> {
               <Button onClick={() => console.log('go to previous page!')}> &gt; </Button>
             </span>
           </span>
-          <BitsContainer />
+          <BitsContainer bits={this.props.optimisticBits} />
+          <BitsContainer bits={this.props.bits} />
         </Col>
       </div>
     );
@@ -56,4 +64,4 @@ class Home extends AppRouteComponent<NOOP> {
   // }
 }
 
-export default connect(null, allActions)(Home);
+export default connect(mapStateToProps, allActions)(Home);

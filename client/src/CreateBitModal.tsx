@@ -21,7 +21,6 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
   } = props;
   const initialState = {
     postId: `fakeId${new Date().getMilliseconds()}`,
-    author: { name: profile?.user.twitterProfile }
   };
   return (
     <Modal
@@ -32,7 +31,10 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
     >
       <LocalForm
         initialState={initialState}
-        onSubmit={values => thunkPostBit(new Bit(values))}
+        onSubmit={values => {
+          thunkPostBit(new Bit(values));
+          onHide();
+        }}
       >
         <Modal.Header>
           <h3>Create a Bit!</h3>
