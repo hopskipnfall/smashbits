@@ -1,6 +1,5 @@
 // A fake implementation of api_client with test data to avoid making an RPC during development.
 
-import * as uuid from 'uuid';
 import { FilteringState } from './store/filtering/types';
 import { Bit, Comment } from './types';
 
@@ -135,12 +134,12 @@ export const fakeApiClient = {
     return Promise.resolve(comments.filter(comment => comment.postId === bitId));
   },
 
-  createBit(bit: Bit) {
+  async createBit(bit: Bit) {
     bits.push({
       ...bit,
-      postId: uuid.v1(),
       dateCreated: new Date().getTime(),
     });
+    await new Promise(r => setTimeout(r, 2000));
     return Promise.resolve(`/bits${bits.slice(-1)[0]}`);
     // TODO: Return a 201 response
   },

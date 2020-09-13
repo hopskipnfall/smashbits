@@ -23,6 +23,10 @@ module.exports = {
       exclude: /node_modules/,
       loader: 'source-map-loader',
     },
+    { 
+      test:/\.(s*)css$/, 
+      use:['style-loader', 'css-loader', 'sass-loader'] 
+    },
     {
       test: /\.s[ac]ss$/,
       use: [
