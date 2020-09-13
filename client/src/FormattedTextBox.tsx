@@ -9,7 +9,7 @@ type InputProps = {
 const FormattedTextBox: React.FunctionComponent<InputProps> = props => {
   const { content } = props;
   return (
-    <Linkify>{content}</Linkify>
+    <Linkify options={{ nl2br: true }}>{content}</Linkify>
   );
 }
 
