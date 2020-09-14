@@ -5,6 +5,19 @@ import { Bit, Comment } from './types';
 
 const bits: {[key: string]: any}[] = [
   {
+    postId: 'K28SKJS792HFF1',
+    author: {
+      personId: 'ASLK892WWSIK92',
+      name: 'Newbie',
+    },
+    dateCreated: new Date(2027, 10, 15, 3, 4).getTime(),
+    upvotes: 1,
+    downvotes: 3,
+    title: 'Link is 2 gud',
+    content: 'Look at this clips.twitch.tv/NeighborlyElatedYakinikuOSsloth dumb ban now',
+    mainChars: ['li'],
+    vsChars: ['li'],
+  }, {
     postId: 'L3WDO8EL3LEKS',
     author: {
       personId: 'I2L3KFAE9GLREJ3',
