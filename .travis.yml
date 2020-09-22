@@ -9,8 +9,8 @@ services:
   - xvfb
 before_script:
 install:
-  - npm install --prefix=client
-  - npm install --prefix=server
+  - cd client; npm install; cd -
+  - cd server; npm install; cd -
 script:
   - cd server; npx eslint '*/**/*.{js,ts,tsx}'; cd -
   - cd client; npx eslint '*/**/*.{js,ts,tsx}'; cd -
