@@ -27,6 +27,16 @@
         "func-names": "off",
         "prefer-arrow-callback": "warn",
         "no-use-before-define": "off",
-        "radix": "off"
+        "radix": "off",
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+              "js": "never",
+              "jsx": "never",
+              "ts": "never",
+              "tsx": "never"
+            }
+         ]
     }
 }

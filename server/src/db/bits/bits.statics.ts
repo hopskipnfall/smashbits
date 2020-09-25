@@ -1,6 +1,6 @@
 /**
  * "Static" methods on the table.
- * 
+ *
  * Each exported method must have "this: AbbreviatedModel"
  * as the first parameter.
  * @packageDocumentation
@@ -21,7 +21,8 @@ const buildFilters = (
   mainChars: string[],
   vsChars: string[],
   stages: string[],
-  labels: string[]) => {
+  labels: string[],
+) => {
   let resultsFiltered = false;
   const filters: { [key: string]: any } = {};
   if (mainChars.length !== 0) {
@@ -40,7 +41,7 @@ const buildFilters = (
     filters.labels = { $in: labels };
     resultsFiltered = true;
   }
-  return resultsFiltered ? filters: null;
+  return resultsFiltered ? filters : null;
 };
 
 /** Searches bits table. */
@@ -74,8 +75,7 @@ export function queryBits(
       break;
   }
   return query.sort(sortParams).skip(offset).limit(limit).exec();
-};
-
+}
 
 /** Adds a new bit. */
 export function createBit(
