@@ -83,7 +83,7 @@ export function createBit(
   bit: Bit,
 ): Promise<BitDocument> {
   // TODO: Mongo can probably do this for us.
-  bit.postId = uuid.v1();
-  bit.dateCreated = new Date().getTime();
+  bit.postId = uuid.v1(); // eslint-disable-line no-param-reassign
+  bit.dateCreated = new Date().getTime(); // eslint-disable-line no-param-reassign
   return this.create(bit);
 }
