@@ -30,6 +30,7 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
       <LocalForm
         initialState={initialState}
         onSubmit={(values) => {
+          values = { ...values, media: [{ uri: values.mediaUri }] };
           thunkPostBit(new Bit(values));
           onHide();
         }}
@@ -43,10 +44,12 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
           {/* TODO(thenuge): Add a char limit and message when they get close to it */}
           <FormLabel> Content </FormLabel>
           <Control.text model=".content" component={FormControl} as="textarea" /*  */ placeholder="Write your bit!" />
+          <FormLabel> Embedded Media (optional) </FormLabel>
+          <Control.text model=".mediaUri" component={FormControl} placeholder="Media URL (limit 1)" />
           <FormLabel> Main Characters </FormLabel>
           <Control model=".mainChars[]" component={ToggleButtonGroup} type="checkbox">
             {Array.from(ALL_CHARACTERS).map((char) => (
-              <ToggleButton value={char.id} key={'main' + char.id}>
+              <ToggleButton value={char.id} key={`main${char.id}`}>
                 {char.display}
               </ToggleButton>
             ))}
@@ -55,7 +58,7 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
           <FormLabel> Vs. Characters </FormLabel>
           <Control model=".vsChars[]" component={ToggleButtonGroup} type="checkbox">
             {Array.from(ALL_CHARACTERS).map((char) => (
-              <ToggleButton value={char.id} key={'vs' + char.id}>
+              <ToggleButton value={char.id} key={`vs${char.id}`}>
                 {char.display}
               </ToggleButton>
             ))}
@@ -64,7 +67,7 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
           <FormLabel> On Stages </FormLabel>
           <Control model=".stages[]" component={ToggleButtonGroup} type="checkbox">
             {Array.from(STAGE_MAP.values()).map((stage) => (
-              <ToggleButton value={stage.id} key={'stage' + stage.id}>
+              <ToggleButton value={stage.id} key={`stage${stage.id}`}>
                 {stage.display}
               </ToggleButton>
             ))}
@@ -73,7 +76,7 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
           <FormLabel> With Tags </FormLabel>
           <Control model=".standaloneTags[]" component={ToggleButtonGroup} type="checkbox">
             {Array.from(LABEL_MAP.values()).map((label) => (
-              <ToggleButton value={label.id} key={'tag' + label.id}>
+              <ToggleButton value={label.id} key={`tag${label.id}`}>
                 {label.display}
               </ToggleButton>
             ))}
