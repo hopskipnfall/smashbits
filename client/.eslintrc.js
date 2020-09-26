@@ -44,9 +44,6 @@ module.exports = {
         'no-use-before-define': 'off',
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': 'error',
-        'object-curly-newline': ['error', {
-            'ImportDeclaration': 'never',
-        }],
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/lines-between-class-members': 'off',
         'import/prefer-default-export': 'off',
@@ -58,6 +55,7 @@ module.exports = {
             "exports": "always-multiline",
             "functions": "always-multiline"
         }],
+        'quotes': ["error", "single"],
 
         // Possibly temporary adjustments to help us ease into using eslint.
         'unicorn/filename-case': 'off',
@@ -66,13 +64,20 @@ module.exports = {
         "@typescript-eslint/ban-types": [
             "warn",
             {
-              "types": {
-                "{}": {
-                  "message": "// TODO(jonnjonn): Somehow allow this for only our Parameters objects",
-                  "fixWith": "object",
+                "types": {
+                    "{}": {
+                        "message": "// TODO(jonnjonn): Somehow allow this for only our Parameters objects",
+                        "fixWith": "object",
+                    }
                 }
-              }
             }
-          ]
+        ],
+
+        // I actually prefer all imports on one line, but prettier makes this hard.
+        // 'object-curly-newline': [
+        //     'error', {
+        //         'ImportDeclaration': 'never',
+        //     }
+        // ],
     }
 };
