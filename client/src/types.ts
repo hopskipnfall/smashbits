@@ -1,4 +1,5 @@
 import * as Immutable from 'immutable';
+import * as URI from 'urijs';
 
 // TODO: Split this file up and put things where they belong.
 
@@ -39,6 +40,16 @@ export class Comment {
   }
 }
 
+export class Media {
+  uri: URI;
+
+  constructor(data?: { [key: string]: any }) {
+    data = data || {};
+
+    this.uri = new URI(data.uri);
+  }
+}
+
 export type Vote = -1 | 0 | 1;
 
 export enum Status {
@@ -63,6 +74,7 @@ export class Bit {
   upvotes: number;
   userVote: Vote;
   vsChars: Character[];
+  media: Media[];
   status: Status;
 
   constructor(data?: { [key: string]: any }) {
@@ -81,6 +93,7 @@ export class Bit {
     this.vsChars = shallowClone(data.vsChars || []);
     this.userVote = data.userVote || 0;
     this.comments = Immutable.Set();
+    this.media = data.media?.map((singleMedia: any) => new Media(singleMedia)) || [];
     this.isRequestingComments = data.isRequestingComments || false;
     this.status = Status.Saved;
   }
