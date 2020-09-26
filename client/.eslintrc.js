@@ -4,10 +4,17 @@ module.exports = {
         es2020: true
     },
     extends: [
+        'airbnb-typescript/base',
         'airbnb-typescript',
         'airbnb/hooks',
         'plugin:@typescript-eslint/recommended',
-        'plugin:@typescript-eslint/recommended-requiring-type-checking'
+        'plugin:unicorn/recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
+        'plugin:prettier/recommended',
+        'prettier',
+        'prettier/@typescript-eslint',
+        'prettier/react',
     ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
@@ -20,10 +27,11 @@ module.exports = {
         sourceType: 'module'
     },
     plugins: [
-        'react',
         '@typescript-eslint',
-        "prettier/@typescript-eslint",
-        "plugin:prettier/recommended" // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+        'prettier',
+        'unicorn',
+        'import',
+        'react',
     ],
     rules: {
         'linebreak-style': 'off',
@@ -36,11 +44,12 @@ module.exports = {
         'no-use-before-define': 'off',
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': 'error',
-        "object-curly-newline": ["error", {
-            "ImportDeclaration": "never",
+        'object-curly-newline': ['error', {
+            'ImportDeclaration': 'never',
         }],
-        "@typescript-eslint/explicit-module-boundary-types": "off",
-        "@typescript-eslint/lines-between-class-members": "off",
-        "import/prefer-default-export": "off",
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/lines-between-class-members': 'off',
+        'import/prefer-default-export': 'off',
+        'prettier/prettier': 'error',
     }
 };
