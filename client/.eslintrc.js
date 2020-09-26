@@ -71,6 +71,12 @@ module.exports = {
                 }
             }
         ],
+        'prettier/prettier': [
+          'error',
+          {
+            endOfLine: 'auto',
+          },
+        ],
 
         // I actually prefer all imports on one line, but prettier makes this hard.
         // 'object-curly-newline': [
