@@ -18,11 +18,12 @@ const bits: { [key: string]: any }[] = [
     media: [
       {
         uri: 'https://clips.twitch.tv/NeighborlyElatedYakinikuOSsloth',
-      }
+      },
     ],
     mainChars: ['li'],
     vsChars: ['li'],
-  }, {
+  },
+  {
     postId: 'L3WDO8EL3LEKS',
     author: {
       personId: 'I2L3KFAE9GLREJ3',
@@ -32,7 +33,8 @@ const bits: { [key: string]: any }[] = [
     upvotes: 10,
     downvotes: 3,
     title: 'Fox is unedgeguardable',
-    content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.\n\nSee https://youtu.be/GCcWPNa89HE?t=798',
+    content:
+      "No matter what you do, you'll never be able to kill a recovering Fox.\n\nSee https://youtu.be/GCcWPNa89HE?t=798",
     mainChars: ['fo'],
     standaloneTags: ['ed'],
   },
