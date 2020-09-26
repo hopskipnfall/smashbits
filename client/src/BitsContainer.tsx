@@ -7,12 +7,14 @@ import { AppFunctionComponent, NOOP } from './store';
 import { Bit as BitType } from './types';
 
 type InputProps = {
-  bits: Immutable.Map<string, BitType>
+  bits: Immutable.Map<string, BitType>;
 };
 
-const BitsContainer: AppFunctionComponent<InputProps, NOOP, NOOP> = props => (
+const BitsContainer: AppFunctionComponent<InputProps, NOOP, NOOP> = (props) => (
   <div>
-    {props.bits.valueSeq().map(bit => <Bit bit={bit} key={bit.postId} />)}
+    {props.bits.valueSeq().map((bit) => (
+      <Bit bit={bit} key={bit.postId} />
+    ))}
   </div>
 );
 

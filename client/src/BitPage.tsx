@@ -3,7 +3,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import BitsContainer from './BitsContainer';
-import { AppComponent, AppState, AppRouteComponent } from './store';
+import { AppRouteComponent, AppState } from './store';
 import { Bit } from './types';
 
 const mapStateToProps = (state: AppState) => ({
@@ -18,9 +18,7 @@ class BitPage extends AppRouteComponent<typeof mapStateToProps> {
   }
 
   render() {
-    return (
-      <BitsContainer bits={this.bits} />
-    );
+    return <BitsContainer bits={this.bits} />;
   }
 }
 

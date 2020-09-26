@@ -7,9 +7,9 @@ import CreateBitButton from './CreateBitButton';
 import FilterControl from './FilterControl';
 import PageSizeMenu from './PageSizeMenu';
 import SortingMenu from './SortingMenu';
-import { AppRouteComponent, AppState, NOOP } from './store';
+import { AppRouteComponent, AppState } from './store';
 
-interface InputProps { }
+interface InputProps {}
 
 const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   bits: state.bits.items,
