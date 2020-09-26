@@ -1,4 +1,4 @@
-import * as Mongoose from "mongoose"
+import * as Mongoose from 'mongoose';
 
 let db: Mongoose.Connection;
 
@@ -19,10 +19,8 @@ export const connect = () => {
 
 export const disconnect = () => {
   if (!db) return;
-  
-  Mongoose.disconnect();
-}
 
-export const getConnection = ():Mongoose.Connection => {
-  return db;
-}
+  Mongoose.disconnect();
+};
+
+export const getConnection = ():Mongoose.Connection => db;

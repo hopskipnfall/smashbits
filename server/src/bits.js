@@ -11,7 +11,7 @@ export function getBit(req) {
 
 export function getBits(req) {
   // TODO: Clean this stuff up.... jsStringEscape returns the string "undefined" for undefined etc.
-  const limit = parseInt(jsStringEscape(req.query[query.QUERY_LIMIT] || 0));
+  let limit = parseInt(jsStringEscape(req.query[query.QUERY_LIMIT] || 0));
   if (!limit) {
     limit = undefined;
   }

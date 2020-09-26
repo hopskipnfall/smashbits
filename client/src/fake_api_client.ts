@@ -5,6 +5,24 @@ import { Bit, Comment } from './types';
 
 const bits: {[key: string]: any}[] = [
   {
+    postId: 'K28SKJS792HFF1',
+    author: {
+      personId: 'ASLK892WWSIK92',
+      name: 'Newbie',
+    },
+    dateCreated: new Date(2027, 10, 15, 3, 4).getTime(),
+    upvotes: 1,
+    downvotes: 3,
+    title: 'Link is 2 gud',
+    content: 'Look at this dumb ban now',
+    media: [
+      {
+        uri: 'https://clips.twitch.tv/NeighborlyElatedYakinikuOSsloth',
+      }
+    ],
+    mainChars: ['li'],
+    vsChars: ['li'],
+  }, {
     postId: 'L3WDO8EL3LEKS',
     author: {
       personId: 'I2L3KFAE9GLREJ3',
@@ -14,7 +32,7 @@ const bits: {[key: string]: any}[] = [
     upvotes: 10,
     downvotes: 3,
     title: 'Fox is unedgeguardable',
-    content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.',
+    content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.\n\nSee https://youtu.be/GCcWPNa89HE?t=798',
     mainChars: ['fo'],
     standaloneTags: ['ed'],
   }, {
