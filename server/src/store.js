@@ -11,6 +11,7 @@ export function queryUser({
   if (twitterId) {
     return User.findOne({ 'twitterProfile.id': twitterId }).exec();
   }
+  return undefined;
 }
 
 export function putTwitterUser(profile) {
