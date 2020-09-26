@@ -3,7 +3,7 @@
 import { FilteringState } from './store/filtering/types';
 import { Bit, Comment } from './types';
 
-const bits: {[key: string]: any}[] = [
+const bits: { [key: string]: any }[] = [
   {
     postId: 'L3WDO8EL3LEKS',
     author: {
@@ -14,10 +14,11 @@ const bits: {[key: string]: any}[] = [
     upvotes: 10,
     downvotes: 3,
     title: 'Fox is unedgeguardable',
-    content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.',
+    content: "No matter what you do, you'll never be able to kill a recovering Fox.",
     mainChars: ['fo'],
     standaloneTags: ['ed'],
-  }, {
+  },
+  {
     postId: 'ME8DU23MNO0S',
     author: {
       personId: '562B3409SLL',
@@ -26,11 +27,12 @@ const bits: {[key: string]: any}[] = [
     dateCreated: new Date(1993, 6, 24).getTime(),
     upvotes: 42,
     downvotes: 8,
-    title: 'Master Hand\'s getup attack',
-    content: 'It\'s a 1HKO.',
+    title: "Master Hand's getup attack",
+    content: "It's a 1HKO.",
     stages: ['dl', 'cj'],
     standaloneTags: ['ap'],
-  }, {
+  },
+  {
     postId: 'JNHQ98ASKJAK',
     author: {
       personId: '82JS0NG28XL1',
@@ -40,7 +42,8 @@ const bits: {[key: string]: any}[] = [
     upvotes: 53,
     downvotes: 21,
     title: 'Falcon shield pressure against Yoshi',
-    content: 'A way to pressure Yoshis that love baiting platform push off by holding shield, especially when you are respawning and have invincibility. Even if you don\'t get the break, they often times get hit trying to escape which can lead to a bunch of combo starters.',
+    content:
+      "A way to pressure Yoshis that love baiting platform push off by holding shield, especially when you are respawning and have invincibility. Even if you don't get the break, they often times get hit trying to escape which can lead to a bunch of combo starters.",
     mainChars: ['ca'],
     vsChars: ['yo'],
   },
@@ -57,7 +60,8 @@ const comments: Comment[] = [
     },
     dateCreated: new Date(2018, 1, 14, 10, 11, 16).getTime(),
     content: 'Not true.',
-  }), new Comment({
+  }),
+  new Comment({
     id: 'B72902B3846',
     postId: 'L3WDO8EL3LEKS',
     author: {
@@ -66,7 +70,8 @@ const comments: Comment[] = [
     },
     dateCreated: new Date(2018, 1, 17, 6, 13, 28).getTime(),
     content: 'Pshh what do you know',
-  }), new Comment({
+  }),
+  new Comment({
     id: 'I26739X7034',
     postId: 'ME8DU23MNO0S',
     author: {
@@ -79,9 +84,8 @@ const comments: Comment[] = [
 ];
 
 export const fakeApiClient = {
-
   fetchBits(filters: FilteringState) {
-    const filtered = bits.filter(bit => {
+    const filtered = bits.filter((bit) => {
       if (filters.mainCharacters.size > 0) {
         if (!bit.mainChars) return false;
         for (let char of Array.from(filters.mainCharacters)) {
@@ -110,28 +114,30 @@ export const fakeApiClient = {
         }
       }
       return true;
-    })
-    const bitsJson = JSON.stringify({bits: filtered.sort((a, b) => {
-      switch (filters.sort) {
-        case 'score':
-          return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
-        case 'newest':
-          return b.dateCreated - a.dateCreated;
-        case 'oldest':
-          return -1 * (b.dateCreated - a.dateCreated);
-        default:
-          return (b.upvotes - b.downvotes) - (a.upvotes - a.downvotes);
-      }
-    })});
+    });
+    const bitsJson = JSON.stringify({
+      bits: filtered.sort((a, b) => {
+        switch (filters.sort) {
+          case 'score':
+            return b.upvotes - b.downvotes - (a.upvotes - a.downvotes);
+          case 'newest':
+            return b.dateCreated - a.dateCreated;
+          case 'oldest':
+            return -1 * (b.dateCreated - a.dateCreated);
+          default:
+            return b.upvotes - b.downvotes - (a.upvotes - a.downvotes);
+        }
+      }),
+    });
     return Promise.resolve(new Response(bitsJson));
-    },
+  },
 
   fetchBit(bitId: string) {
-    return Promise.resolve({ bit: bits.find(bit => bit.postId === bitId) });
+    return Promise.resolve({ bit: bits.find((bit) => bit.postId === bitId) });
   },
 
   fetchComments(bitId: string) {
-    return Promise.resolve(comments.filter(comment => comment.postId === bitId));
+    return Promise.resolve(comments.filter((comment) => comment.postId === bitId));
   },
 
   async createBit(bit: Bit) {
@@ -139,7 +145,7 @@ export const fakeApiClient = {
       ...bit,
       dateCreated: new Date().getTime(),
     });
-    await new Promise(r => setTimeout(r, 2000));
+    await new Promise((r) => setTimeout(r, 2000));
     return Promise.resolve(`/bits${bits.slice(-1)[0]}`);
     // TODO: Return a 201 response
   },
