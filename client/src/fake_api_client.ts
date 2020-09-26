@@ -14,7 +14,12 @@ const bits: {[key: string]: any}[] = [
     upvotes: 1,
     downvotes: 3,
     title: 'Link is 2 gud',
-    content: 'Look at this clips.twitch.tv/NeighborlyElatedYakinikuOSsloth dumb ban now',
+    content: 'Look at this dumb ban now',
+    media: [
+      {
+        uri: 'https://clips.twitch.tv/NeighborlyElatedYakinikuOSsloth',
+      }
+    ],
     mainChars: ['li'],
     vsChars: ['li'],
   }, {
