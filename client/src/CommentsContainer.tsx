@@ -6,17 +6,17 @@ import { AppFunctionComponent, NOOP } from './store';
 import { Bit, Comment } from './types';
 
 type InputProps = {
-  bit: Bit
-  comments: Immutable.Map<string, Comment>
-}
+  bit: Bit;
+  comments: Immutable.Map<string, Comment>;
+};
 
 // NOTE: This component isn't used anywhere yet, who knows if it works.
 
-const CommentsContainer: AppFunctionComponent<InputProps, NOOP> = props => {
+const CommentsContainer: AppFunctionComponent<InputProps, NOOP> = (props) => {
   const { bit, comments } = props;
   return (
     <div>
-      {bit.comments.map(id => {
+      {bit.comments.map((id) => {
         const comment = comments.get(id, new Comment());
         return (
           <div key={id}>
@@ -30,6 +30,6 @@ const CommentsContainer: AppFunctionComponent<InputProps, NOOP> = props => {
       })}
     </div>
   );
-}
+};
 
 export default connect(null, allActions)(CommentsContainer);

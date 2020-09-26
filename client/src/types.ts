@@ -7,7 +7,7 @@ const shallowClone = (a: any[]) => [...a];
 
 export class Profile {
   user: {
-    twitterProfile: { displayName: string }
+    twitterProfile: { displayName: string };
   };
 
   constructor(data?: { [key: string]: any }) {
@@ -81,7 +81,7 @@ export class Bit {
     data = data || {};
 
     this.postId = data.postId;
-    this.author = data.author || { personId: '', name: ''};
+    this.author = data.author || { personId: '', name: '' };
     this.dateCreated = data.dateCreated;
     this.upvotes = data.upvotes || 0;
     this.downvotes = data.downvotes || 0;
@@ -105,15 +105,15 @@ export type Readonly<T> = {
 };
 
 export interface FilterParameter {
-  id: string
-  display: string
+  id: string;
+  display: string;
 }
 
 export type CharacterId = 'lu' | 'ma' | 'do' | 'li' | 'sa' | 'ca' | 'ne' | 'yo' | 'ki' | 'fo' | 'pi' | 'pu';
 export type Character = {
-  id: CharacterId
-  display: string
-}
+  id: CharacterId;
+  display: string;
+};
 
 export const CHARACTER_MAP = new Map<CharacterId, Character>([
   ['lu', { id: 'lu', display: 'Luigi' } as const],
@@ -129,20 +129,18 @@ export const CHARACTER_MAP = new Map<CharacterId, Character>([
   ['pi', { id: 'pi', display: 'Pikachu' } as const],
   ['pu', { id: 'pu', display: 'Jigglypuff' } as const],
 ]);
-export const CHARACTER_MAP_REVERSE = new Map(
-  Array.from(CHARACTER_MAP).map(e => [e[1].display, e[1]])
-);
+export const CHARACTER_MAP_REVERSE = new Map(Array.from(CHARACTER_MAP).map((e) => [e[1].display, e[1]]));
 
-export const ALL_CHARACTERS = new Set(Array.from(CHARACTER_MAP).map(entry => entry[1]));
+export const ALL_CHARACTERS = new Set(Array.from(CHARACTER_MAP).map((entry) => entry[1]));
 
 export type StageId = 'pc' | 'cj' | 'hc' | 'pz' | 'mk' | 'dl' | 'sz' | 'sc' | 'mc' | 'yi' | 'fd' | 'bf';
 export type Stage = {
-  id: StageId
-  display: string
-}
+  id: StageId;
+  display: string;
+};
 
 export const STAGE_MAP = new Map<StageId, Stage>([
-  ['pc', { id: 'pc', display: 'Peach\'s Castle' } as const],
+  ['pc', { id: 'pc', display: "Peach's Castle" } as const],
   ['cj', { id: 'cj', display: 'Congo Jungle' } as const],
   ['hc', { id: 'hc', display: 'Hyrule Castle' } as const],
   ['pz', { id: 'pz', display: 'Planet Zebes' } as const],
@@ -151,33 +149,29 @@ export const STAGE_MAP = new Map<StageId, Stage>([
   ['sz', { id: 'sz', display: 'Sector Z' } as const],
   ['sc', { id: 'sc', display: 'Saffron City' } as const],
   ['mc', { id: 'mc', display: 'Meta Crystal (19xx)' } as const],
-  ['yi', { id: 'yi', display: 'Yoshi\'s Island (19xx)' } as const],
+  ['yi', { id: 'yi', display: "Yoshi's Island (19xx)" } as const],
   ['fd', { id: 'fd', display: 'Final Destination (19xx)' } as const],
   ['bf', { id: 'bf', display: 'Battlefield (19xx)' } as const],
 ]);
-export const STAGE_MAP_REVERSE = new Map(
-  Array.from(STAGE_MAP).map(e => [e[1].display, e[1]])
-);
+export const STAGE_MAP_REVERSE = new Map(Array.from(STAGE_MAP).map((e) => [e[1].display, e[1]]));
 
-export const ALL_STAGES = new Set(Array.from(STAGE_MAP).map(entry => entry[1]));
+export const ALL_STAGES = new Set(Array.from(STAGE_MAP).map((entry) => entry[1]));
 
 export type LabelId = 'ap' | 'ed' | 'co' | 'es';
 export type Label = {
-  id: LabelId
-  display: string
-}
+  id: LabelId;
+  display: string;
+};
 
 export const LABEL_MAP = new Map<LabelId, Label>([
   ['ap', { id: 'ap', display: 'Approach' } as const],
   ['ed', { id: 'ed', display: 'Edge Guarding' } as const],
   ['co', { id: 'co', display: 'Combos' } as const],
   ['es', { id: 'es', display: 'Escapes' } as const],
-])
-export const LABEL_MAP_REVERSE = new Map(
-  Array.from(LABEL_MAP).map(e => [e[1].display, e[1]])
-);
+]);
+export const LABEL_MAP_REVERSE = new Map(Array.from(LABEL_MAP).map((e) => [e[1].display, e[1]]));
 
-export const ALL_LABELS = new Set(Array.from(LABEL_MAP).map(entry => entry[1]));
+export const ALL_LABELS = new Set(Array.from(LABEL_MAP).map((entry) => entry[1]));
 
 export const SORT_OPTIONS = ['newest', 'oldest', 'score'];
 export type SortOption = typeof SORT_OPTIONS[number];

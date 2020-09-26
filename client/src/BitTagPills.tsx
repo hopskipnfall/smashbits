@@ -6,58 +6,60 @@ import { AppFunctionComponent, AppState, NOOP } from './store';
 import { Bit } from './types';
 
 type InputProps = {
-  bit: Bit
+  bit: Bit;
 };
 
 const mapStateToProps = (state: AppState, ownProps: any) => {
   return { state };
-}
+};
 
-const BitTagPills: AppFunctionComponent<InputProps, NOOP> = props => {
-  const {
-    bit,
-    thunkSetMainChars,
-    thunkSetVsChars,
-    thunkSetStages,
-    thunkSetLabels,
-  } = props;
+const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
+  const { bit, thunkSetMainChars, thunkSetVsChars, thunkSetStages, thunkSetLabels } = props;
   return (
     <div className="bit-tag-pills">
-      {bit.mainChars.map(tag => (
+      {bit.mainChars.map((tag) => (
         <Badge
           variant="success"
           className="filter-pill"
-          onClick={() => { thunkSetMainChars(new Set([tag])) }}
+          onClick={() => {
+            thunkSetMainChars(new Set([tag]));
+          }}
           key={tag.id}
         >
           {tag.display}
         </Badge>
       ))}
-      {bit.vsChars.map(tag => (
+      {bit.vsChars.map((tag) => (
         <Badge
           variant="danger"
           className="filter-pill"
-          onClick={() => { thunkSetVsChars(new Set([tag])) }}
+          onClick={() => {
+            thunkSetVsChars(new Set([tag]));
+          }}
           key={tag.id}
         >
           {tag.display}
         </Badge>
       ))}
-      {bit.stages.map(tag => (
+      {bit.stages.map((tag) => (
         <Badge
           variant="primary"
           className="filter-pill"
-          onClick={() => { thunkSetStages(new Set([tag])) }}
+          onClick={() => {
+            thunkSetStages(new Set([tag]));
+          }}
           key={tag.id}
         >
           {tag.display}
         </Badge>
       ))}
-      {bit.standaloneTags.map(tag => (
+      {bit.standaloneTags.map((tag) => (
         <Badge
           variant="warning"
           className="filter-pill"
-          onClick={() => { thunkSetLabels(new Set([tag])) }}
+          onClick={() => {
+            thunkSetLabels(new Set([tag]));
+          }}
           key={tag.id}
         >
           {tag.display}
@@ -65,6 +67,6 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = props => {
       ))}
     </div>
   );
-}
+};
 
 export default connect(mapStateToProps, allActions)(BitTagPills);

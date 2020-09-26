@@ -1,7 +1,16 @@
 // import * as Immutable from 'immutable';
 // import * as _ from 'lodash';
 import * as URI from 'urijs';
-import { QUERY_LIMIT, QUERY_MAIN_CHARS, QUERY_OFFSET, QUERY_PAGE_SIZE, QUERY_SORT, QUERY_STAGES, QUERY_TAGS, QUERY_VS_CHARS } from './shared/query_params';
+import {
+  QUERY_LIMIT,
+  QUERY_MAIN_CHARS,
+  QUERY_OFFSET,
+  QUERY_PAGE_SIZE,
+  QUERY_SORT,
+  QUERY_STAGES,
+  QUERY_TAGS,
+  QUERY_VS_CHARS,
+} from './shared/query_params';
 // // import { SORT_DATE, SORT_SCORE } from './reducer';
 // import * as queryParams from './shared/query_params';
 import { AppState } from './store';
@@ -92,17 +101,17 @@ const defaultToUndefined = (param: any) => {
   //   return param.size > 0 ? param : undefined;
   // }
   return param ? param : undefined;
-}
+};
 
 export const buildUriFromState = (state: AppState) => {
   const params = {
     [QUERY_SORT]: defaultToUndefined(state.filtering.sort),
     [QUERY_LIMIT]: defaultToUndefined(state.filtering.limit),
     [QUERY_OFFSET]: defaultToUndefined(state.filtering.offset),
-    [QUERY_MAIN_CHARS]: defaultToUndefined(Array.from(state.filtering.mainCharacters).map(char => char.id)),
-    [QUERY_VS_CHARS]: defaultToUndefined(Array.from(state.filtering.vsCharacters).map(char => char.id)),
-    [QUERY_STAGES]: defaultToUndefined(Array.from(state.filtering.stages).map(stage => stage.id)),
-    [QUERY_TAGS]: defaultToUndefined(Array.from(state.filtering.labels).map(label => label.id)),
+    [QUERY_MAIN_CHARS]: defaultToUndefined(Array.from(state.filtering.mainCharacters).map((char) => char.id)),
+    [QUERY_VS_CHARS]: defaultToUndefined(Array.from(state.filtering.vsCharacters).map((char) => char.id)),
+    [QUERY_STAGES]: defaultToUndefined(Array.from(state.filtering.stages).map((stage) => stage.id)),
+    [QUERY_TAGS]: defaultToUndefined(Array.from(state.filtering.labels).map((label) => label.id)),
     [QUERY_PAGE_SIZE]: defaultToUndefined(state.filtering.currentPageSize),
   };
 

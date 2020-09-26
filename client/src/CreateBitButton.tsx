@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Button } from 'react-bootstrap';
-import { connect, ConnectedProps } from 'react-redux';
+import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import CreateBitModal from './CreateBitModal';
 import LoginButton from './LoginButton';
-import { AppComponent, NOOP, AppState } from './store';
+import { AppComponent, AppState } from './store';
 
 type InputProps = {};
 
@@ -30,16 +30,16 @@ class CreateBitButton extends AppComponent<InputProps, typeof mapStateToProps> {
 
   render() {
     if (this.props.profile) {
-      return ([
+      return [
         <Button variant="danger" onClick={() => this.show()} key="create-bit-button">
           Create new bit
         </Button>,
         <CreateBitModal
-          show={(this.state as {show: boolean}).show}
+          show={(this.state as { show: boolean }).show}
           onHide={() => this.hide()}
           key="create-bit-modal"
         />,
-      ]);
+      ];
     }
     return <LoginButton variant="danger" loginText="Log in to create bits" />;
   }

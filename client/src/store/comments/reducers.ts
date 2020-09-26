@@ -11,7 +11,7 @@ export function setCommentState(state: CommentsState, id: string) {
 
       return {
         ...state,
-        items: state.items.set(id, clonedComment)
+        items: state.items.set(id, clonedComment),
       };
     },
 
@@ -20,7 +20,7 @@ export function setCommentState(state: CommentsState, id: string) {
       return {
         ...state,
         items: state.items.set(id, comment),
-      }
+      };
     },
   };
 }
@@ -29,16 +29,13 @@ const initialState: CommentsState = {
   items: Immutable.Map<string, Comment>(),
 };
 
-export function commentsReducer(
-  state = initialState,
-  action: CommentsActionTypes,
-): CommentsState {
+export function commentsReducer(state = initialState, action: CommentsActionTypes): CommentsState {
   switch (action.type) {
     case ADD_COMMENTS:
       return {
         ...state,
         items: state.items.merge(action.items),
-      }
+      };
     default:
       return state;
   }
