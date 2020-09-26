@@ -1,4 +1,3 @@
-
 import * as bitsActions from './store/bits/actions';
 import * as commentsActions from './store/comments/actions';
 import * as filteringActions from './store/filtering/actions';
@@ -9,4 +8,4 @@ export const allActions = {
   ...commentsActions,
   ...filteringActions,
   ...thunkActions,
-}
+};

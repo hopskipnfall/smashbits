@@ -1,6 +1,14 @@
 import * as Immutable from 'immutable';
-import { BitsState, BitsActionTypes, CLEAR_BITS, CHANGE_VOTE, ADD_BIT, REPLACE_BITS, SET_OPTIMISTIC_BIT_STATUS } from './types';
 import { Bit } from '../../types';
+import {
+  ADD_BIT,
+  BitsActionTypes,
+  BitsState,
+  CHANGE_VOTE,
+  CLEAR_BITS,
+  REPLACE_BITS,
+  SET_OPTIMISTIC_BIT_STATUS,
+} from './types';
 
 export function setBitState(state: BitsState, id: string) {
   return {
@@ -11,7 +19,7 @@ export function setBitState(state: BitsState, id: string) {
 
       return {
         ...state,
-        items: state.items.set(id, clonedBit)
+        items: state.items.set(id, clonedBit),
       };
     },
 
@@ -20,24 +28,24 @@ export function setBitState(state: BitsState, id: string) {
       return {
         ...state,
         items: state.items.set(id, bit),
-      }
+      };
     },
 
     insertOptimisticBit(bit: Bit): BitsState {
       return {
         ...state,
         optimisticItems: state.optimisticItems.set(id, bit),
-      }
+      };
     },
 
-     /** Clone and edit a copy of the optimistic bit. */
-     editOptimisticBit(editFn: (bit: Bit) => void): BitsState {
+    /** Clone and edit a copy of the optimistic bit. */
+    editOptimisticBit(editFn: (bit: Bit) => void): BitsState {
       const clonedBit = new Bit(state.optimisticItems.get(id));
       editFn(clonedBit);
 
       return {
         ...state,
-        optimisticItems: state.optimisticItems.set(id, clonedBit)
+        optimisticItems: state.optimisticItems.set(id, clonedBit),
       };
     },
   };
@@ -50,34 +58,29 @@ const initialState: BitsState = {
 };
 
 function bitArrayToMap(bits: Bit[]) {
-  return Immutable.Map<string, Bit>([
-    ...(bits.map(bit => [bit.postId, bit]) as [string, Bit][]),
-  ]);
+  return Immutable.Map<string, Bit>([...(bits.map((bit) => [bit.postId, bit]) as [string, Bit][])]);
 }
 
-export function bitsReducer(
-  state = initialState,
-  action: BitsActionTypes,
-): BitsState {
+export function bitsReducer(state = initialState, action: BitsActionTypes): BitsState {
   switch (action.type) {
     case CLEAR_BITS:
       return {
         ...state,
         items: Immutable.Map(),
-      }
+      };
     case CHANGE_VOTE:
-      return setBitState(state, action.bitId).edit(b => b.userVote = action.vote);
+      return setBitState(state, action.bitId).edit((b) => (b.userVote = action.vote));
     case ADD_BIT:
-      return action.optimistic 
-          ? setBitState(state, action.bit.postId).insertOptimisticBit(action.bit)
-          : setBitState(state, action.bit.postId).insert(action.bit);
+      return action.optimistic
+        ? setBitState(state, action.bit.postId).insertOptimisticBit(action.bit)
+        : setBitState(state, action.bit.postId).insert(action.bit);
     case REPLACE_BITS:
       return {
         ...state,
         items: bitArrayToMap(action.bits),
-      }
+      };
     case SET_OPTIMISTIC_BIT_STATUS:
-      return setBitState(state, action.bitId).editOptimisticBit(b => b.status = action.status);
+      return setBitState(state, action.bitId).editOptimisticBit((b) => (b.status = action.status));
     default:
       return state;
   }

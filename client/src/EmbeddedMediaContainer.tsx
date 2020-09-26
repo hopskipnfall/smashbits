@@ -3,7 +3,7 @@ import ReactPlayer from 'react-player';
 import * as URI from 'urijs';
 
 type InputProps = {
-  contentUri: URI
+  contentUri: URI;
 };
 
 /**
@@ -22,31 +22,25 @@ const getTwitchClipIframe = (uri: URI) => {
   return (
     <>
       <br />
-      <iframe
-        src={uri.href()}
-        height="360px"
-        width="640px"
-        frameBorder="0"
-        allowFullScreen={true}
-      />
+      <iframe src={uri.href()} height="360px" width="640px" frameBorder="0" allowFullScreen={true} />
       <br />
     </>
-  )
-}
+  );
+};
 
 /** A container to display embedded media. */
-const EmbeddedMediaContainer: React.FunctionComponent<InputProps> = props => {
+const EmbeddedMediaContainer: React.FunctionComponent<InputProps> = (props) => {
   const { contentUri } = props;
   return (
     <span>
-      {/^(https?:\/\/)?clips.twitch.tv/.test(contentUri.href()) ?
-        getTwitchClipIframe(contentUri)
-        :
-        ReactPlayer.canPlay(contentUri.href()) && <ReactPlayer url={contentUri.href()} controls={true} />
-      }
-      <a href={contentUri.href()} target="_blank">{contentUri.href()}</a>
+      {/^(https?:\/\/)?clips.twitch.tv/.test(contentUri.href())
+        ? getTwitchClipIframe(contentUri)
+        : ReactPlayer.canPlay(contentUri.href()) && <ReactPlayer url={contentUri.href()} controls={true} />}
+      <a href={contentUri.href()} target="_blank">
+        {contentUri.href()}
+      </a>
     </span>
   );
-}
+};
 
 export default EmbeddedMediaContainer;

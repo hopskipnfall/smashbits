@@ -4,16 +4,13 @@ const initialState: ProfileState = {
   profile: null,
 };
 
-export function profileReducer(
-  state = initialState,
-  action: ProfileActionTypes,
-): ProfileState {
+export function profileReducer(state = initialState, action: ProfileActionTypes): ProfileState {
   switch (action.type) {
     case SET_PROFILE:
       return {
         ...state,
         profile: action.profile,
-      }
+      };
     default:
       return state;
   }
