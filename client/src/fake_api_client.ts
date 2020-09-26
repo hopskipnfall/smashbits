@@ -14,7 +14,7 @@ const bits: {[key: string]: any}[] = [
     upvotes: 10,
     downvotes: 3,
     title: 'Fox is unedgeguardable',
-    content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.',
+    content: 'No matter what you do, you\'ll never be able to kill a recovering Fox.\n\nSee https://youtu.be/GCcWPNa89HE?t=798',
     mainChars: ['fo'],
     standaloneTags: ['ed'],
   }, {

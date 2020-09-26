@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { allActions } from './all_actions';
 import * as styles from './Bit.sass';
 import BitTagPills from './BitTagPills';
+import FormattedTextBox from './FormattedTextBox';
 import { AppFunctionComponent, AppState } from './store';
 import { VOTE_DOWN, VOTE_UP } from './store/bits/types';
 import { Bit as BitType, Status } from './types';
@@ -60,7 +61,7 @@ const Bit: AppFunctionComponent<InputProps, typeof mapStateToProps> = props => {
             <i>{new Date(bit.dateCreated).toDateString()}</i>
           </p>)
         }
-        {bit.content}
+        <FormattedTextBox content={bit.content} />
         <p>
           <Link to={`/bits/${bit.postId}`}>permalink</Link>
         </p>
