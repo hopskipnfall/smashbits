@@ -8,3 +8,13 @@ export const decorateBit = (bit: { [key: string]: any }): Bit =>
     stages: bit.stages && bit.stages.map((stage: StageId) => STAGE_MAP.get(stage)).filter(Boolean),
     standaloneTags: bit.standaloneTags && bit.standaloneTags.map((tag: LabelId) => LABEL_MAP.get(tag)).filter(Boolean),
   });
+
+export const transformBitForRequest = (bit: Bit): { [key: string]: any } => ({
+  ...bit,
+  media:
+    bit.media &&
+    bit.media.map((singleMedia) => ({
+      ...singleMedia,
+      uri: singleMedia.uri.href(),
+    })),
+});
