@@ -51,5 +51,28 @@ module.exports = {
         '@typescript-eslint/lines-between-class-members': 'off',
         'import/prefer-default-export': 'off',
         'prettier/prettier': 'error',
+        "comma-dangle": ["error", {
+            "arrays": "always-multiline",
+            "objects": "always-multiline",
+            "imports": "always-multiline",
+            "exports": "always-multiline",
+            "functions": "always-multiline"
+        }],
+
+        // Possibly temporary adjustments to help us ease into using eslint.
+        'unicorn/filename-case': 'off',
+        '@typescript-eslint/no-unused-vars': 'warn',
+        'unicorn/prevent-abbreviations': 'off',
+        "@typescript-eslint/ban-types": [
+            "warn",
+            {
+              "types": {
+                "{}": {
+                  "message": "// TODO(jonnjonn): Somehow allow this for only our Parameters objects",
+                  "fixWith": "object",
+                }
+              }
+            }
+          ]
     }
 };
