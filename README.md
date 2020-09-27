@@ -22,7 +22,6 @@ After cloning the repo and installing dependencies with `npm install`, use these
 | `npm run build`          | Build the app. Built files are in the /dist folder.                                  |
 | `npm run lint`           | Lint your code before sending a PR.                                                  |
 | `npm run fix-lint`       | Uses Prettier to fix most lint issues in the code base                               |
-| `npm run electron:build` | Builds your application and creates an app consumable based on your operating system |
 
 For local development with fake data (no server communication at all), edit `client/.env`.
 
