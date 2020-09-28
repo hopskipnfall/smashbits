@@ -15,9 +15,9 @@ install:
   - cd client; npm install; cd -
   - cd server; npm install; cd -
 script:
-  - ./server/node_modules/.bin/eslint 'server/**/*.{js,ts,tsx}'
+  - cd server && npm run lint && cd -
   #  TODO: Un-comment when eslint works for client code.
-  # - ./client/node_modules/.bin/eslint 'client/**/*.{js,ts,tsx}'
+  # - cd client && npm run lint && cd -
   - npm run build --prefix=client
   # Tests don't exist or don't pass yet..
   # - if [ "$TRAVIS_OS_NAME" != "windows" ]; then npm run test:all --prefix=server ; fi

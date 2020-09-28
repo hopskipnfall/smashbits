@@ -32,7 +32,9 @@
     "start": "webpack-dev-server",
     "build": "webpack",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "npx eslint ./",
+    "fix-lint": "npx prettier --write ."
   },
   "devDependencies": {
     "@reach/router": "^1.2.1",

@@ -1,0 +1,7 @@
+# Ignore artifacts:
+dist
+node_modules
+
+# Compiled output:
+**/*.js.map
+**/*.sass.d.ts
