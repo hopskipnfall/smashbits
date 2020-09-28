@@ -23,7 +23,7 @@ After cloning the repo and installing dependencies with `npm install`, use these
 | `npm run lint`     | Lint your code before sending a PR.                                |
 | `npm run fix-lint` | Uses Prettier to fix most lint issues in the code base             |
 
-For local development with fake data (no server communication at all), edit `client/.env`.
+For local development with fake data (no server communication at all), edit `client/.env`. By default, the client will hit a local version of the server stack that connects to a (test) live DB environment
 
 See [the Cookbook](https://github.com/hopskipnfall/smashbits/wiki/Cookbook) for full documentation.
 
