@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import * as URI from 'urijs';
-import { decorateBit } from './bits_util';
+import { decorateBit, transformBitForRequest } from './bits_util';
 import { fakeApiClient } from './fake_api_client';
 import history from './history';
 import { FilteringState } from './store/filtering/types';
@@ -87,7 +87,7 @@ export function apiCreateBit(bit: Bit, dispatch: Dispatch) {
     fetchPromise = fakeApiClient.createBit(bit);
   } else {
     fetchPromise = safeFetch(new URI(BASE_URI).path(BITS_PATH).toString(), {
-      body: JSON.stringify({ bit }),
+      body: JSON.stringify({ bit: transformBitForRequest(bit) }),
       headers: {
         'content-type': 'application/json',
       },

@@ -46,7 +46,7 @@ export class Media {
   constructor(data?: { [key: string]: any }) {
     data = data || {};
 
-    this.uri = new URI(data.uri);
+    this.uri = new URI(data.uri || '');
   }
 }
 

@@ -1,7 +1,9 @@
 import * as jsStringEscape from 'js-string-escape';
 import { BitsModel } from './db/bits/bits.schema';
 import * as query from './shared/query_params';
-import { getCharFilters, getStageFilters, getTagFilters } from './shared/query_util';
+import { getCharFilters,
+  getStageFilters,
+  getTagFilters } from './shared/query_util';
 
 const SORTS = [query.SORT_PARAM_DATE, query.SORT_PARAM_SCORE];
 
@@ -16,10 +18,18 @@ export function getBits(req) {
     limit = undefined;
   }
   const offset = parseInt(jsStringEscape(req.query[query.QUERY_OFFSET] || 0));
-  const mainChars = getCharFilters(jsStringEscape(req.query[query.QUERY_MAIN_CHARS] || ''));
-  const vsChars = getCharFilters(jsStringEscape(req.query[query.QUERY_VS_CHARS] || ''));
-  const stages = getStageFilters(jsStringEscape(req.query[query.QUERY_STAGES] || ''));
-  const standaloneTags = getTagFilters(jsStringEscape(req.query[query.QUERY_TAGS] || ''));
+  const mainChars = getCharFilters(
+    jsStringEscape(req.query[query.QUERY_MAIN_CHARS] || ''),
+  );
+  const vsChars = getCharFilters(
+    jsStringEscape(req.query[query.QUERY_VS_CHARS] || ''),
+  );
+  const stages = getStageFilters(
+    jsStringEscape(req.query[query.QUERY_STAGES] || ''),
+  );
+  const standaloneTags = getTagFilters(
+    jsStringEscape(req.query[query.QUERY_TAGS] || ''),
+  );
 
   return BitsModel.queryBits(
     paramToSort(req.query[query.QUERY_SORT]),
@@ -40,12 +50,26 @@ export function createBit({ bit, author } = {}) {
     },
     title: jsStringEscape(bit.title),
     content: jsStringEscape(bit.content),
+    ...(bit.media
+      ? { media: bit.media.map(media => escapeMedia(media)) }
+      : {}),
     ...(bit.tags ? { tags: bit.tags.map(tag => jsStringEscape(tag)) } : {}),
-    ...(bit.stages ? { stages: bit.stages.map(stage => jsStringEscape(stage)) } : {}),
-    ...(bit.mainChars ? { mainChars: bit.mainChars.map(char => jsStringEscape(char)) } : {}),
-    ...(bit.vsChars ? { vsChars: bit.vsChars.map(char => jsStringEscape(char)) } : {}),
+    ...(bit.stages
+      ? { stages: bit.stages.map(stage => jsStringEscape(stage)) }
+      : {}),
+    ...(bit.mainChars
+      ? { mainChars: bit.mainChars.map(char => jsStringEscape(char)) }
+      : {}),
+    ...(bit.vsChars
+      ? { vsChars: bit.vsChars.map(char => jsStringEscape(char)) }
+      : {}),
   });
 }
+
+const escapeMedia = singleMedia => ({
+  ...singleMedia,
+  uri: jsStringEscape(singleMedia.uri),
+});
 
 export function getComments(reqParams) {
   // return queryComments(reqParams.bitId);
