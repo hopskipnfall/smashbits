@@ -14,7 +14,13 @@ const mapStateToProps = (state: AppState, ownProps: any) => {
 };
 
 const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
-  const { bit, thunkSetMainChars, thunkSetVsChars, thunkSetStages, thunkSetLabels } = props;
+  const {
+    bit,
+    thunkSetMainChars,
+    thunkSetVsChars,
+    thunkSetStages,
+    thunkSetLabels,
+  } = props;
   return (
     <div className="bit-tag-pills">
       {bit.mainChars.map((tag) => (

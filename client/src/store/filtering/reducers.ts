@@ -21,7 +21,10 @@ const initialState: FilteringState = {
   currentPageSize: 42,
 };
 
-export function filteringReducer(state = initialState, action: FilteringActionTypes): FilteringState {
+export function filteringReducer(
+  state = initialState,
+  action: FilteringActionTypes,
+): FilteringState {
   switch (action.type) {
     case CHANGE_SORT:
       return { ...state, sort: action.sort };

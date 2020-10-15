@@ -93,7 +93,8 @@ export class Bit {
     this.vsChars = shallowClone(data.vsChars || []);
     this.userVote = data.userVote || 0;
     this.comments = Immutable.Set();
-    this.media = data.media?.map((singleMedia: any) => new Media(singleMedia)) || [];
+    this.media =
+      data.media?.map((singleMedia: any) => new Media(singleMedia)) || [];
     this.isRequestingComments = data.isRequestingComments || false;
     this.status = Status.Saved;
   }
@@ -109,7 +110,19 @@ export interface FilterParameter {
   display: string;
 }
 
-export type CharacterId = 'lu' | 'ma' | 'do' | 'li' | 'sa' | 'ca' | 'ne' | 'yo' | 'ki' | 'fo' | 'pi' | 'pu';
+export type CharacterId =
+  | 'lu'
+  | 'ma'
+  | 'do'
+  | 'li'
+  | 'sa'
+  | 'ca'
+  | 'ne'
+  | 'yo'
+  | 'ki'
+  | 'fo'
+  | 'pi'
+  | 'pu';
 export type Character = {
   id: CharacterId;
   display: string;
@@ -129,11 +142,27 @@ export const CHARACTER_MAP = new Map<CharacterId, Character>([
   ['pi', { id: 'pi', display: 'Pikachu' } as const],
   ['pu', { id: 'pu', display: 'Jigglypuff' } as const],
 ]);
-export const CHARACTER_MAP_REVERSE = new Map(Array.from(CHARACTER_MAP).map((e) => [e[1].display, e[1]]));
+export const CHARACTER_MAP_REVERSE = new Map(
+  Array.from(CHARACTER_MAP).map((e) => [e[1].display, e[1]]),
+);
 
-export const ALL_CHARACTERS = new Set(Array.from(CHARACTER_MAP).map((entry) => entry[1]));
+export const ALL_CHARACTERS = new Set(
+  Array.from(CHARACTER_MAP).map((entry) => entry[1]),
+);
 
-export type StageId = 'pc' | 'cj' | 'hc' | 'pz' | 'mk' | 'dl' | 'sz' | 'sc' | 'mc' | 'yi' | 'fd' | 'bf';
+export type StageId =
+  | 'pc'
+  | 'cj'
+  | 'hc'
+  | 'pz'
+  | 'mk'
+  | 'dl'
+  | 'sz'
+  | 'sc'
+  | 'mc'
+  | 'yi'
+  | 'fd'
+  | 'bf';
 export type Stage = {
   id: StageId;
   display: string;
@@ -153,9 +182,13 @@ export const STAGE_MAP = new Map<StageId, Stage>([
   ['fd', { id: 'fd', display: 'Final Destination (19xx)' } as const],
   ['bf', { id: 'bf', display: 'Battlefield (19xx)' } as const],
 ]);
-export const STAGE_MAP_REVERSE = new Map(Array.from(STAGE_MAP).map((e) => [e[1].display, e[1]]));
+export const STAGE_MAP_REVERSE = new Map(
+  Array.from(STAGE_MAP).map((e) => [e[1].display, e[1]]),
+);
 
-export const ALL_STAGES = new Set(Array.from(STAGE_MAP).map((entry) => entry[1]));
+export const ALL_STAGES = new Set(
+  Array.from(STAGE_MAP).map((entry) => entry[1]),
+);
 
 export type LabelId = 'ap' | 'ed' | 'co' | 'es';
 export type Label = {
@@ -169,9 +202,13 @@ export const LABEL_MAP = new Map<LabelId, Label>([
   ['co', { id: 'co', display: 'Combos' } as const],
   ['es', { id: 'es', display: 'Escapes' } as const],
 ]);
-export const LABEL_MAP_REVERSE = new Map(Array.from(LABEL_MAP).map((e) => [e[1].display, e[1]]));
+export const LABEL_MAP_REVERSE = new Map(
+  Array.from(LABEL_MAP).map((e) => [e[1].display, e[1]]),
+);
 
-export const ALL_LABELS = new Set(Array.from(LABEL_MAP).map((entry) => entry[1]));
+export const ALL_LABELS = new Set(
+  Array.from(LABEL_MAP).map((entry) => entry[1]),
+);
 
 export const SORT_OPTIONS = ['newest', 'oldest', 'score'];
 export type SortOption = typeof SORT_OPTIONS[number];

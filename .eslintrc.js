@@ -49,6 +49,7 @@ module.exports = {
       },
     ],
     'no-unused-vars': 'off', // Broken for type imports...
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
   ignorePatterns: [
     'client/node_modules',

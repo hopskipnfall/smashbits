@@ -20,8 +20,10 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   optimistic: state.bits.optimisticItems.get(ownProps.bit.postId) != undefined,
 });
 
-const getDownvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_DOWN ? 'danger' : 'primary');
-const getUpvoteButtonStyle = (bit: BitType) => (bit.userVote === VOTE_UP ? 'success' : 'primary');
+const getDownvoteButtonStyle = (bit: BitType) =>
+  bit.userVote === VOTE_DOWN ? 'danger' : 'primary';
+const getUpvoteButtonStyle = (bit: BitType) =>
+  bit.userVote === VOTE_UP ? 'success' : 'primary';
 
 const STATUS_TO_ICON = new Map([
   [Status.Saving, <Spinner animation="border" variant="primary" />],
@@ -29,7 +31,9 @@ const STATUS_TO_ICON = new Map([
   [Status.Error, <FcHighPriority />],
 ]);
 
-const Bit: AppFunctionComponent<InputProps, typeof mapStateToProps> = (props) => {
+const Bit: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
+  props,
+) => {
   const { bit, optimistic, thunkChangeVote } = props;
   const header = (
     <h3>
@@ -62,11 +66,14 @@ const Bit: AppFunctionComponent<InputProps, typeof mapStateToProps> = (props) =>
           </div>
         ) : (
           <p>
-            <b>{bit.author.name}</b> • <i>{new Date(bit.dateCreated).toDateString()}</i>
+            <b>{bit.author.name}</b> •{' '}
+            <i>{new Date(bit.dateCreated).toDateString()}</i>
           </p>
         )}
         <FormattedTextBox content={bit.content} />
-        {bit.media?.length > 0 && <EmbeddedMediaContainer contentUri={bit.media[0].uri} />}
+        {bit.media?.length > 0 && (
+          <EmbeddedMediaContainer contentUri={bit.media[0].uri} />
+        )}
         <p>
           <Link to={`/bits/${bit.postId}`}>permalink</Link>
         </p>

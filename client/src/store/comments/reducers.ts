@@ -29,7 +29,10 @@ const initialState: CommentsState = {
   items: Immutable.Map<string, Comment>(),
 };
 
-export function commentsReducer(state = initialState, action: CommentsActionTypes): CommentsState {
+export function commentsReducer(
+  state = initialState,
+  action: CommentsActionTypes,
+): CommentsState {
   switch (action.type) {
     case ADD_COMMENTS:
       return {

@@ -11,7 +11,9 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   pageSize: state.filtering.currentPageSize,
 });
 
-const PageSizeMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = (props) => {
+const PageSizeMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
+  props,
+) => {
   const { pageSize, thunkChangePageSize } = props;
   return (
     <span>
