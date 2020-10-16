@@ -1,10 +1,7 @@
 import uuid from 'uuid';
 import User from './User';
 
-export function queryUser({
-  id,
-  twitterId,
-} = {}) {
+export function queryUser({ id, twitterId } = {}) {
   if (id) {
     return User.findOne({ id }).exec();
   }
@@ -22,7 +19,7 @@ export function putTwitterUser(profile) {
 
   return new Promise((resolve, reject) => {
     User.create(params)
-      .then(data => resolve(params))
-      .catch(err => reject(err));
+      .then((data) => resolve(params))
+      .catch((err) => reject(err));
   });
 }

@@ -11,10 +11,16 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   currentSort: state.filtering.sort,
 });
 
-const SortingMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = (props) => {
+const SortingMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
+  props,
+) => {
   const { currentSort, thunkChangeSort } = props;
   return (
-    <DropdownButton variant="info" title={`Sorting: ${currentSort}`} id="sorting-menu">
+    <DropdownButton
+      variant="info"
+      title={`Sorting: ${currentSort}`}
+      id="sorting-menu"
+    >
       {SORT_OPTIONS.map((sort: SortOption) => (
         <Dropdown.Item onSelect={() => thunkChangeSort(sort)} key={sort}>
           {sort}

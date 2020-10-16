@@ -1,6 +1,10 @@
+amplify/
+
 # Ignore artifacts:
-dist
-node_modules
+client/dist/
+server/.build/
+
+**/node_modules/
 
 # Compiled output:
 **/*.js.map

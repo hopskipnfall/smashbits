@@ -13,7 +13,8 @@ const App = () => (
         <LoginButton />
       </div>
       <p className={styles.intro}>
-        SmashBits is a place to collaborate on and organize game knowledge in a central, public place.
+        SmashBits is a place to collaborate on and organize game knowledge in a
+        central, public place.
       </p>
     </div>
     <Switch>

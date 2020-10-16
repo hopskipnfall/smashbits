@@ -25,7 +25,10 @@ export function configureStore() {
   const middlewares = [thunkMiddleware];
   const middlewareEnhancer = applyMiddleware(...middlewares);
 
-  const store = createStore(rootReducer, composeWithDevTools(middlewareEnhancer));
+  const store = createStore(
+    rootReducer,
+    composeWithDevTools(middlewareEnhancer),
+  );
 
   return createStore(rootReducer, middlewareEnhancer);
 }
@@ -43,7 +46,9 @@ export class AppComponent<
   InputParams,
   StateToProps extends (...args: any) => any,
   ComponentState = {}
-> extends Component<InputParams & ReturnType<StateToProps> & ConnectedProps<typeof connector>> {}
+> extends Component<
+  InputParams & ReturnType<StateToProps> & ConnectedProps<typeof connector>
+> {}
 
 /**
  * Component class arranged by a router.
@@ -53,11 +58,10 @@ export class AppComponent<
  * @param <StateToProps> "typeof mapStateToProps". Use {@link NOOP} if N/A.
  * @param <ComponentState> // TODO(jonnjonn): Use this to type the state object.
  */
-export class AppRouteComponent<StateToProps extends (...args: any) => any, ComponentState = {}> extends AppComponent<
-  RouteChildrenProps,
-  StateToProps,
-  ComponentState
-> {}
+export class AppRouteComponent<
+  StateToProps extends (...args: any) => any,
+  ComponentState = {}
+> extends AppComponent<RouteChildrenProps, StateToProps, ComponentState> {}
 
 /**
  * Component defined as a single function.
@@ -65,7 +69,12 @@ export class AppRouteComponent<StateToProps extends (...args: any) => any, Compo
  * @param <InputParams> parameters passed directly in JSX file
  * @param <StateToProps> "typeof mapStateToProps". Use {@link NOOP} if N/A.
  */
-export interface AppFunctionComponent<InputParams, StateToProps extends (...args: any) => any, ComponentState = {}>
-  extends FunctionComponent<InputParams & ReturnType<StateToProps> & ConnectedProps<typeof connector>> {}
+export interface AppFunctionComponent<
+  InputParams,
+  StateToProps extends (...args: any) => any,
+  ComponentState = {}
+> extends FunctionComponent<
+    InputParams & ReturnType<StateToProps> & ConnectedProps<typeof connector>
+  > {}
 
 export type NOOP = () => {};

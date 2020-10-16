@@ -24,23 +24,32 @@ const OAUTH_PATH = '/login';
 const TWITTER_PATH = '/twitter';
 const PROFILE_PATH = '/profile';
 // Set this to true in .env to use local, fake data instead of making any RPCs.
-const USE_FAKE_CLIENT = process.env.USE_FAKE_API_CLIENT === 'true' && process.env.NODE_ENV === 'development';
+const USE_FAKE_CLIENT =
+  process.env.USE_FAKE_API_CLIENT === 'true' &&
+  process.env.NODE_ENV === 'development';
 
 export function apiFetchBits(filters: FilteringState): Promise<Bit[]> {
   let fetchPromise: Promise<Response>;
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeApiClient.fetchBits(filters);
   } else {
-    fetchPromise = safeFetch(new URI(BASE_URI).path(BITS_PATH).query(history.location.search).toString()).catch(
-      (error) => {
-        console.error('Error fetching bits', error);
-        // TODO(thenuge): Handle this more gracefully with a message in the UI.
-        throw error;
-      },
-    );
+    fetchPromise = safeFetch(
+      new URI(BASE_URI)
+        .path(BITS_PATH)
+        .query(history.location.search)
+        .toString(),
+    ).catch((error) => {
+      console.error('Error fetching bits', error);
+      // TODO(thenuge): Handle this more gracefully with a message in the UI.
+      throw error;
+    });
   }
   return fetchPromise.then((response) =>
-    response.json().then((json) => json.bits.map((bit: { [key: string]: any }) => decorateBit(bit))),
+    response
+      .json()
+      .then((json) =>
+        json.bits.map((bit: { [key: string]: any }) => decorateBit(bit)),
+      ),
   );
   // TODO(thenuge): Add actions for initiating requests for bit fetching, as well as errors.
   // fetchPromise.then((response: any) => response.bits.map((bit: { [key: string]: any }) => dispatch(addBit(new Bit(bit)))));
@@ -51,7 +60,9 @@ export function apiFetchBit(bitId: string) {
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeApiClient.fetchBit(bitId);
   } else {
-    fetchPromise = safeFetch(new URI(BASE_URI).segment([BITS_PATH, bitId]).toString())
+    fetchPromise = safeFetch(
+      new URI(BASE_URI).segment([BITS_PATH, bitId]).toString(),
+    )
       .then((result) => result.json())
       .catch((error) => {
         console.log(`Error fetching bit: ${bitId}`, error);
@@ -110,7 +121,9 @@ export function initTwitterLogin() {
   if (USE_FAKE_CLIENT) {
     history.push('/?success=true');
   } else {
-    window.location.href = new URI(BASE_URI).path(OAUTH_PATH + TWITTER_PATH).toString();
+    window.location.href = new URI(BASE_URI)
+      .path(OAUTH_PATH + TWITTER_PATH)
+      .toString();
   }
 }
 

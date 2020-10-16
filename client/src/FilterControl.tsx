@@ -12,8 +12,17 @@ const mapStateToProps = (state: AppState, ownProps: Parameters) => ({
   filtering: state.filtering,
 });
 
-const FilterControl: AppFunctionComponent<Parameters, typeof mapStateToProps> = (props) => {
-  const { filtering, thunkToggleMainChar, thunkToggleVsChar, thunkToggleLabel, thunkToggleStage } = props;
+const FilterControl: AppFunctionComponent<
+  Parameters,
+  typeof mapStateToProps
+> = (props) => {
+  const {
+    filtering,
+    thunkToggleMainChar,
+    thunkToggleVsChar,
+    thunkToggleLabel,
+    thunkToggleStage,
+  } = props;
   return (
     <Card>
       <Card.Header>

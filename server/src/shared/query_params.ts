@@ -39,9 +39,4 @@ export const STAGE_FILTERS = new Set([
   'bf',
 ]);
 
-export const TAG_FILTERS = new Set([
-  'ap',
-  'ed',
-  'co',
-  'es',
-]);
+export const TAG_FILTERS = new Set(['ap', 'ed', 'co', 'es']);

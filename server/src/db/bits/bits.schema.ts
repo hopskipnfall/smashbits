@@ -35,9 +35,11 @@ const BitsSchema = new Schema<typeof methods>({
   downvotes: Number,
   title: String,
   content: String,
-  media: [{
-    uri: String,
-  }],
+  media: [
+    {
+      uri: String,
+    },
+  ],
   mainChars: [String],
   vsChars: [String],
   stages: [String],

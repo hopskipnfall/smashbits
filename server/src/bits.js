@@ -1,9 +1,11 @@
 import * as jsStringEscape from 'js-string-escape';
 import { BitsModel } from './db/bits/bits.schema';
 import * as query from './shared/query_params';
-import { getCharFilters,
+import {
+  getCharFilters,
   getStageFilters,
-  getTagFilters } from './shared/query_util';
+  getTagFilters,
+} from './shared/query_util';
 
 const SORTS = [query.SORT_PARAM_DATE, query.SORT_PARAM_SCORE];
 
@@ -11,13 +13,20 @@ export function getBit(req) {
   return BitsModel.findOne({ postId: req.params.bitId });
 }
 
+const normalize = (string) => string.trim().toLowerCase();
+
+const paramToSort = (param) => {
+  const normalized = normalize(jsStringEscape(param));
+  return SORTS.includes(normalized) ? normalized : query.SORT_PARAM_DATE;
+};
+
 export function getBits(req) {
   // TODO: Clean this stuff up.... jsStringEscape returns the string "undefined" for undefined etc.
-  let limit = parseInt(jsStringEscape(req.query[query.QUERY_LIMIT] || 0));
+  let limit = Number(jsStringEscape(req.query[query.QUERY_LIMIT] || 0));
   if (!limit) {
     limit = undefined;
   }
-  const offset = parseInt(jsStringEscape(req.query[query.QUERY_OFFSET] || 0));
+  const offset = Number(jsStringEscape(req.query[query.QUERY_OFFSET] || 0));
   const mainChars = getCharFilters(
     jsStringEscape(req.query[query.QUERY_MAIN_CHARS] || ''),
   );
@@ -51,22 +60,22 @@ export function createBit({ bit, author } = {}) {
     title: jsStringEscape(bit.title),
     content: jsStringEscape(bit.content),
     ...(bit.media
-      ? { media: bit.media.map(media => escapeMedia(media)) }
+      ? { media: bit.media.map((media) => escapeMedia(media)) }
       : {}),
-    ...(bit.tags ? { tags: bit.tags.map(tag => jsStringEscape(tag)) } : {}),
+    ...(bit.tags ? { tags: bit.tags.map((tag) => jsStringEscape(tag)) } : {}),
     ...(bit.stages
-      ? { stages: bit.stages.map(stage => jsStringEscape(stage)) }
+      ? { stages: bit.stages.map((stage) => jsStringEscape(stage)) }
       : {}),
     ...(bit.mainChars
-      ? { mainChars: bit.mainChars.map(char => jsStringEscape(char)) }
+      ? { mainChars: bit.mainChars.map((char) => jsStringEscape(char)) }
       : {}),
     ...(bit.vsChars
-      ? { vsChars: bit.vsChars.map(char => jsStringEscape(char)) }
+      ? { vsChars: bit.vsChars.map((char) => jsStringEscape(char)) }
       : {}),
   });
 }
 
-const escapeMedia = singleMedia => ({
+const escapeMedia = (singleMedia) => ({
   ...singleMedia,
   uri: jsStringEscape(singleMedia.uri),
 });
@@ -74,10 +83,3 @@ const escapeMedia = singleMedia => ({
 export function getComments(reqParams) {
   // return queryComments(reqParams.bitId);
 }
-
-const normalize = string => string.trim().toLowerCase();
-
-const paramToSort = param => {
-  const normalized = normalize(jsStringEscape(param));
-  return SORTS.includes(normalized) ? normalized : query.SORT_PARAM_DATE;
-};

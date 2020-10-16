@@ -31,7 +31,11 @@ class CreateBitButton extends AppComponent<InputProps, typeof mapStateToProps> {
   render() {
     if (this.props.profile) {
       return [
-        <Button variant="danger" onClick={() => this.show()} key="create-bit-button">
+        <Button
+          variant="danger"
+          onClick={() => this.show()}
+          key="create-bit-button"
+        >
           Create new bit
         </Button>,
         <CreateBitModal

@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { Button, FormControl, FormLabel, Modal, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Modal,
+  ToggleButton,
+  ToggleButtonGroup,
+} from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { Control, LocalForm } from 'react-redux-form';
 import { allActions } from './all_actions';
@@ -15,7 +22,10 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   profile: state.profile.profile,
 });
 
-const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> = (props) => {
+const CreateBitModal: AppFunctionComponent<
+  InputProps,
+  typeof mapStateToProps
+> = (props) => {
   const { show, onHide, thunkPostBit, profile } = props;
   const initialState = {
     postId: `fakeId${new Date().getMilliseconds()}`,
@@ -40,14 +50,31 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
         </Modal.Header>
         <Modal.Body>
           <FormLabel> Title </FormLabel>
-          <Control.text model=".title" component={FormControl} placeholder="Enter title" />
+          <Control.text
+            model=".title"
+            component={FormControl}
+            placeholder="Enter title"
+          />
           {/* TODO(thenuge): Add a char limit and message when they get close to it */}
           <FormLabel> Content </FormLabel>
-          <Control.text model=".content" component={FormControl} as="textarea" /*  */ placeholder="Write your bit!" />
+          <Control.text
+            model=".content"
+            component={FormControl}
+            as="textarea"
+            /*  */ placeholder="Write your bit!"
+          />
           <FormLabel> Embedded Media (optional) </FormLabel>
-          <Control.text model=".mediaUri" component={FormControl} placeholder="Media URL (limit 1)" />
+          <Control.text
+            model=".mediaUri"
+            component={FormControl}
+            placeholder="Media URL (limit 1)"
+          />
           <FormLabel> Main Characters </FormLabel>
-          <Control model=".mainChars[]" component={ToggleButtonGroup} type="checkbox">
+          <Control
+            model=".mainChars[]"
+            component={ToggleButtonGroup}
+            type="checkbox"
+          >
             {Array.from(ALL_CHARACTERS).map((char) => (
               <ToggleButton value={char.id} key={`main${char.id}`}>
                 {char.display}
@@ -56,7 +83,11 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
           </Control>
           <br /> <br />
           <FormLabel> Vs. Characters </FormLabel>
-          <Control model=".vsChars[]" component={ToggleButtonGroup} type="checkbox">
+          <Control
+            model=".vsChars[]"
+            component={ToggleButtonGroup}
+            type="checkbox"
+          >
             {Array.from(ALL_CHARACTERS).map((char) => (
               <ToggleButton value={char.id} key={`vs${char.id}`}>
                 {char.display}
@@ -65,7 +96,11 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
           </Control>
           <br /> <br />
           <FormLabel> On Stages </FormLabel>
-          <Control model=".stages[]" component={ToggleButtonGroup} type="checkbox">
+          <Control
+            model=".stages[]"
+            component={ToggleButtonGroup}
+            type="checkbox"
+          >
             {Array.from(STAGE_MAP.values()).map((stage) => (
               <ToggleButton value={stage.id} key={`stage${stage.id}`}>
                 {stage.display}
@@ -74,7 +109,11 @@ const CreateBitModal: AppFunctionComponent<InputProps, typeof mapStateToProps> =
           </Control>
           <br /> <br />
           <FormLabel> With Tags </FormLabel>
-          <Control model=".standaloneTags[]" component={ToggleButtonGroup} type="checkbox">
+          <Control
+            model=".standaloneTags[]"
+            component={ToggleButtonGroup}
+            type="checkbox"
+          >
             {Array.from(LABEL_MAP.values()).map((label) => (
               <ToggleButton value={label.id} key={`tag${label.id}`}>
                 {label.display}
