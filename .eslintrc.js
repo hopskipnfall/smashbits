@@ -62,7 +62,5 @@ module.exports = {
     'server/node_modules',
     'server/.build',
     'server/dist',
-    // 'src/**/*.js',
-    // 'main.js',
   ],
 };
