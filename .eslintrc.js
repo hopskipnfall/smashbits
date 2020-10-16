@@ -50,6 +50,10 @@ module.exports = {
     ],
     'no-unused-vars': 'off', // Broken for type imports...
     '@typescript-eslint/no-unused-vars': 'warn',
+    // Let the compiler decide instead. Maybe we can change this in the future.
+    'import/no-cycle': 'off',
+    // TODO: Enable this and clean up the code.
+    '@typescript-eslint/no-use-before-define': 'warn',
   },
   ignorePatterns: [
     'client/node_modules',

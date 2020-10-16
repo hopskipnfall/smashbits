@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "lint": "npx eslint ./",
+    "lint-master-diff": "LIST=`git --no-pager diff --name-status master | grep '^[M|A]' | awk -F ' ' '{print $2}'`; if [ \"$LIST\" ]; then eslint $LIST; fi",
     "format": "npx prettier --write ."
   },
   "repository": {

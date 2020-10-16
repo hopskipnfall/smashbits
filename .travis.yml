@@ -16,9 +16,9 @@ install:
   - cd client; npm install; cd -
   - cd server; npm install; cd -
 script:
-  - cd server && npm run lint && cd -
+  # TODO: Turn off exit 0 lol
+  - npm run lint-master-diff
   #  TODO: Un-comment when eslint works for client code.
-  # - cd client && npm run lint && cd -
   - npm run build --prefix=client
   # Tests don't exist or don't pass yet..
   # - if [ "$TRAVIS_OS_NAME" != "windows" ]; then npm run test:all --prefix=server ; fi
