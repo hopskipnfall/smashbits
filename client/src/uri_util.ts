@@ -108,10 +108,18 @@ export const buildUriFromState = (state: AppState) => {
     [QUERY_SORT]: defaultToUndefined(state.filtering.sort),
     [QUERY_LIMIT]: defaultToUndefined(state.filtering.limit),
     [QUERY_OFFSET]: defaultToUndefined(state.filtering.offset),
-    [QUERY_MAIN_CHARS]: defaultToUndefined(Array.from(state.filtering.mainCharacters).map((char) => char.id)),
-    [QUERY_VS_CHARS]: defaultToUndefined(Array.from(state.filtering.vsCharacters).map((char) => char.id)),
-    [QUERY_STAGES]: defaultToUndefined(Array.from(state.filtering.stages).map((stage) => stage.id)),
-    [QUERY_TAGS]: defaultToUndefined(Array.from(state.filtering.labels).map((label) => label.id)),
+    [QUERY_MAIN_CHARS]: defaultToUndefined(
+      Array.from(state.filtering.mainCharacters).map((char) => char.id),
+    ),
+    [QUERY_VS_CHARS]: defaultToUndefined(
+      Array.from(state.filtering.vsCharacters).map((char) => char.id),
+    ),
+    [QUERY_STAGES]: defaultToUndefined(
+      Array.from(state.filtering.stages).map((stage) => stage.id),
+    ),
+    [QUERY_TAGS]: defaultToUndefined(
+      Array.from(state.filtering.labels).map((label) => label.id),
+    ),
     [QUERY_PAGE_SIZE]: defaultToUndefined(state.filtering.currentPageSize),
   };
 

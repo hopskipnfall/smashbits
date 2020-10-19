@@ -10,7 +10,12 @@ import {
 import { decorateBit } from './bits_util';
 import history from './history';
 import { AppState } from './store';
-import { addOptimisticBit, changeVote, replaceBits, setOptimisticBitStatus } from './store/bits/actions';
+import {
+  addOptimisticBit,
+  changeVote,
+  replaceBits,
+  setOptimisticBitStatus,
+} from './store/bits/actions';
 import {
   changeSort,
   setLabels,
@@ -20,7 +25,16 @@ import {
   setVsCharacters,
 } from './store/filtering/actions';
 import { setProfile } from './store/profile/actions';
-import { Bit, Character, Label, PageSize, SortOption, Stage, Status, Vote } from './types';
+import {
+  Bit,
+  Character,
+  Label,
+  PageSize,
+  SortOption,
+  Stage,
+  Status,
+  Vote,
+} from './types';
 import { buildUriFromState } from './uri_util';
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>;
@@ -42,11 +56,17 @@ export const thunkFetchBit: AppThunkActionCreator = (bitId: string) => {
 
 export const thunkToggleMainChar: AppThunkActionCreator = (char: Character) => {
   return async (dispatch, getState) => {
-    dispatch(thunkSetMainChars(new Set(_.xor(Array.from(getState().filtering.mainCharacters), [char]))));
+    dispatch(
+      thunkSetMainChars(
+        new Set(_.xor(Array.from(getState().filtering.mainCharacters), [char])),
+      ),
+    );
   };
 };
 
-export const thunkSetMainChars: AppThunkActionCreator = (characters: Set<Character>) => {
+export const thunkSetMainChars: AppThunkActionCreator = (
+  characters: Set<Character>,
+) => {
   return async (dispatch, getState) => {
     dispatch(setMainCharacters(characters));
     history.push(buildUriFromState(getState()));
@@ -56,11 +76,17 @@ export const thunkSetMainChars: AppThunkActionCreator = (characters: Set<Charact
 
 export const thunkToggleVsChar: AppThunkActionCreator = (char: Character) => {
   return async (dispatch, getState) => {
-    dispatch(thunkSetVsChars(new Set(_.xor(Array.from(getState().filtering.vsCharacters), [char]))));
+    dispatch(
+      thunkSetVsChars(
+        new Set(_.xor(Array.from(getState().filtering.vsCharacters), [char])),
+      ),
+    );
   };
 };
 
-export const thunkSetVsChars: AppThunkActionCreator = (characters: Set<Character>) => {
+export const thunkSetVsChars: AppThunkActionCreator = (
+  characters: Set<Character>,
+) => {
   return async (dispatch, getState) => {
     dispatch(setVsCharacters(characters));
     history.push(buildUriFromState(getState()));
@@ -70,7 +96,11 @@ export const thunkSetVsChars: AppThunkActionCreator = (characters: Set<Character
 
 export const thunkToggleStage: AppThunkActionCreator = (stageId: Stage) => {
   return async (dispatch, getState) => {
-    dispatch(thunkSetStages(new Set(_.xor(Array.from(getState().filtering.stages), [stageId]))));
+    dispatch(
+      thunkSetStages(
+        new Set(_.xor(Array.from(getState().filtering.stages), [stageId])),
+      ),
+    );
   };
 };
 
@@ -84,7 +114,11 @@ export const thunkSetStages: AppThunkActionCreator = (stageIds: Set<Stage>) => {
 
 export const thunkToggleLabel: AppThunkActionCreator = (labelId: Label) => {
   return async (dispatch, getState) => {
-    dispatch(thunkSetLabels(new Set(_.xor(Array.from(getState().filtering.labels), [labelId]))));
+    dispatch(
+      thunkSetLabels(
+        new Set(_.xor(Array.from(getState().filtering.labels), [labelId])),
+      ),
+    );
   };
 };
 
@@ -111,7 +145,10 @@ export const thunkPostBit: AppThunkActionCreator = (bit: Bit) => {
   };
 };
 
-export const thunkChangeVote: AppThunkActionCreator = (bitId: string, vote: Vote) => {
+export const thunkChangeVote: AppThunkActionCreator = (
+  bitId: string,
+  vote: Vote,
+) => {
   return async (dispatch, getState) => {
     dispatch(changeVote(bitId, vote));
 

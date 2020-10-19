@@ -109,14 +109,16 @@ export const fakeApiClient = {
       if (filters.mainCharacters.size > 0) {
         if (!bit.mainChars) return false;
         for (let char of Array.from(filters.mainCharacters)) {
-          if (!bit.mainChars || bit.mainChars.indexOf(char.id) == -1) return false;
+          if (!bit.mainChars || bit.mainChars.indexOf(char.id) == -1)
+            return false;
         }
       }
 
       if (filters.labels.size > 0) {
         if (!bit.standaloneTags) return false;
         for (let label of Array.from(filters.labels)) {
-          if (!bit.standaloneTags || bit.standaloneTags.indexOf(label.id) == -1) return false;
+          if (!bit.standaloneTags || bit.standaloneTags.indexOf(label.id) == -1)
+            return false;
         }
       }
 
@@ -157,7 +159,9 @@ export const fakeApiClient = {
   },
 
   fetchComments(bitId: string) {
-    return Promise.resolve(comments.filter((comment) => comment.postId === bitId));
+    return Promise.resolve(
+      comments.filter((comment) => comment.postId === bitId),
+    );
   },
 
   async createBit(bit: Bit) {
@@ -171,6 +175,8 @@ export const fakeApiClient = {
   },
 
   fetchProfile() {
-    return Promise.resolve({ user: { twitterProfile: { displayName: 'LD_on_1_frame' } } });
+    return Promise.resolve({
+      user: { twitterProfile: { displayName: 'LD_on_1_frame' } },
+    });
   },
 };

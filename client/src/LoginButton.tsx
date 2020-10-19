@@ -33,8 +33,15 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
   profile: state.profile.profile,
 });
 
-const LoginButton: AppFunctionComponent<InputProps, typeof mapStateToProps> = (props) => {
-  const { variant = 'primary', profile, thunkFetchProfile, loginText = 'Log in with Twitter' } = props;
+const LoginButton: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
+  props,
+) => {
+  const {
+    variant = 'primary',
+    profile,
+    thunkFetchProfile,
+    loginText = 'Log in with Twitter',
+  } = props;
   if (profile) {
     return <Badge>Welcome, {profile.user.twitterProfile.displayName}!</Badge>;
   }

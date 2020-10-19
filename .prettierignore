@@ -1,0 +1,11 @@
+amplify/
+
+# Ignore artifacts:
+client/dist/
+server/.build/
+
+**/node_modules/
+
+# Compiled output:
+**/*.js.map
+**/*.sass.d.ts

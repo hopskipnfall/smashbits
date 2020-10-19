@@ -2,21 +2,26 @@ import { Document, Model, model, Schema } from 'mongoose';
 import * as methods from './bits.methods';
 import * as statics from './bits.statics';
 
+export interface Media {
+  uri: String;
+}
+
 export interface Bit {
-  postId: string,
-  dateCreated: number,
+  postId: string;
+  dateCreated: number;
   author: {
-    name: string,
-    personId: string,
-  },
-  upvotes: number,
-  downvotes: number,
-  title: string,
-  content: string,
-  mainChars: string[],
-  vsChars: string[],
-  stages: string[],
-  tags: string[],
+    name: string;
+    personId: string;
+  };
+  upvotes: number;
+  downvotes: number;
+  title: string;
+  content: string;
+  media: Media[];
+  mainChars: string[];
+  vsChars: string[];
+  stages: string[];
+  tags: string[];
 }
 
 const BitsSchema = new Schema<typeof methods>({
@@ -30,6 +35,11 @@ const BitsSchema = new Schema<typeof methods>({
   downvotes: Number,
   title: String,
   content: String,
+  media: [
+    {
+      uri: String,
+    },
+  ],
   mainChars: [String],
   vsChars: [String],
   stages: [String],

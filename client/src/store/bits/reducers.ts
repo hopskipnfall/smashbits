@@ -58,10 +58,15 @@ const initialState: BitsState = {
 };
 
 function bitArrayToMap(bits: Bit[]) {
-  return Immutable.Map<string, Bit>([...(bits.map((bit) => [bit.postId, bit]) as [string, Bit][])]);
+  return Immutable.Map<string, Bit>([
+    ...(bits.map((bit) => [bit.postId, bit]) as [string, Bit][]),
+  ]);
 }
 
-export function bitsReducer(state = initialState, action: BitsActionTypes): BitsState {
+export function bitsReducer(
+  state = initialState,
+  action: BitsActionTypes,
+): BitsState {
   switch (action.type) {
     case CLEAR_BITS:
       return {
@@ -69,7 +74,9 @@ export function bitsReducer(state = initialState, action: BitsActionTypes): Bits
         items: Immutable.Map(),
       };
     case CHANGE_VOTE:
-      return setBitState(state, action.bitId).edit((b) => (b.userVote = action.vote));
+      return setBitState(state, action.bitId).edit(
+        (b) => (b.userVote = action.vote),
+      );
     case ADD_BIT:
       return action.optimistic
         ? setBitState(state, action.bit.postId).insertOptimisticBit(action.bit)
@@ -80,7 +87,9 @@ export function bitsReducer(state = initialState, action: BitsActionTypes): Bits
         items: bitArrayToMap(action.bits),
       };
     case SET_OPTIMISTIC_BIT_STATUS:
-      return setBitState(state, action.bitId).editOptimisticBit((b) => (b.status = action.status));
+      return setBitState(state, action.bitId).editOptimisticBit(
+        (b) => (b.status = action.status),
+      );
     default:
       return state;
   }

@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "sourceMap": true, // allow sourcemap support
+    "strictNullChecks": true, // enable strict null checks as a best practice
+    "module": "es6", // specifiy module code generation
+    "target": "es5", // specify ECMAScript target version
+    "allowJs": false,
+    "noImplicitAny": true, // disallow implicit any type
+    "moduleResolution": "node",
+    "preserveConstEnums": true
+    // "rootDir": "./",
+  }
+}

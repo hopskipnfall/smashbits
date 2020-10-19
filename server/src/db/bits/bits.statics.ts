@@ -15,7 +15,10 @@ const DEFAULT_PAGE_SIZE = 25;
 
 // Not using BitModel here as that would cause a circular dependency.
 // Some fields overridden as unknown instead of any to prevent untyped usage.
-type AbbreviatedModel = Model<BitDocument> & { statics: unknown, methods: unknown };
+type AbbreviatedModel = Model<BitDocument> & {
+  statics: unknown;
+  methods: unknown;
+};
 
 const buildFilters = (
   mainChars: string[],

@@ -23,4 +23,4 @@ export const disconnect = () => {
   Mongoose.disconnect();
 };
 
-export const getConnection = ():Mongoose.Connection => db;
+export const getConnection = (): Mongoose.Connection => db;
