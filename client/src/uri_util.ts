@@ -5,7 +5,6 @@ import {
   QUERY_LIMIT,
   QUERY_MAIN_CHARS,
   QUERY_OFFSET,
-  QUERY_PAGE_SIZE,
   QUERY_SORT,
   QUERY_STAGES,
   QUERY_TAGS,
@@ -34,7 +33,7 @@ import { AppState } from './store';
 //     ...queryMap[queryParams.QUERY_STAGES] && { currentStages: getStageFilters(queryMap[queryParams.QUERY_STAGES]) },
 //     ...queryMap[queryParams.QUERY_TAGS] && { currentStandaloneTags: getTagFilters(queryMap[queryParams.QUERY_TAGS]) },
 //   };
-// };
+// };  
 
 // export const getSort = (query: string) => PARAM_TO_CLIENT_SORT[(URI(query).query(true) as { [key: string]: string })[queryParams.QUERY_SORT]];
 
@@ -100,13 +99,13 @@ const defaultToUndefined = (param: any) => {
   // if (param instanceof Set) {
   //   return param.size > 0 ? param : undefined;
   // }
+  // eslint-disable-next-line no-unneeded-ternary
   return param ? param : undefined;
 };
 
 export const buildUriFromState = (state: AppState) => {
   const params = {
     [QUERY_SORT]: defaultToUndefined(state.filtering.sort),
-    [QUERY_LIMIT]: defaultToUndefined(state.filtering.limit),
     [QUERY_OFFSET]: defaultToUndefined(state.filtering.offset),
     [QUERY_MAIN_CHARS]: defaultToUndefined(
       Array.from(state.filtering.mainCharacters).map((char) => char.id),
@@ -120,7 +119,7 @@ export const buildUriFromState = (state: AppState) => {
     [QUERY_TAGS]: defaultToUndefined(
       Array.from(state.filtering.labels).map((label) => label.id),
     ),
-    [QUERY_PAGE_SIZE]: defaultToUndefined(state.filtering.currentPageSize),
+    [QUERY_LIMIT]: defaultToUndefined(state.filtering.currentPageSize),
   };
 
   const uri = URI().search(params);
