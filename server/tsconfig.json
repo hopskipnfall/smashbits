@@ -11,6 +11,8 @@
     "rootDir": "./"
   },
   "include": [
+    "index.js",
+    "./src/",
     "../shared/",
     // Dumb but we have to put it here for linting.. Maybe we can move this to a different project.
     "webpack.config.js"

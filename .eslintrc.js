@@ -70,6 +70,10 @@ module.exports = {
       },
     ],
     'react/jsx-pascal-case': 'off',
+
+    // These two are rules set by some config, but we do not have that plugin installed or something..
+    '@typescript-eslint/no-redeclare': 'off',
+    '@typescript-eslint/no-shadow': 'off',
   },
   ignorePatterns: [
     'client/node_modules',
