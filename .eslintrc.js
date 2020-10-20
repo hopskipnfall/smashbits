@@ -54,6 +54,7 @@ module.exports = {
     'import/no-cycle': 'off',
     // TODO: Enable this and clean up the code.
     '@typescript-eslint/no-use-before-define': 'warn',
+    'import/no-extraneous-dependencies': 'warn', // This doesn't always seem correct.
   },
   ignorePatterns: [
     'client/node_modules',
