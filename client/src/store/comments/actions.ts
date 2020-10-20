@@ -5,5 +5,5 @@ import { AddCommentsAction, ADD_COMMENTS } from './types';
 export const addComments = (items: Immutable.Map<string, Comment>) =>
   ({
     type: ADD_COMMENTS,
-    items: items,
+    items,
   } as AddCommentsAction);
