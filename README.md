@@ -12,7 +12,7 @@ Our repo is currently split into `client/` and `server/` code, and these are two
 
 We recommend using Visual Studio Code for development.
 
-To lint, run `npm run lint`. To format run `npm run format`. Presubmits will be run with `npm run lint-master-diff` which only runs the linter on files that have changed compared to the master branch.
+To lint, run `npm run lint`. To format run `npm run format`.
 
 ### client/
 
