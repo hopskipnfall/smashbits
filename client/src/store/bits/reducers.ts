@@ -74,9 +74,9 @@ export function bitsReducer(
         items: Immutable.Map(),
       };
     case CHANGE_VOTE:
-      return setBitState(state, action.bitId).edit(
-        (b) => (b.userVote = action.vote),
-      );
+      return setBitState(state, action.bitId).edit((b) => {
+        b.userVote = action.vote;
+      });
     case ADD_BIT:
       return action.optimistic
         ? setBitState(state, action.bit.postId).insertOptimisticBit(action.bit)
@@ -87,9 +87,9 @@ export function bitsReducer(
         items: bitArrayToMap(action.bits),
       };
     case SET_OPTIMISTIC_BIT_STATUS:
-      return setBitState(state, action.bitId).editOptimisticBit(
-        (b) => (b.status = action.status),
-      );
+      return setBitState(state, action.bitId).editOptimisticBit((b) => {
+        b.status = action.status;
+      });
     default:
       return state;
   }

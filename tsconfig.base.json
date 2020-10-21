@@ -9,5 +9,6 @@
     "moduleResolution": "node",
     "preserveConstEnums": true
     // "rootDir": "./",
-  }
+  },
+  "include": [".eslintrc.js"]
 }

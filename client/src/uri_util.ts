@@ -33,7 +33,7 @@ import { AppState } from './store';
 //     ...queryMap[queryParams.QUERY_STAGES] && { currentStages: getStageFilters(queryMap[queryParams.QUERY_STAGES]) },
 //     ...queryMap[queryParams.QUERY_TAGS] && { currentStandaloneTags: getTagFilters(queryMap[queryParams.QUERY_TAGS]) },
 //   };
-// };  
+// };
 
 // export const getSort = (query: string) => PARAM_TO_CLIENT_SORT[(URI(query).query(true) as { [key: string]: string })[queryParams.QUERY_SORT]];
 

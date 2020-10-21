@@ -68,7 +68,6 @@ const bits: { [key: string]: any }[] = [
     vsChars: ['yo'],
   },
 ];
-const bitsJson: string = JSON.stringify(bits);
 
 const comments: Comment[] = [
   new Comment({
@@ -108,31 +107,34 @@ export const fakeApiClient = {
     const filtered = bits.filter((bit) => {
       if (filters.mainCharacters.size > 0) {
         if (!bit.mainChars) return false;
-        for (let char of Array.from(filters.mainCharacters)) {
-          if (!bit.mainChars || bit.mainChars.indexOf(char.id) == -1)
+        for (const char of Array.from(filters.mainCharacters)) {
+          if (!bit.mainChars || bit.mainChars.indexOf(char.id) === -1)
             return false;
         }
       }
 
       if (filters.labels.size > 0) {
         if (!bit.standaloneTags) return false;
-        for (let label of Array.from(filters.labels)) {
-          if (!bit.standaloneTags || bit.standaloneTags.indexOf(label.id) == -1)
+        for (const label of Array.from(filters.labels)) {
+          if (
+            !bit.standaloneTags ||
+            bit.standaloneTags.indexOf(label.id) === -1
+          )
             return false;
         }
       }
 
       if (filters.vsCharacters.size > 0) {
         if (!bit.vsChars) return false;
-        for (let char of Array.from(filters.vsCharacters)) {
-          if (!bit.vsChars || bit.vsChars.indexOf(char.id) == -1) return false;
+        for (const char of Array.from(filters.vsCharacters)) {
+          if (!bit.vsChars || bit.vsChars.indexOf(char.id) === -1) return false;
         }
       }
 
       if (filters.stages.size > 0) {
         if (!bit.stages) return false;
-        for (let stage of Array.from(filters.stages)) {
-          if (bit.stages.indexOf(stage.id) == -1) return false;
+        for (const stage of Array.from(filters.stages)) {
+          if (bit.stages.indexOf(stage.id) === -1) return false;
         }
       }
       return true;

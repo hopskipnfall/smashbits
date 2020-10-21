@@ -42,6 +42,7 @@ const connector = connect(null, allActions);
  * @param <StateToProps> "typeof mapStateToProps". Use {@link NOOP} if N/A.
  * @param <ComponentState> // TODO(jonnjonn): Use this to type the state object.
  */
+// eslint-disable-next-line react/prefer-stateless-function
 export class AppComponent<
   InputParams,
   StateToProps extends (...args: any) => any,

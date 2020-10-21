@@ -17,7 +17,7 @@ type InputProps = {
 };
 
 const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
-  optimistic: state.bits.optimisticItems.get(ownProps.bit.postId) != undefined,
+  optimistic: state.bits.optimisticItems.get(ownProps.bit.postId) !== undefined,
 });
 
 const getDownvoteButtonStyle = (bit: BitType) =>
