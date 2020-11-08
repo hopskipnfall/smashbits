@@ -7,5 +7,11 @@
     "allowJs": true, // allow a partial TypeScript and JavaScript codebase
     "lib": ["es2015", "dom"]
   },
-  "include": ["./src/", "../shared/"]
+  "include": [
+    "declarations.d.ts",
+    "./src/",
+    "../shared/",
+    "webpack.config.js",
+    "config-overrides.js"
+  ]
 }

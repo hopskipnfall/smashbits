@@ -10,12 +10,15 @@ type InputProps = {
   bits: Immutable.Map<string, BitType>;
 };
 
-const BitsContainer: AppFunctionComponent<InputProps, NOOP, NOOP> = (props) => (
-  <div>
-    {props.bits.valueSeq().map((bit) => (
-      <Bit bit={bit} key={bit.postId} />
-    ))}
-  </div>
-);
+const BitsContainer: AppFunctionComponent<InputProps, NOOP, NOOP> = (props) => {
+  const { bits } = props;
+  return (
+    <div>
+      {bits.valueSeq().map((bit) => (
+        <Bit bit={bit} key={bit.postId} />
+      ))}
+    </div>
+  );
+};
 
 export default connect(null, allActions)(BitsContainer);

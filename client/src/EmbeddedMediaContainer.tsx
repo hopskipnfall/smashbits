@@ -24,10 +24,11 @@ const getTwitchClipIframe = (uri: URI) => {
       <br />
       <iframe
         src={uri.href()}
+        title="myIframe"
         height="360px"
         width="640px"
         frameBorder="0"
-        allowFullScreen={true}
+        allowFullScreen
       />
       <br />
     </>
@@ -42,11 +43,9 @@ const EmbeddedMediaContainer: React.FunctionComponent<InputProps> = (props) => {
       {/^(https?:\/\/)?clips.twitch.tv/.test(contentUri.href())
         ? getTwitchClipIframe(contentUri)
         : ReactPlayer.canPlay(contentUri.href()) && (
-            <ReactPlayer url={contentUri.href()} controls={true} />
+            <ReactPlayer url={contentUri.href()} controls />
           )}
-      <a href={contentUri.href()} target="_blank">
-        {contentUri.href()}
-      </a>
+      <a href={contentUri.href()}>{contentUri.href()}</a>
     </span>
   );
 };

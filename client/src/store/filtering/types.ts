@@ -6,7 +6,6 @@ export interface FilteringState {
   vsCharacters: Set<Character>;
   stages: Set<Stage>;
   offset: number;
-  limit: number;
   labels: Set<Label>;
   currentPageSize: PageSize;
 }

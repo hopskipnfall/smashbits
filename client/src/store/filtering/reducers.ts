@@ -16,7 +16,6 @@ const initialState: FilteringState = {
   vsCharacters: new Set(),
   stages: new Set(),
   offset: 0,
-  limit: 42,
   labels: new Set(),
   currentPageSize: 42,
 };
