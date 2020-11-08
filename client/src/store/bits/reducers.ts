@@ -58,7 +58,8 @@ const initialState: BitsState = {
 };
 
 function bitArrayToMap(bits: Bit[]) {
-  return Immutable.Map<string, Bit>([
+  // We need to keep the Bits in the same order that the server returned them in.
+  return Immutable.OrderedMap<string, Bit>([
     ...(bits.map((bit) => [bit.postId, bit]) as [string, Bit][]),
   ]);
 }

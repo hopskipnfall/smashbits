@@ -22,7 +22,7 @@ class Home extends AppRouteComponent<typeof mapStateToProps> {
   }
 
   render() {
-    const { location } = this.props;
+    const { thunkFetchNextPage, thunkFetchPreviousPage } = this.props;
     return (
       <div>
         <Col md={4}>
@@ -34,15 +34,8 @@ class Home extends AppRouteComponent<typeof mapStateToProps> {
             <SortingMenu />
             <span style={{ float: 'right' }}>
               <PageSizeMenu />
-              {/* TODO: Put pagination back. */}
-              <Button onClick={() => console.log('go to next page!')}>
-                {' '}
-                &lt;{' '}
-              </Button>
-              <Button onClick={() => console.log('go to previous page!')}>
-                {' '}
-                &gt;{' '}
-              </Button>
+              <Button onClick={() => thunkFetchPreviousPage()}> &lt; </Button>
+              <Button onClick={() => thunkFetchNextPage()}> &gt; </Button>
             </span>
           </span>
           <BitsContainer bits={this.props.optimisticBits} />
@@ -51,23 +44,6 @@ class Home extends AppRouteComponent<typeof mapStateToProps> {
       </div>
     );
   }
-
-  // TODO: make these into thunks
-  // fetchNextPage() {
-  //   const offset = (getOffset(history.location.search) || 0)
-  //     + (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE);
-  //   this.props.setOffset(offset);
-  //   this.props.thunkFetchBits();
-  // }
-
-  // fetchPreviousPage() {
-  //   const offset = Math.max(
-  //     0,
-  //     (getOffset(history.location.search) || 0)
-  //     - (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE));
-  //   this.props.setOffset(offset);
-  //   this.props.thunkFetchBits();
-  // }
 }
 
 export default connect(mapStateToProps, allActions)(Home);
