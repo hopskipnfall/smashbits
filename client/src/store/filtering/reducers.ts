@@ -1,3 +1,4 @@
+import { DEFAULT_PAGE_SIZE } from '../../types';
 import {
   CHANGE_SORT,
   FilteringActionTypes,
@@ -11,13 +12,13 @@ import {
 } from './types';
 
 const initialState: FilteringState = {
-  sort: 'score',
+  sort: 'newest',
   mainCharacters: new Set(),
   vsCharacters: new Set(),
   stages: new Set(),
   offset: 0,
   labels: new Set(),
-  currentPageSize: 42,
+  currentPageSize: DEFAULT_PAGE_SIZE,
 };
 
 export function filteringReducer(
