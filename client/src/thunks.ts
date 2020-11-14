@@ -20,6 +20,7 @@ import {
   changeSort,
   setLabels,
   setMainCharacters,
+  setOffset,
   setPageSize,
   setStages,
   setVsCharacters,
@@ -28,6 +29,7 @@ import { setProfile } from './store/profile/actions';
 import {
   Bit,
   Character,
+  DEFAULT_PAGE_SIZE,
   Label,
   PageSize,
   SortOption,
@@ -35,7 +37,7 @@ import {
   Status,
   Vote,
 } from './types';
-import { buildUriFromState } from './uri_util';
+import { buildUriFromState, getOffset, getPageSize } from './uri_util';
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>;
 type AppThunkActionCreator = ActionCreator<AppThunkAction>;
@@ -51,6 +53,30 @@ export const thunkFetchBit: AppThunkActionCreator = (bitId: string) => {
   return async (dispatch, getState) => {
     const response = await fetchBitApi(bitId);
     dispatch(replaceBits([response.bit]));
+  };
+};
+
+export const thunkFetchNextPage: AppThunkActionCreator = () => {
+  return async (dispatch, getState) => {
+    const offset =
+      (getOffset(history.location.search) || 0) +
+      (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE);
+    dispatch(setOffset(offset));
+    history.push(buildUriFromState(getState()));
+    dispatch(thunkFetchBits());
+  };
+};
+
+export const thunkFetchPreviousPage: AppThunkActionCreator = () => {
+  return async (dispatch, getState) => {
+    const offset = Math.max(
+      0,
+      (getOffset(history.location.search) || 0) -
+        (getPageSize(history.location.search) || DEFAULT_PAGE_SIZE),
+    );
+    dispatch(setOffset(offset));
+    history.push(buildUriFromState(getState()));
+    dispatch(thunkFetchBits());
   };
 };
 

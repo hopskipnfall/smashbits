@@ -215,3 +215,4 @@ export type SortOption = typeof SORT_OPTIONS[number];
 
 export const PAGE_SIZES = [10, 25, 42];
 export type PageSize = typeof PAGE_SIZES[number];
+export const DEFAULT_PAGE_SIZE: PageSize = 25;

@@ -37,9 +37,17 @@ import { AppState } from './store';
 
 // export const getSort = (query: string) => PARAM_TO_CLIENT_SORT[(URI(query).query(true) as { [key: string]: string })[queryParams.QUERY_SORT]];
 
-// export const getPageSize = (query: string) => parseInt((URI(query).query(true) as { [key: string]: string })[queryParams.QUERY_LIMIT], 10);
+export const getPageSize = (query: string) =>
+  parseInt(
+    (URI(query).query(true) as { [key: string]: string })[QUERY_LIMIT],
+    10,
+  );
 
-// export const getOffset = (query: string) => parseInt((URI(query).query(true) as { [key: string]: string })[queryParams.QUERY_OFFSET], 10);
+export const getOffset = (query: string) =>
+  parseInt(
+    (URI(query).query(true) as { [key: string]: string })[QUERY_OFFSET],
+    10,
+  );
 
 // export const setSortQuery = (sort: string, queryString: string) => setQueryParam('currentSort', sort, queryString);
 
