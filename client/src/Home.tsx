@@ -5,8 +5,8 @@ import { allActions } from './all_actions';
 import BitsContainer from './BitsContainer';
 import CreateBitButton from './CreateBitButton';
 import FilterControl from './FilterControl';
-import PageSizeMenu from './PageSizeMenu';
 import history from './history';
+import PageSizeMenu from './PageSizeMenu';
 import SortingMenu from './SortingMenu';
 import { AppRouteComponent, AppState } from './store';
 
