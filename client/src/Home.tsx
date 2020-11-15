@@ -6,6 +6,7 @@ import BitsContainer from './BitsContainer';
 import CreateBitButton from './CreateBitButton';
 import FilterControl from './FilterControl';
 import PageSizeMenu from './PageSizeMenu';
+import history from './history';
 import SortingMenu from './SortingMenu';
 import { AppRouteComponent, AppState } from './store';
 
@@ -19,6 +20,10 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
 class Home extends AppRouteComponent<typeof mapStateToProps> {
   componentDidMount() {
     this.props.thunkSetStateFromUrlBar();
+    history.listen((location, action) => {
+      this.props.thunkSetStateFromUrlBar();
+      this.props.thunkFetchBits();
+    });
     this.props.thunkFetchBits(); // maybe get rid of this this looks wrong
   }
 

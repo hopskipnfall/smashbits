@@ -107,35 +107,34 @@ export const fakeApiClient = {
     const filtered = bits.filter((bit) => {
       if (filters.mainCharacters.size > 0) {
         if (!bit.mainChars) return false;
-        for (const char of Array.from(filters.mainCharacters)) {
-          if (!bit.mainChars || bit.mainChars.indexOf(char.id) === -1)
-            return false;
+        if (
+        Array.from(filters.mainCharacters).filter(char => bit.mainChars.indexOf(char.id) >= 0).length === 0) {
+          return false;
         }
       }
 
       if (filters.labels.size > 0) {
         if (!bit.standaloneTags) return false;
-        for (const label of Array.from(filters.labels)) {
-          if (
-            !bit.standaloneTags ||
-            bit.standaloneTags.indexOf(label.id) === -1
-          )
+        if (
+          Array.from(filters.labels).filter(label => bit.standaloneTags.indexOf(label.id) >= 0).length === 0) {
             return false;
-        }
+          }
       }
 
       if (filters.vsCharacters.size > 0) {
         if (!bit.vsChars) return false;
-        for (const char of Array.from(filters.vsCharacters)) {
-          if (!bit.vsChars || bit.vsChars.indexOf(char.id) === -1) return false;
-        }
+        if (
+          Array.from(filters.vsCharacters).filter(char => bit.vsChars.indexOf(char.id) >= 0).length === 0) {
+            return false;
+          }
       }
 
       if (filters.stages.size > 0) {
         if (!bit.stages) return false;
-        for (const stage of Array.from(filters.stages)) {
-          if (bit.stages.indexOf(stage.id) === -1) return false;
-        }
+        if (
+          Array.from(filters.stages).filter(stage => bit.stages.indexOf(stage.id) >= 0).length === 0) {
+            return false;
+          }
       }
       return true;
     });
