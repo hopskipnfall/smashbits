@@ -18,6 +18,7 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
 
 class Home extends AppRouteComponent<typeof mapStateToProps> {
   componentDidMount() {
+    this.props.thunkSetStateFromUrlBar();
     this.props.thunkFetchBits(); // maybe get rid of this this looks wrong
   }
 

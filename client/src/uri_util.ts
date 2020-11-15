@@ -13,41 +13,48 @@ import {
 // // import { SORT_DATE, SORT_SCORE } from './reducer';
 // import * as queryParams from './shared/query_params';
 import { AppState } from './store';
+import { CHARACTER_MAP, LABEL_MAP, STAGE_MAP } from './types';
 
 // export const PARAM_TO_CLIENT_SORT: { [key: string]: string } = { [queryParams.SORT_PARAM_DATE]: SORT_DATE, [queryParams.SORT_PARAM_SCORE]: SORT_SCORE };
 // export const CLIENT_SORT_TO_PARAM: { [key: string]: string } = { [SORT_DATE]: queryParams.SORT_PARAM_DATE, [SORT_SCORE]: queryParams.SORT_PARAM_SCORE };
 
-// export const getFilters = (queryString: string) => _.pick(
-//   getDisplayQueryParams(queryString),
-//   ['currentMainChars', 'currentVsChars', 'currentStages', 'currentStandaloneTags'],
-// );
+const queryStringToObject = (query: string) =>
+  URI(query).query(true) as { [key: string]: string };
 
-// const getDisplayQueryParams = (query: string) => {
-//   const queryMap = URI(query).query(true) as { [key: string]: string };
-//   return {
-//     ...queryMap[queryParams.QUERY_SORT] && { currentSort: getSort(query) },
-//     ...queryMap[queryParams.QUERY_LIMIT] && { currentPageSize: getPageSize(query) },
-//     ...queryMap[queryParams.QUERY_OFFSET] && { currentOffset: getOffset(query) },
-//     ...queryMap[queryParams.QUERY_MAIN_CHARS] && { currentMainChars: getCharFilters(queryMap[queryParams.QUERY_MAIN_CHARS]) },
-//     ...queryMap[queryParams.QUERY_VS_CHARS] && { currentVsChars: getCharFilters(queryMap[queryParams.QUERY_VS_CHARS]) },
-//     ...queryMap[queryParams.QUERY_STAGES] && { currentStages: getStageFilters(queryMap[queryParams.QUERY_STAGES]) },
-//     ...queryMap[queryParams.QUERY_TAGS] && { currentStandaloneTags: getTagFilters(queryMap[queryParams.QUERY_TAGS]) },
-//   };
-// };
+const paramStringToFilters = <V>(param: string, filterMap: Map<string, V>) =>
+  new Set(
+    param
+      .split(',')
+      .map((id) => filterMap.get(id))
+      .filter(isPresent),
+  );
 
-// export const getSort = (query: string) => PARAM_TO_CLIENT_SORT[(URI(query).query(true) as { [key: string]: string })[queryParams.QUERY_SORT]];
+export const getMainCharFilters = (query: string) =>
+  paramStringToFilters(
+    queryStringToObject(query)[QUERY_MAIN_CHARS],
+    CHARACTER_MAP,
+  );
+
+export const getVsCharFilters = (query: string) =>
+  paramStringToFilters(
+    queryStringToObject(query)[QUERY_VS_CHARS],
+    CHARACTER_MAP,
+  );
+
+export const getStageFilters = (query: string) =>
+  paramStringToFilters(queryStringToObject(query)[QUERY_STAGES], STAGE_MAP);
+
+export const getTagFilters = (query: string) =>
+  paramStringToFilters(queryStringToObject(query)[QUERY_TAGS], LABEL_MAP);
+
+export const getSort = (query: string) =>
+  queryStringToObject(query)[QUERY_SORT];
 
 export const getPageSize = (query: string) =>
-  parseInt(
-    (URI(query).query(true) as { [key: string]: string })[QUERY_LIMIT],
-    10,
-  );
+  parseInt(queryStringToObject(query)[QUERY_LIMIT], 10);
 
 export const getOffset = (query: string) =>
-  parseInt(
-    (URI(query).query(true) as { [key: string]: string })[QUERY_OFFSET],
-    10,
-  );
+  parseInt(queryStringToObject(query)[QUERY_OFFSET], 10);
 
 // export const setSortQuery = (sort: string, queryString: string) => setQueryParam('currentSort', sort, queryString);
 
@@ -103,6 +110,9 @@ export const getOffset = (query: string) =>
 //   ...params.currentStandaloneTags && { [queryParams.QUERY_TAGS]: getTagFilterQuery(params.currentStandaloneTags) },
 // }, _.identity);
 
+const isPresent = <T>(t: T | undefined | null | void): t is T =>
+  t !== undefined && t !== null;
+
 const defaultToUndefined = (param: any) => {
   // if (param instanceof Set) {
   //   return param.size > 0 ? param : undefined;
@@ -116,16 +126,24 @@ export const buildUriFromState = (state: AppState) => {
     [QUERY_SORT]: defaultToUndefined(state.filtering.sort),
     [QUERY_OFFSET]: defaultToUndefined(state.filtering.offset),
     [QUERY_MAIN_CHARS]: defaultToUndefined(
-      Array.from(state.filtering.mainCharacters).map((char) => char.id),
+      Array.from(state.filtering.mainCharacters)
+        .map((char) => char.id)
+        .join(','),
     ),
     [QUERY_VS_CHARS]: defaultToUndefined(
-      Array.from(state.filtering.vsCharacters).map((char) => char.id),
+      Array.from(state.filtering.vsCharacters)
+        .map((char) => char.id)
+        .join(','),
     ),
     [QUERY_STAGES]: defaultToUndefined(
-      Array.from(state.filtering.stages).map((stage) => stage.id),
+      Array.from(state.filtering.stages)
+        .map((stage) => stage.id)
+        .join(','),
     ),
     [QUERY_TAGS]: defaultToUndefined(
-      Array.from(state.filtering.labels).map((label) => label.id),
+      Array.from(state.filtering.labels)
+        .map((label) => label.id)
+        .join(','),
     ),
     [QUERY_LIMIT]: defaultToUndefined(state.filtering.currentPageSize),
   };
