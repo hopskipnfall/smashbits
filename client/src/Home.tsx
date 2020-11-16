@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, ButtonGroup, Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import BitsContainer from './BitsContainer';
@@ -32,22 +32,22 @@ class Home extends AppRouteComponent<typeof mapStateToProps> {
     return (
       <Container fluid>
         <Row>
-        <Col md={4}>
-          <CreateBitButton />
-          <FilterControl />
-        </Col>
-        <Col>
-          <span>
-            <SortingMenu />
-            <span style={{ float: 'right' }}>
-              <PageSizeMenu />
-              <Button onClick={() => thunkFetchPreviousPage()}> &lt; </Button>
-              <Button onClick={() => thunkFetchNextPage()}> &gt; </Button>
+          <Col md={4}>
+            <CreateBitButton />
+            <FilterControl />
+          </Col>
+          <Col>
+            <span>
+              <SortingMenu />
+              <span style={{ float: 'right' }}>
+                <PageSizeMenu />
+                <Button onClick={() => thunkFetchPreviousPage()}> &lt; </Button>
+                <Button onClick={() => thunkFetchNextPage()}> &gt; </Button>
+              </span>
             </span>
-          </span>
-          <BitsContainer bits={this.props.optimisticBits} />
-          <BitsContainer bits={this.props.bits} />
-        </Col>
+            <BitsContainer bits={this.props.optimisticBits} />
+            <BitsContainer bits={this.props.bits} />
+          </Col>
         </Row>
       </Container>
     );

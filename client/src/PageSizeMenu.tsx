@@ -18,7 +18,12 @@ const PageSizeMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
   return (
     <span>
       Results per page:
-      <DropdownButton as={ButtonGroup} variant="info" title={`${pageSize}`} id="page-size-menu">
+      <DropdownButton
+        as={ButtonGroup}
+        variant="info"
+        title={`${pageSize}`}
+        id="page-size-menu"
+      >
         {PAGE_SIZES.map((size) => (
           <Dropdown.Item onSelect={() => thunkChangePageSize(size)} key={size}>
             {size}

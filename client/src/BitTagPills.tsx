@@ -23,11 +23,11 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
     thunkSetLabels,
   } = props;
   return (
-    <div className={styles["bit-tag-pills"]}>
+    <div className={styles['bit-tag-pills']}>
       {bit.mainChars.map((tag) => (
         <Badge
           variant="success"
-          className={styles["filter-pill"]}
+          className={styles['filter-pill']}
           onClick={() => {
             thunkSetMainChars(new Set([tag]));
           }}
@@ -39,7 +39,7 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
       {bit.vsChars.map((tag) => (
         <Badge
           variant="danger"
-          className={styles["filter-pill"]}
+          className={styles['filter-pill']}
           onClick={() => {
             thunkSetVsChars(new Set([tag]));
           }}
@@ -51,7 +51,7 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
       {bit.stages.map((tag) => (
         <Badge
           variant="primary"
-          className={styles["filter-pill"]}
+          className={styles['filter-pill']}
           onClick={() => {
             thunkSetStages(new Set([tag]));
           }}
@@ -63,7 +63,7 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
       {bit.standaloneTags.map((tag) => (
         <Badge
           variant="warning"
-          className={styles["filter-pill"]}
+          className={styles['filter-pill']}
           onClick={() => {
             thunkSetLabels(new Set([tag]));
           }}

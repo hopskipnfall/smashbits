@@ -40,7 +40,7 @@ const Bit: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
     <h3>
       <Button
         variant={getUpvoteButtonStyle(bit)}
-        className={styles["thumbs-up-button"]}
+        className={styles['thumbs-up-button']}
         onClick={() => thunkChangeVote(bit.postId, VOTE_UP)}
       >
         <RiThumbUpLine />
@@ -48,7 +48,7 @@ const Bit: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
       {bit.upvotes - bit.downvotes + bit.userVote}
       <Button
         variant={getDownvoteButtonStyle(bit)}
-        className={styles["thumbs-down-button"]}
+        className={styles['thumbs-down-button']}
         onClick={() => thunkChangeVote(bit.postId, VOTE_DOWN)}
       >
         <RiThumbDownLine />

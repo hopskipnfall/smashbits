@@ -17,7 +17,7 @@ const SortingMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
   const { currentSort, thunkChangeSort } = props;
   return (
     <DropdownButton
-    as={ButtonGroup}
+      as={ButtonGroup}
       variant="info"
       title={`Sorting: ${currentSort}`}
       id="sorting-menu"

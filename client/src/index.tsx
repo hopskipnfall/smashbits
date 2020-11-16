@@ -1,9 +1,9 @@
-import './App.sass';
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import App from './App';
+import './App.sass';
 import history from './history';
 import './index.sass';
 import registerServiceWorker from './registerServiceWorker';

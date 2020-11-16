@@ -1,8 +1,8 @@
 import * as React from 'react';
-import * as styles from './index.sass';
 import { Badge, Dropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
+import * as styles from './index.sass';
 import { AppFunctionComponent, NOOP } from './store';
 import { FilterParameter } from './types';
 
