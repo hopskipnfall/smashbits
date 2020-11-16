@@ -5,8 +5,7 @@ interface CssExports {
   'dropdown-caret-margin': string;
   'dropdown-option': string;
   'filter-pill': string;
-  'thumbs-down-button': string;
-  'thumbs-up-button': string;
+  'filter-section': string;
 }
 declare var cssExports: CssExports;
 export = cssExports;

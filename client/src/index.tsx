@@ -1,4 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.css';
+import './App.sass';
 import * as React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
