@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Badge, Dropdown } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
+import * as styles from './index.sass';
 import { AppFunctionComponent, NOOP } from './store';
 import { FilterParameter } from './types';
 
@@ -16,8 +17,8 @@ type InputProps = {
 const FilterMenu: AppFunctionComponent<InputProps, NOOP> = (props) => {
   const { title, bootstrapStyle, allFilters, currentFilters, onClick } = props;
   return (
-    <div className="panel-body">
-      <Dropdown className="dropdown">
+    <div className={styles['filter-section']}>
+      <Dropdown>
         <Dropdown.Toggle variant={bootstrapStyle} id="dropdown-basic">
           {title}
         </Dropdown.Toggle>
@@ -35,7 +36,7 @@ const FilterMenu: AppFunctionComponent<InputProps, NOOP> = (props) => {
         {Array.from(currentFilters).map((filter) => (
           <Badge
             variant={bootstrapStyle}
-            className="filter-pill"
+            className={styles["filter-pill"]}
             onClick={() => onClick(filter)}
             key={filter.id}
           >

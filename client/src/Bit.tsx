@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Button, Card, Spinner } from 'react-bootstrap';
 import { FcHighPriority, FcOk } from 'react-icons/fc';
+import { RiThumbDownLine, RiThumbUpLine } from 'react-icons/ri';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { allActions } from './all_actions';
@@ -39,18 +40,18 @@ const Bit: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
     <h3>
       <Button
         variant={getUpvoteButtonStyle(bit)}
-        className="thumbs-up-button"
+        className={styles['thumbs-up-button']}
         onClick={() => thunkChangeVote(bit.postId, VOTE_UP)}
       >
-        <span className="glyphicon glyphicon-thumbs-up" />
+        <RiThumbUpLine />
       </Button>
       {bit.upvotes - bit.downvotes + bit.userVote}
       <Button
         variant={getDownvoteButtonStyle(bit)}
-        className="thumbs-down-button"
+        className={styles['thumbs-down-button']}
         onClick={() => thunkChangeVote(bit.postId, VOTE_DOWN)}
       >
-        <span className="glyphicon glyphicon-thumbs-down" />
+        <RiThumbDownLine />
       </Button>
       <span className={styles.title}>{bit.title}</span>
     </h3>

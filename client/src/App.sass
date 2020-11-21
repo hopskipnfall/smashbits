@@ -1,3 +1,5 @@
+@import "~bootstrap/scss/bootstrap";
+  
 .container
   text-align: center
 
@@ -10,6 +12,11 @@
   height: 150px
   padding: 20px
   color: white
+  // These seem to be needed to get the header to be full-width.
+  // See https://css-tricks.com/the-inside-problem/.
+  width: 100vw
+  margin-left: 50%
+  transform: translateX(-50%)
 
 .intro
   font-size: large

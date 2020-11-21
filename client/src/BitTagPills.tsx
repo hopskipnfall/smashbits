@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Badge } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
+import * as styles from './index.sass';
 import { AppFunctionComponent, AppState, NOOP } from './store';
 import { Bit } from './types';
 
@@ -22,11 +23,11 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
     thunkSetLabels,
   } = props;
   return (
-    <div className="bit-tag-pills">
+    <div className={styles['bit-tag-pills']}>
       {bit.mainChars.map((tag) => (
         <Badge
           variant="success"
-          className="filter-pill"
+          className={styles['filter-pill']}
           onClick={() => {
             thunkSetMainChars(new Set([tag]));
           }}
@@ -38,7 +39,7 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
       {bit.vsChars.map((tag) => (
         <Badge
           variant="danger"
-          className="filter-pill"
+          className={styles['filter-pill']}
           onClick={() => {
             thunkSetVsChars(new Set([tag]));
           }}
@@ -50,7 +51,7 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
       {bit.stages.map((tag) => (
         <Badge
           variant="primary"
-          className="filter-pill"
+          className={styles['filter-pill']}
           onClick={() => {
             thunkSetStages(new Set([tag]));
           }}
@@ -62,7 +63,7 @@ const BitTagPills: AppFunctionComponent<InputProps, NOOP> = (props) => {
       {bit.standaloneTags.map((tag) => (
         <Badge
           variant="warning"
-          className="filter-pill"
+          className={styles['filter-pill']}
           onClick={() => {
             thunkSetLabels(new Set([tag]));
           }}
