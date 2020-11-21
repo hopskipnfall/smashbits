@@ -36,7 +36,7 @@ const FilterMenu: AppFunctionComponent<InputProps, NOOP> = (props) => {
         {Array.from(currentFilters).map((filter) => (
           <Badge
             variant={bootstrapStyle}
-            className="filter-pill"
+            className={styles["filter-pill"]}
             onClick={() => onClick(filter)}
             key={filter.id}
           >
