@@ -1,4 +1,4 @@
-import { DEFAULT_PAGE_SIZE } from '../../types';
+import { DEFAULT_PAGE_SIZE, DEFAULT_SORT } from '../../types';
 import {
   CHANGE_SORT,
   FilteringActionTypes,
@@ -12,7 +12,7 @@ import {
 } from './types';
 
 const initialState: FilteringState = {
-  sort: 'newest',
+  sort: DEFAULT_SORT,
   mainCharacters: new Set(),
   vsCharacters: new Set(),
   stages: new Set(),

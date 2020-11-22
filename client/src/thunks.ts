@@ -5,7 +5,7 @@ import {
   apiCreateBit as createBitApi,
   apiFetchBit as fetchBitApi,
   apiFetchBits as fetchBitsApi,
-  apiFetchProfile,
+  apiFetchProfile
 } from './api_client';
 import { decorateBit } from './bits_util';
 import history from './history';
@@ -14,7 +14,7 @@ import {
   addOptimisticBit,
   changeVote,
   replaceBits,
-  setOptimisticBitStatus,
+  setOptimisticBitStatus
 } from './store/bits/actions';
 import {
   changeSort,
@@ -23,29 +23,27 @@ import {
   setOffset,
   setPageSize,
   setStages,
-  setVsCharacters,
+  setVsCharacters
 } from './store/filtering/actions';
 import { setProfile } from './store/profile/actions';
 import {
   Bit,
   Character,
   DEFAULT_PAGE_SIZE,
+  DEFAULT_SORT,
   Label,
   PageSize,
   SortOption,
   Stage,
   Status,
-  Vote,
+  Vote
 } from './types';
 import {
   buildUriFromState,
-  getMainCharFilters,
+  getDisplayQueryParams,
+
   getOffset,
-  getPageSize,
-  getSort,
-  getStageFilters,
-  getTagFilters,
-  getVsCharFilters,
+  getPageSize
 } from './uri_util';
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>;
@@ -219,14 +217,14 @@ export const thunkChangePageSize: AppThunkActionCreator = (size: PageSize) => {
 };
 
 export const thunkSetStateFromUrlBar: AppThunkActionCreator = () => {
-  return async (dispatch, getState) => {
-    // TODO: Refactor this to get all URL params in a single method call.
-    dispatch(setPageSize(getPageSize(history.location.search)));
-    dispatch(setOffset(getOffset(history.location.search)));
-    dispatch(changeSort(getSort(history.location.search)));
-    dispatch(setMainCharacters(getMainCharFilters(history.location.search)));
-    dispatch(setVsCharacters(getVsCharFilters(history.location.search)));
-    dispatch(setStages(getStageFilters(history.location.search)));
-    dispatch(setLabels(getTagFilters(history.location.search)));
+  return async (dispatch) => {
+    const params = getDisplayQueryParams(history.location.search);
+    dispatch(setPageSize(params.pageSize ?? DEFAULT_PAGE_SIZE));
+    dispatch(setOffset(params.offset ?? 0));
+    dispatch(changeSort(params.sort ?? DEFAULT_SORT));
+    dispatch(setMainCharacters(params.mainChars ?? new Set()));
+    dispatch(setVsCharacters(params.vsChars ?? new Set()));
+    dispatch(setStages(params.stages ?? new Set()));
+    dispatch(setLabels(params.standaloneTags ?? new Set()));
   };
 };

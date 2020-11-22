@@ -18,6 +18,19 @@ import { CHARACTER_MAP, LABEL_MAP, STAGE_MAP } from './types';
 // export const PARAM_TO_CLIENT_SORT: { [key: string]: string } = { [queryParams.SORT_PARAM_DATE]: SORT_DATE, [queryParams.SORT_PARAM_SCORE]: SORT_SCORE };
 // export const CLIENT_SORT_TO_PARAM: { [key: string]: string } = { [SORT_DATE]: queryParams.SORT_PARAM_DATE, [SORT_SCORE]: queryParams.SORT_PARAM_SCORE };
 
+export const getDisplayQueryParams = (query: string) => {	
+  const queryMap = URI(query).query(true) as { [key: string]: string };	
+  return {	
+    ...queryMap[QUERY_SORT] && { sort: getSort(query) },	
+    ...queryMap[QUERY_LIMIT] && { pageSize: getPageSize(query) },	
+    ...queryMap[QUERY_OFFSET] && { offset: getOffset(query) },	
+    ...queryMap[QUERY_MAIN_CHARS] && { mainChars: getMainCharFilters(query) },	
+    ...queryMap[QUERY_VS_CHARS] && { vsChars: getVsCharFilters(query) },	
+    ...queryMap[QUERY_STAGES] && { stages: getStageFilters(query) },	
+    ...queryMap[QUERY_TAGS] && { standaloneTags: getTagFilters(query) },	
+  };	
+};
+
 const queryStringToObject = (query: string) =>
   URI(query).query(true) as { [key: string]: string };
 
@@ -29,25 +42,25 @@ const paramStringToFilters = <V>(param: string, filterMap: Map<string, V>) =>
       .filter(isPresent),
   );
 
-export const getMainCharFilters = (query: string) =>
+const getMainCharFilters = (query: string) =>
   paramStringToFilters(
     queryStringToObject(query)[QUERY_MAIN_CHARS],
     CHARACTER_MAP,
   );
 
-export const getVsCharFilters = (query: string) =>
+const getVsCharFilters = (query: string) =>
   paramStringToFilters(
     queryStringToObject(query)[QUERY_VS_CHARS],
     CHARACTER_MAP,
   );
 
-export const getStageFilters = (query: string) =>
+const getStageFilters = (query: string) =>
   paramStringToFilters(queryStringToObject(query)[QUERY_STAGES], STAGE_MAP);
 
-export const getTagFilters = (query: string) =>
+const getTagFilters = (query: string) =>
   paramStringToFilters(queryStringToObject(query)[QUERY_TAGS], LABEL_MAP);
 
-export const getSort = (query: string) =>
+const getSort = (query: string) =>
   queryStringToObject(query)[QUERY_SORT];
 
 export const getPageSize = (query: string) =>
