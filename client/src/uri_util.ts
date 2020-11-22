@@ -51,10 +51,10 @@ export const getSort = (query: string) =>
   queryStringToObject(query)[QUERY_SORT];
 
 export const getPageSize = (query: string) =>
-  parseInt(queryStringToObject(query)[QUERY_LIMIT], 10);
+  parseInt(queryStringToObject(query)[QUERY_LIMIT], /*radix=*/ 10);
 
 export const getOffset = (query: string) =>
-  parseInt(queryStringToObject(query)[QUERY_OFFSET], 10);
+  parseInt(queryStringToObject(query)[QUERY_OFFSET], /*radix=*/ 10);
 
 // export const setSortQuery = (sort: string, queryString: string) => setQueryParam('currentSort', sort, queryString);
 
