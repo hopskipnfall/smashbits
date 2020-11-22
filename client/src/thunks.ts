@@ -220,6 +220,7 @@ export const thunkChangePageSize: AppThunkActionCreator = (size: PageSize) => {
 
 export const thunkSetStateFromUrlBar: AppThunkActionCreator = () => {
   return async (dispatch, getState) => {
+    // TODO: Refactor this to get all URL params in a single method call.
     dispatch(setPageSize(getPageSize(history.location.search)));
     dispatch(setOffset(getOffset(history.location.search)));
     dispatch(changeSort(getSort(history.location.search)));
