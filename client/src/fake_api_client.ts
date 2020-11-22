@@ -108,9 +108,9 @@ export const fakeApiClient = {
       if (filters.mainCharacters.size > 0) {
         if (!bit.mainChars) return false;
         if (
-          Array.from(filters.mainCharacters).filter(
-            (char) => bit.mainChars.indexOf(char.id) >= 0,
-          ).length === 0
+          !Array.from(filters.mainCharacters).find(
+            (char) => bit.mainChars.indexOf(char.id) >= 0
+          )
         ) {
           return false;
         }
@@ -119,9 +119,9 @@ export const fakeApiClient = {
       if (filters.labels.size > 0) {
         if (!bit.standaloneTags) return false;
         if (
-          Array.from(filters.labels).filter(
+          !Array.from(filters.labels).find(
             (label) => bit.standaloneTags.indexOf(label.id) >= 0,
-          ).length === 0
+          )
         ) {
           return false;
         }
@@ -130,9 +130,9 @@ export const fakeApiClient = {
       if (filters.vsCharacters.size > 0) {
         if (!bit.vsChars) return false;
         if (
-          Array.from(filters.vsCharacters).filter(
+          !Array.from(filters.vsCharacters).find(
             (char) => bit.vsChars.indexOf(char.id) >= 0,
-          ).length === 0
+          )
         ) {
           return false;
         }
@@ -141,9 +141,9 @@ export const fakeApiClient = {
       if (filters.stages.size > 0) {
         if (!bit.stages) return false;
         if (
-          Array.from(filters.stages).filter(
+          !Array.from(filters.stages).find(
             (stage) => bit.stages.indexOf(stage.id) >= 0,
-          ).length === 0
+          )
         ) {
           return false;
         }

@@ -1,3 +1,4 @@
+import { UnregisterCallback } from 'history';
 import * as React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { connect } from 'react-redux';
@@ -18,13 +19,19 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
 });
 
 class Home extends AppRouteComponent<typeof mapStateToProps> {
+  unregisterHistoryListener: UnregisterCallback;
+
   componentDidMount() {
     this.props.thunkSetStateFromUrlBar();
-    history.listen((location, action) => {
+    this.unregisterHistoryListener = history.listen((location, action) => {
       this.props.thunkSetStateFromUrlBar();
       this.props.thunkFetchBits();
     });
     this.props.thunkFetchBits(); // maybe get rid of this this looks wrong
+  }
+
+  componentWillUnmount() {
+    this.unregisterHistoryListener();
   }
 
   render() {
