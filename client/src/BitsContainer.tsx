@@ -14,7 +14,7 @@ const BitsContainer: AppFunctionComponent<InputProps, NOOP, NOOP> = (props) => {
   const { bits } = props;
   return (
     <div>
-      {bits.valueSeq().map((bit) => (
+      {bits?.valueSeq().map((bit) => (
         <Bit bit={bit} key={bit.postId} />
       ))}
     </div>
