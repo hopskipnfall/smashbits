@@ -18,17 +18,17 @@ import { CHARACTER_MAP, LABEL_MAP, STAGE_MAP } from './types';
 // export const PARAM_TO_CLIENT_SORT: { [key: string]: string } = { [queryParams.SORT_PARAM_DATE]: SORT_DATE, [queryParams.SORT_PARAM_SCORE]: SORT_SCORE };
 // export const CLIENT_SORT_TO_PARAM: { [key: string]: string } = { [SORT_DATE]: queryParams.SORT_PARAM_DATE, [SORT_SCORE]: queryParams.SORT_PARAM_SCORE };
 
-export const getDisplayQueryParams = (query: string) => {	
-  const queryMap = URI(query).query(true) as { [key: string]: string };	
-  return {	
-    ...queryMap[QUERY_SORT] && { sort: getSort(query) },	
-    ...queryMap[QUERY_LIMIT] && { pageSize: getPageSize(query) },	
-    ...queryMap[QUERY_OFFSET] && { offset: getOffset(query) },	
-    ...queryMap[QUERY_MAIN_CHARS] && { mainChars: getMainCharFilters(query) },	
-    ...queryMap[QUERY_VS_CHARS] && { vsChars: getVsCharFilters(query) },	
-    ...queryMap[QUERY_STAGES] && { stages: getStageFilters(query) },	
-    ...queryMap[QUERY_TAGS] && { standaloneTags: getTagFilters(query) },	
-  };	
+export const getDisplayQueryParams = (query: string) => {
+  const queryMap = URI(query).query(true) as { [key: string]: string };
+  return {
+    ...(queryMap[QUERY_SORT] && { sort: getSort(query) }),
+    ...(queryMap[QUERY_LIMIT] && { pageSize: getPageSize(query) }),
+    ...(queryMap[QUERY_OFFSET] && { offset: getOffset(query) }),
+    ...(queryMap[QUERY_MAIN_CHARS] && { mainChars: getMainCharFilters(query) }),
+    ...(queryMap[QUERY_VS_CHARS] && { vsChars: getVsCharFilters(query) }),
+    ...(queryMap[QUERY_STAGES] && { stages: getStageFilters(query) }),
+    ...(queryMap[QUERY_TAGS] && { standaloneTags: getTagFilters(query) }),
+  };
 };
 
 const queryStringToObject = (query: string) =>
@@ -60,8 +60,7 @@ const getStageFilters = (query: string) =>
 const getTagFilters = (query: string) =>
   paramStringToFilters(queryStringToObject(query)[QUERY_TAGS], LABEL_MAP);
 
-const getSort = (query: string) =>
-  queryStringToObject(query)[QUERY_SORT];
+const getSort = (query: string) => queryStringToObject(query)[QUERY_SORT];
 
 export const getPageSize = (query: string) =>
   parseInt(queryStringToObject(query)[QUERY_LIMIT], /*radix=*/ 10);

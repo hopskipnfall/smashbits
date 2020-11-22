@@ -5,7 +5,7 @@ import {
   apiCreateBit as createBitApi,
   apiFetchBit as fetchBitApi,
   apiFetchBits as fetchBitsApi,
-  apiFetchProfile
+  apiFetchProfile,
 } from './api_client';
 import { decorateBit } from './bits_util';
 import history from './history';
@@ -14,7 +14,7 @@ import {
   addOptimisticBit,
   changeVote,
   replaceBits,
-  setOptimisticBitStatus
+  setOptimisticBitStatus,
 } from './store/bits/actions';
 import {
   changeSort,
@@ -23,7 +23,7 @@ import {
   setOffset,
   setPageSize,
   setStages,
-  setVsCharacters
+  setVsCharacters,
 } from './store/filtering/actions';
 import { setProfile } from './store/profile/actions';
 import {
@@ -36,14 +36,13 @@ import {
   SortOption,
   Stage,
   Status,
-  Vote
+  Vote,
 } from './types';
 import {
   buildUriFromState,
   getDisplayQueryParams,
-
   getOffset,
-  getPageSize
+  getPageSize,
 } from './uri_util';
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>;
