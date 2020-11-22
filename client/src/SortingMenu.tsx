@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import { AppFunctionComponent, AppState } from './store';
@@ -17,6 +17,7 @@ const SortingMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
   const { currentSort, thunkChangeSort } = props;
   return (
     <DropdownButton
+      as={ButtonGroup}
       variant="info"
       title={`Sorting: ${currentSort}`}
       id="sorting-menu"

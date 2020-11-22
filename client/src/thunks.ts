@@ -37,7 +37,16 @@ import {
   Status,
   Vote,
 } from './types';
-import { buildUriFromState, getOffset, getPageSize } from './uri_util';
+import {
+  buildUriFromState,
+  getMainCharFilters,
+  getOffset,
+  getPageSize,
+  getSort,
+  getStageFilters,
+  getTagFilters,
+  getVsCharFilters,
+} from './uri_util';
 
 type AppThunkAction = ThunkAction<Promise<void>, AppState, null, AnyAction>;
 type AppThunkActionCreator = ActionCreator<AppThunkAction>;
@@ -206,5 +215,18 @@ export const thunkChangePageSize: AppThunkActionCreator = (size: PageSize) => {
     // TODO: IDK if this is necessary and stuff.
     history.push(buildUriFromState(getState()));
     dispatch(thunkFetchBits());
+  };
+};
+
+export const thunkSetStateFromUrlBar: AppThunkActionCreator = () => {
+  return async (dispatch, getState) => {
+    // TODO: Refactor this to get all URL params in a single method call.
+    dispatch(setPageSize(getPageSize(history.location.search)));
+    dispatch(setOffset(getOffset(history.location.search)));
+    dispatch(changeSort(getSort(history.location.search)));
+    dispatch(setMainCharacters(getMainCharFilters(history.location.search)));
+    dispatch(setVsCharacters(getVsCharFilters(history.location.search)));
+    dispatch(setStages(getStageFilters(history.location.search)));
+    dispatch(setLabels(getTagFilters(history.location.search)));
   };
 };
