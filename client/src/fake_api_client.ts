@@ -109,7 +109,7 @@ export const fakeApiClient = {
         if (!bit.mainChars) return false;
         if (
           !Array.from(filters.mainCharacters).find(
-            (char) => bit.mainChars.indexOf(char.id) >= 0
+            (char) => bit.mainChars.indexOf(char.id) >= 0,
           )
         ) {
           return false;
