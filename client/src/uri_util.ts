@@ -24,7 +24,7 @@ const queryStringToObject = (query: string) =>
 const paramStringToFilters = <V>(param: string, filterMap: Map<string, V>) =>
   new Set(
     param
-      .split(',')
+      ?.split(',')
       .map((id) => filterMap.get(id))
       .filter(isPresent),
   );

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import { ButtonGroup, Dropdown, DropdownButton } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { allActions } from './all_actions';
 import { AppFunctionComponent, AppState } from './store';
@@ -18,7 +18,12 @@ const PageSizeMenu: AppFunctionComponent<InputProps, typeof mapStateToProps> = (
   return (
     <span>
       Results per page:
-      <DropdownButton variant="info" title={`${pageSize}`} id="page-size-menu">
+      <DropdownButton
+        as={ButtonGroup}
+        variant="info"
+        title={`${pageSize}`}
+        id="page-size-menu"
+      >
         {PAGE_SIZES.map((size) => (
           <Dropdown.Item onSelect={() => thunkChangePageSize(size)} key={size}>
             {size}
