@@ -1,4 +1,4 @@
-import { DEFAULT_PAGE_SIZE } from '../../types';
+import { DEFAULT_PAGE_SIZE, DEFAULT_SORT } from '../../types';
 import {
   CHANGE_SORT,
   FilteringActionTypes,
@@ -12,7 +12,7 @@ import {
 } from './types';
 
 const initialState: FilteringState = {
-  sort: 'newest',
+  sort: DEFAULT_SORT,
   mainCharacters: new Set(),
   vsCharacters: new Set(),
   stages: new Set(),
@@ -27,19 +27,30 @@ export function filteringReducer(
 ): FilteringState {
   switch (action.type) {
     case CHANGE_SORT:
-      return { ...state, sort: action.sort };
+      return { ...state, ...(action.sort && { sort: action.sort }) };
     case SET_VS_CHARACTERS:
-      return { ...state, vsCharacters: action.characters };
+      return {
+        ...state,
+        ...(action.characters && { vsCharacters: action.characters }),
+      };
     case SET_MAIN_CHARACTERS:
-      return { ...state, mainCharacters: action.characters };
+      return {
+        ...state,
+        ...(action.characters && { mainCharacters: action.characters }),
+      };
     case SET_OFFSET:
-      return { ...state, offset: action.offset };
+      return { ...state, ...(action.offset && { offset: action.offset }) };
     case SET_STAGES:
-      return { ...state, stages: action.stageIds };
+      return { ...state, ...(action.stageIds && { stages: action.stageIds }) };
     case SET_LABELS:
-      return { ...state, labels: action.labels };
+      return { ...state, ...(action.labels && { labels: action.labels }) };
     case SET_PAGE_SIZE:
-      return { ...state, currentPageSize: action.currentPageSize };
+      return {
+        ...state,
+        ...(action.currentPageSize && {
+          currentPageSize: action.currentPageSize,
+        }),
+      };
     default:
       return state;
   }

@@ -13,11 +13,13 @@ const mapStateToProps = (state: AppState, ownProps: InputProps) => ({
 });
 
 class CreateBitButton extends AppComponent<InputProps, typeof mapStateToProps> {
-  componentDidMount() {
+  constructor(props: any) {
+    // TODO: Figure out strict typing for props.
+    super(props);
     // TODO: Make this typed somehow..
-    this.setState({
+    this.state = {
       show: false,
-    });
+    };
   }
 
   private show() {
