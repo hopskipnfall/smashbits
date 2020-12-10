@@ -14,10 +14,7 @@ function safeFetch(url: string, options?: any) {
   });
 }
 
-const BASE_URI =
-  process.env.NODE_ENV === 'production'
-    ? 'https://7mgkyv8jyg.execute-api.us-east-1.amazonaws.com/dev'
-    : 'http://localhost:3001';
+const BASE_URI = process.env.REACT_APP_API_URL ?? 'http://localhost:3001';
 const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
 const OAUTH_PATH = '/login';
