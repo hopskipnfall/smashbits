@@ -14,6 +14,7 @@ frontend:
     build:
       commands:
         - 'npm run build --prefix=client/'
+        - REACT_APP_API_URL=$REACT_APP_API_URL
   artifacts:
     baseDirectory: client/dist
     files:
