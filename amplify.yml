@@ -13,9 +13,9 @@ frontend:
         - 'cd client; npm install; cd -;'
     build:
       commands:
-        - 'npm run build --prefix=client/'
+        - echo "" >> client/.env
         - echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> client/.env
-        - cat client/.env
+        - 'npm run build --prefix=client/'
   artifacts:
     baseDirectory: client/dist
     files:
