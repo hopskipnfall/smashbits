@@ -56,5 +56,6 @@ module.exports = {
       favicon: 'static/favicon.ico',
     }),
     new Dotenv(),
+    new webpack.EnvironmentPlugin(['REACT_APP_API_URL']),
   ],
 };
