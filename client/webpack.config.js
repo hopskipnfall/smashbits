@@ -1,6 +1,5 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
-const webpack = require('webpack');
 
 module.exports = {
   entry: './src/index.tsx',
@@ -57,6 +56,5 @@ module.exports = {
       favicon: 'static/favicon.ico',
     }),
     new Dotenv(),
-    // new webpack.EnvironmentPlugin(['VARIABLE_NAME_1']),
   ],
 };

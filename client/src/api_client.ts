@@ -30,7 +30,6 @@ export function apiFetchBits(filters: FilteringState): Promise<Bit[]> {
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeApiClient.fetchBits(filters);
   } else {
-    console.log(`REACT_APP_API_URL: ${process.env.REACT_APP_API_URL}`);
     fetchPromise = safeFetch(
       new URI(BASE_URI)
         .path(BITS_PATH)
