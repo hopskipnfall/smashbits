@@ -32,7 +32,7 @@ export function apiFetchBits(filters: FilteringState): Promise<Bit[]> {
   } else {
     fetchPromise = safeFetch(
       new URI(BASE_URI)
-        .path(BITS_PATH)
+        .segment(BITS_PATH)
         .query(history.location.search)
         .toString(),
     ).catch((error) => {
