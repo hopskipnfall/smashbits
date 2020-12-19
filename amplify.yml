@@ -15,6 +15,7 @@ frontend:
       commands:
         # This needs to be done before the build step because .env is loaded by Webpack.
         - echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> client/.env
+        - cat client/.env
         - 'npm run build --prefix=client/'
   artifacts:
     baseDirectory: client/dist
