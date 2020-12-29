@@ -8,6 +8,7 @@ import * as passport from 'passport';
 import * as TwitterStrategy from 'passport-twitter';
 import * as serverless from 'serverless-http';
 import 'source-map-support/register';
+import * as URI from 'urijs';
 import { createBit, getBit, getBits, getComments } from './src/bits';
 import { connect, getConnection } from './src/db/db';
 import { putTwitterUser, queryUser } from './src/store';
@@ -21,7 +22,10 @@ passport.use(
     {
       consumerKey: `${process.env.TWITTER_API_KEY}`,
       consumerSecret: `${process.env.TWITTER_API_SECRET_KEY}`,
-      callback: `${process.env.BASE_SERVER_URL}/oauth/twitter/callback`,
+      // Uncomment to use localhost callback in testing.
+      // TODO: Use Serverless stages to set this.
+      // callbackURL: `${process.env.BASE_SERVER_URL}/oauth/twitter/callback`;
+      callbackURL: 'https://h0fhui0i48.execute-api.us-east-1.amazonaws.com/dev/oauth/twitter/callback',
     },
     async (token, tokenSecret, profile, cb) => {
       // If the user isn't already in the DB, add them.
@@ -53,7 +57,7 @@ app.use(
     secret:
       `${process.env.SESSION_SECRET}` || crypto.randomBytes(20).toString('hex'),
     store: new MongoStore({ mongooseConnection: getConnection() }),
-    cookie: { secure: false },
+    cookie: { secure: true, sameSite: 'none' },
   }),
 );
 app.use(passport.initialize());
@@ -112,17 +116,21 @@ app.get('/bits/:bitId/comments', (req, res) => {
   res.send(JSON.stringify(getComments(req.params)));
 });
 
-app.get('/login/twitter', passport.authenticate('twitter'));
+app.get('/login/twitter', 
+(req, res, next) => {
+  // Success should redirect to the original client base URL.
+  req.session.returnTo = new URI(req.get('Referrer')).path('').query('?success=true').toString();
+  next();
+},
+passport.authenticate('twitter'));
 
 app.get(
   '/oauth/twitter/callback',
   passport.authenticate('twitter', {
-    failureRedirect: `${process.env.BASE_CLIENT_URL}?success=false`,
-    successRedirect: `${process.env.BASE_CLIENT_URL}?success=true`,
+    // TODO: These alternate paths don't actually work because they resolve to server-local URLs.
+    failureRedirect: '/?success=false',
+    successReturnToOrRedirect: '/?success=true',
   }),
-  (req, res) => {
-    res.redirect('/');
-  },
 );
 
 app.get('/profile', (req, res) => {

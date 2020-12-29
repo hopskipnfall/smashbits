@@ -1,4 +1,4 @@
-import uuid from 'uuid';
+import * as uuid from 'uuid';
 import User from './User';
 
 export function queryUser({ id, twitterId } = {}) {
