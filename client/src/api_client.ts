@@ -32,7 +32,7 @@ export function apiFetchBits(filters: FilteringState): Promise<Bit[]> {
   } else {
     fetchPromise = safeFetch(
       new URI(BASE_URI)
-        .path(BITS_PATH)
+        .segment(BITS_PATH)
         .query(history.location.search)
         .toString(),
     ).catch((error) => {
@@ -94,7 +94,7 @@ export function apiCreateBit(bit: Bit, dispatch: Dispatch) {
     console.log('POSTING BIT', bit);
     fetchPromise = fakeApiClient.createBit(bit);
   } else {
-    fetchPromise = safeFetch(new URI(BASE_URI).path(BITS_PATH).toString(), {
+    fetchPromise = safeFetch(new URI(BASE_URI).segment(BITS_PATH).toString(), {
       body: JSON.stringify({ bit: transformBitForRequest(bit) }),
       headers: {
         'content-type': 'application/json',
@@ -119,7 +119,7 @@ export function initTwitterLogin() {
     history.push('/?success=true');
   } else {
     window.location.href = new URI(BASE_URI)
-      .path(OAUTH_PATH + TWITTER_PATH)
+      .segment(OAUTH_PATH + TWITTER_PATH)
       .toString();
   }
 }
@@ -129,7 +129,7 @@ export function apiFetchProfile(): Promise<Profile> {
   if (USE_FAKE_CLIENT) {
     fetchPromise = fakeApiClient.fetchProfile();
   } else {
-    fetchPromise = safeFetch(new URI(BASE_URI).path(PROFILE_PATH).toString())
+    fetchPromise = safeFetch(new URI(BASE_URI).segment(PROFILE_PATH).toString())
       .then((result) => result.json())
       .catch((error) => {
         console.log('Error fetching profile', error);
