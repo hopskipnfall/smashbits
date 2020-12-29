@@ -25,7 +25,8 @@ passport.use(
       // Uncomment to use localhost callback in testing.
       // TODO: Use Serverless stages to set this.
       // callbackURL: `${process.env.BASE_SERVER_URL}/oauth/twitter/callback`;
-      callbackURL: 'https://h0fhui0i48.execute-api.us-east-1.amazonaws.com/dev/oauth/twitter/callback',
+      callbackURL:
+        'https://h0fhui0i48.execute-api.us-east-1.amazonaws.com/dev/oauth/twitter/callback',
     },
     async (token, tokenSecret, profile, cb) => {
       // If the user isn't already in the DB, add them.
@@ -121,13 +122,18 @@ app.get('/bits/:bitId/comments', (req, res) => {
   res.send(JSON.stringify(getComments(req.params)));
 });
 
-app.get('/login/twitter', 
-(req, res, next) => {
-  // Success should redirect to the original client base URL.
-  req.session.returnTo = new URI(req.get('Referrer')).path('').query('?success=true').toString();
-  next();
-},
-passport.authenticate('twitter'));
+app.get(
+  '/login/twitter',
+  (req, res, next) => {
+    // Success should redirect to the original client base URL.
+    req.session.returnTo = new URI(req.get('Referrer'))
+      .path('')
+      .query('?success=true')
+      .toString();
+    next();
+  },
+  passport.authenticate('twitter'),
+);
 
 app.get(
   '/oauth/twitter/callback',
