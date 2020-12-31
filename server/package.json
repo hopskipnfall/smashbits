@@ -69,7 +69,7 @@
     "serverless": "^1.67.0",
     "serverless-http": "^1.5.2",
     "source-map-support": "^0.5.19",
-    "urijs": "^1.19.2",
+    "urijs": "^1.19.4",
     "uuid": "^3.2.1"
   }
 }
