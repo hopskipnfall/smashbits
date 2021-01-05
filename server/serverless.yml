@@ -2,10 +2,17 @@ service: smashbits
 
 plugins:
   - serverless-plugin-typescript
+  - serverless-domain-manager
   - serverless-offline # serverless-offline needs to be last in the list
 
 # Enable auto-packing of external modules
 custom:
+  customDomain:
+    domainName: api.smashbits.dev
+    basePath: ''
+    stage: ${self:provider.stage}
+    certificateName: '*.smashbits.dev'
+    createRoute53Record: true
   serverless-offline:
     httpPort: 3001
     noPrependStageInUrl: true # GET /bits instead of GET /dev/bits
