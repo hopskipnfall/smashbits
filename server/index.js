@@ -26,7 +26,7 @@ passport.use(
       // TODO: Use Serverless stages to set this.
       // callbackURL: `${process.env.BASE_SERVER_URL}/oauth/twitter/callback`;
       callbackURL:
-        'https://h0fhui0i48.execute-api.us-east-1.amazonaws.com/dev/oauth/twitter/callback',
+        'https://api.smashbits.dev/oauth/twitter/callback',
     },
     async (token, tokenSecret, profile, cb) => {
       // If the user isn't already in the DB, add them.
@@ -76,7 +76,9 @@ passport.deserializeUser((id, cb) => {
 
 app.use(
   cors({
-    origin: [process.env.BASE_CLIENT_URL],
+    // Since the client and API might be on different subdomains, we need to explicitly allow
+    // smashbits.dev.
+    origin: [process.env.BASE_CLIENT_URL, /\.smashbits\.dev$/],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // allow session cookie from browser to pass through
   }),
