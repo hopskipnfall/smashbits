@@ -77,7 +77,7 @@ passport.deserializeUser((id, cb) => {
 app.use(
   cors({
     // Since the client and API might be on different subdomains, we need to explicitly allow
-    // smashbits.dev.
+    // *.smashbits.dev.
     origin: [process.env.BASE_CLIENT_URL, /\.smashbits\.dev$/],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // allow session cookie from browser to pass through
