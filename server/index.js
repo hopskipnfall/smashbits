@@ -58,9 +58,7 @@ app.use(
     secret:
       `${process.env.SESSION_SECRET}` || crypto.randomBytes(20).toString('hex'),
     store: new MongoStore({ mongooseConnection: getConnection() }),
-    // As long as the client and API are on different domains, we need sameSite: none.
-    // TODO: Remove this once we start hosting the API on smashbits.dev.
-    cookie: { secure: true, sameSite: 'none' },
+    cookie: { secure: true },
   }),
 );
 app.use(passport.initialize());
@@ -78,10 +76,7 @@ passport.deserializeUser((id, cb) => {
 
 app.use(
   cors({
-    // As long as the client and API are on different domains, we need to explicitly allow
-    // smashbits.dev.
-    // TODO: Remove this once we start hosting the API on smashbits.dev.
-    origin: [process.env.BASE_CLIENT_URL, /\.smashbits\.dev$/],
+    origin: [process.env.BASE_CLIENT_URL],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // allow session cookie from browser to pass through
   }),

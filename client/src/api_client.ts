@@ -14,7 +14,7 @@ function safeFetch(url: string, options?: any) {
   });
 }
 
-const BASE_URI = process.env.REACT_APP_API_URL ?? 'http://localhost:3001';
+const BASE_URI = 'https://api.smashbits.dev';
 const BITS_PATH = '/bits';
 const COMMENTS_PATH = '/comments';
 const OAUTH_PATH = '/login';
