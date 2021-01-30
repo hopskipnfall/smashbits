@@ -74,8 +74,7 @@ export interface AppFunctionComponent<
   InputParams,
   StateToProps extends (...args: any) => any,
   ComponentState = {}
->
-  extends FunctionComponent<
+> extends FunctionComponent<
     InputParams & ReturnType<StateToProps> & ConnectedProps<typeof connector>
   > {}
 
