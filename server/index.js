@@ -135,7 +135,6 @@ app.get(
 app.get(
   '/oauth/twitter/callback',
   passport.authenticate('twitter', {
-    // TODO: These alternate paths don't actually work because they resolve to server-local URLs.
     failureRedirect: '/?success=false',
     successReturnToOrRedirect: '/?success=true',
   }),
