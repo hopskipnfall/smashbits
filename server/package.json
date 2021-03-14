@@ -47,8 +47,7 @@
     "serverless-webpack": "^5.3.5",
     "ts-loader": "^8.0.18",
     "typescript": "^3.9.7",
-    "webpack": "^5.25.0",
-    "webpack-node-externals": "^2.5.2"
+    "webpack": "^5.25.0"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",

@@ -27,9 +27,6 @@ const serverless = require('serverless-http');
 const URI = require('urijs');
 
 const ConnectMongo = require('connect-mongo');
-// const { putTwitterUser, queryUser } = require('./src/store');
-// const { connect, getConnection } = require('./src/db/db');
-// const { createBit, getBit, getBits, getComments } = require('./src/bits');
 
 connect();
 // Prepare the connection between Mongo and express-session.
@@ -58,8 +55,6 @@ passport.use(
 );
 
 const app = express();
-console.log(`thenuge express.json: ${express.json}`);
-console.log(`thenuge express: ${express}`);
 app.use(express.json()); // support encoded JSON
 app.use(express.urlencoded({ extended: true })); // support encoded bodies
 // Security middleware, but keep client-side caching.
