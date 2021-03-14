@@ -1,32 +1,17 @@
-// import ConnectMongo from 'connect-mongo';
-// import cors from 'cors';
-// import crypto from 'crypto';
-// import express, { json, urlencoded } from 'express';
-// import session from 'express-session';
-// import helmet from 'helmet';
-// import passport from 'passport';
-// import TwitterStrategy from 'passport-twitter';
-// import serverless from 'serverless-http';
-// import 'source-map-support/register';
-// import URI from 'urijs';
+import ConnectMongo from 'connect-mongo';
+import cors from 'cors';
+import crypto from 'crypto';
+import express from 'express';
+import session from 'express-session';
+import helmet from 'helmet';
+import passport from 'passport';
+import { Strategy as TwitterStrategy } from 'passport-twitter';
+import serverless from 'serverless-http';
+import 'source-map-support/register';
+import URI from 'urijs';
 import { createBit, getBit, getBits, getComments } from './src/bits';
 import { connect, getConnection } from './src/db/db';
 import { putTwitterUser, queryUser } from './src/store';
-
-const express = require('express');
-// const { json, urlencoded } = require('express');
-require('source-map-support/register');
-
-const cors = require('cors');
-const crypto = require('crypto');
-const session = require('express-session');
-const helmet = require('helmet');
-const passport = require('passport');
-const TwitterStrategy = require('passport-twitter');
-const serverless = require('serverless-http');
-const URI = require('urijs');
-
-const ConnectMongo = require('connect-mongo');
 
 connect();
 // Prepare the connection between Mongo and express-session.
@@ -78,11 +63,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser((user, cb) => {
+passport.serializeUser((user: any, cb) => {
   cb(null, user.id);
 });
 
-passport.deserializeUser((id, cb) => {
+passport.deserializeUser((id: string, cb) => {
   queryUser({ id })
     .then((user) => cb(null, user))
     .catch((e) => cb(new Error('Failed to deserialize a user')));
@@ -107,7 +92,8 @@ app.get('/bits', (req, res) => {
 
 app.post('/bits', (req, res) => {
   if (!req.user) {
-    res.status(401).setHeader('WWW-Authenticate', 'Bearer').send();
+    res.status(401).setHeader('WWW-Authenticate', 'Bearer');
+    res.send();
     return;
   }
   res.setHeader('Access-Control-Expose-Headers', 'location');
@@ -136,6 +122,11 @@ app.get('/bits/:bitId/comments', (req, res) => {
 app.get(
   '/login/twitter',
   (req, res, next) => {
+    if (!req.session) {
+      res.status(401).setHeader('WWW-Authenticate', 'Bearer');
+      res.send();
+      return;
+    }
     // Success should redirect to the original client base URL.
     req.session.returnTo = new URI(req.get('Referrer'))
       .path('')

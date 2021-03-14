@@ -6,8 +6,8 @@
     "target": "es2019",
     "module": "commonjs",
     "noImplicitAny": false, // TODO: Remove this
-    // "esModuleInterop": true,
-    // "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
     "lib": ["es2020"],
     "rootDir": "./"
