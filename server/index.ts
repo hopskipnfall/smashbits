@@ -43,13 +43,7 @@ const app = express();
 app.use(express.json()); // support encoded JSON
 app.use(express.urlencoded({ extended: true })); // support encoded bodies
 // Security middleware, but keep client-side caching.
-app.use(
-  helmet({
-    noCache: {
-      action: 'deny',
-    },
-  }),
-);
+app.use(helmet());
 app.use(
   session({
     // If the environment var wasn't set, fall back to a randomly generated secret.
@@ -69,15 +63,15 @@ passport.serializeUser((user: any, cb) => {
 
 passport.deserializeUser((id: string, cb) => {
   queryUser({ id })
-    .then((user) => cb(null, user))
-    .catch((e) => cb(new Error('Failed to deserialize a user')));
+    .then((user: any) => cb(null, user))
+    .catch((e: any) => cb(new Error('Failed to deserialize a user')));
 });
 
 app.use(
   cors({
     // Since the client and API might be on different subdomains, we need to explicitly allow
     // *.smashbits.dev.
-    origin: [process.env.BASE_CLIENT_URL, /\.smashbits\.dev$/],
+    origin: [...(process.env.BASE_CLIENT_URL || []), /\.smashbits\.dev$/],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // allow session cookie from browser to pass through
   }),

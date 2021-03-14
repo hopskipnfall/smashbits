@@ -5,7 +5,6 @@
     "allowJs": true, // allow a partial TypeScript and JavaScript codebase
     "target": "es2019",
     "module": "commonjs",
-    "noImplicitAny": false, // TODO: Remove this
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
