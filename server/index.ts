@@ -1,17 +1,35 @@
-import * as ConnectMongo from 'connect-mongo';
-import * as cors from 'cors';
-import crypto from 'crypto';
-import * as express from 'express';
-import * as session from 'express-session';
-import * as helmet from 'helmet';
-import * as passport from 'passport';
-import * as TwitterStrategy from 'passport-twitter';
-import * as serverless from 'serverless-http';
-import 'source-map-support/register';
-import * as URI from 'urijs';
+// import ConnectMongo from 'connect-mongo';
+// import cors from 'cors';
+// import crypto from 'crypto';
+// import express, { json, urlencoded } from 'express';
+// import session from 'express-session';
+// import helmet from 'helmet';
+// import passport from 'passport';
+// import TwitterStrategy from 'passport-twitter';
+// import serverless from 'serverless-http';
+// import 'source-map-support/register';
+// import URI from 'urijs';
 import { createBit, getBit, getBits, getComments } from './src/bits';
 import { connect, getConnection } from './src/db/db';
 import { putTwitterUser, queryUser } from './src/store';
+
+const express = require('express');
+// const { json, urlencoded } = require('express');
+require('source-map-support/register');
+
+const cors = require('cors');
+const crypto = require('crypto');
+const session = require('express-session');
+const helmet = require('helmet');
+const passport = require('passport');
+const TwitterStrategy = require('passport-twitter');
+const serverless = require('serverless-http');
+const URI = require('urijs');
+
+const ConnectMongo = require('connect-mongo');
+// const { putTwitterUser, queryUser } = require('./src/store');
+// const { connect, getConnection } = require('./src/db/db');
+// const { createBit, getBit, getBits, getComments } = require('./src/bits');
 
 connect();
 // Prepare the connection between Mongo and express-session.
@@ -25,8 +43,7 @@ passport.use(
       // Uncomment to use localhost callback in testing.
       // TODO: Use Serverless stages to set this.
       // callbackURL: `${process.env.BASE_SERVER_URL}/oauth/twitter/callback`;
-      callbackURL:
-        'https://api.smashbits.dev/oauth/twitter/callback',
+      callbackURL: 'https://api.smashbits.dev/oauth/twitter/callback',
     },
     async (token, tokenSecret, profile, cb) => {
       // If the user isn't already in the DB, add them.
@@ -41,6 +58,8 @@ passport.use(
 );
 
 const app = express();
+console.log(`thenuge express.json: ${express.json}`);
+console.log(`thenuge express: ${express}`);
 app.use(express.json()); // support encoded JSON
 app.use(express.urlencoded({ extended: true })); // support encoded bodies
 // Security middleware, but keep client-side caching.

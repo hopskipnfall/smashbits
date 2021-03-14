@@ -3,15 +3,18 @@
   "compilerOptions": {
     "preserveConstEnums": true,
     "allowJs": true, // allow a partial TypeScript and JavaScript codebase
-    "target": "es5",
+    "target": "es2019",
     "module": "commonjs",
-    "outDir": ".build",
+    "noImplicitAny": false, // TODO: Remove this
+    // "esModuleInterop": true,
+    // "allowSyntheticDefaultImports": true,
+    //"outDir": ".build",
     "moduleResolution": "node",
-    "lib": ["es2015"],
+    "lib": ["es2020"],
     "rootDir": "./"
   },
   "include": [
-    "index.js",
+    "index.ts",
     "./src/",
     "../shared/",
     // Dumb but we have to put it here for linting.. Maybe we can move this to a different project.

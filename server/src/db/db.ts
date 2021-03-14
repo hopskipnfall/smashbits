@@ -1,12 +1,12 @@
-import * as Mongoose from 'mongoose';
+import * as mongoose from 'mongoose';
 
-let db: Mongoose.Connection;
+let db: mongoose.Connection;
 
 export const connect = () => {
   if (db) return;
 
-  Mongoose.connect(process.env.STORE_URI!);
-  db = Mongoose.connection;
+  mongoose.connect(process.env.STORE_URI!);
+  db = mongoose.connection;
 
   db.once('open', async () => {
     console.log('Connected to database');
@@ -20,7 +20,7 @@ export const connect = () => {
 export const disconnect = () => {
   if (!db) return;
 
-  Mongoose.disconnect();
+  mongoose.disconnect();
 };
 
-export const getConnection = (): Mongoose.Connection => db;
+export const getConnection = (): mongoose.Connection => db;
