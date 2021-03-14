@@ -23,6 +23,3 @@ export function putTwitterUser(profile) {
       .catch((err) => reject(err));
   });
 }
-
-exports.queryUser = queryUser;
-exports.putTwitterUser = putTwitterUser;

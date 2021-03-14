@@ -44,8 +44,6 @@
     "chai-immutable": "^1.6.0",
     "mocha": "^3.5.0",
     "serverless-domain-manager": "^5.1.0",
-    "serverless-plugin-include-dependencies": "^4.1.0",
-    "serverless-plugin-typescript": "^1.1.9",
     "serverless-webpack": "^5.3.5",
     "ts-loader": "^8.0.18",
     "typescript": "^3.9.7",
