@@ -25,8 +25,7 @@ passport.use(
       // Uncomment to use localhost callback in testing.
       // TODO: Use Serverless stages to set this.
       // callbackURL: `${process.env.BASE_SERVER_URL}/oauth/twitter/callback`;
-      callbackURL:
-        'https://api.smashbits.dev/oauth/twitter/callback',
+      callbackURL: 'https://api.smashbits.dev/oauth/twitter/callback',
     },
     async (token, tokenSecret, profile, cb) => {
       // If the user isn't already in the DB, add them.
