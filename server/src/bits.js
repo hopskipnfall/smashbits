@@ -1,4 +1,4 @@
-import * as jsStringEscape from 'js-string-escape';
+import jsStringEscape from 'js-string-escape';
 import { BitsModel } from './db/bits/bits.schema';
 import * as query from './shared/query_params';
 import {

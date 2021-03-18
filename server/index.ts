@@ -1,14 +1,14 @@
-import * as ConnectMongo from 'connect-mongo';
-import * as cors from 'cors';
+import ConnectMongo from 'connect-mongo';
+import cors from 'cors';
 import crypto from 'crypto';
-import * as express from 'express';
-import * as session from 'express-session';
-import * as helmet from 'helmet';
-import * as passport from 'passport';
-import * as TwitterStrategy from 'passport-twitter';
-import * as serverless from 'serverless-http';
+import express from 'express';
+import session from 'express-session';
+import helmet from 'helmet';
+import passport from 'passport';
+import { Strategy as TwitterStrategy } from 'passport-twitter';
+import serverless from 'serverless-http';
 import 'source-map-support/register';
-import * as URI from 'urijs';
+import URI from 'urijs';
 import { createBit, getBit, getBits, getComments } from './src/bits';
 import { connect, getConnection } from './src/db/db';
 import { putTwitterUser, queryUser } from './src/store';
@@ -43,13 +43,7 @@ const app = express();
 app.use(express.json()); // support encoded JSON
 app.use(express.urlencoded({ extended: true })); // support encoded bodies
 // Security middleware, but keep client-side caching.
-app.use(
-  helmet({
-    noCache: {
-      action: 'deny',
-    },
-  }),
-);
+app.use(helmet());
 app.use(
   session({
     // If the environment var wasn't set, fall back to a randomly generated secret.
@@ -63,21 +57,21 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-passport.serializeUser((user, cb) => {
+passport.serializeUser((user: any, cb) => {
   cb(null, user.id);
 });
 
-passport.deserializeUser((id, cb) => {
+passport.deserializeUser((id: string, cb) => {
   queryUser({ id })
-    .then((user) => cb(null, user))
-    .catch((e) => cb(new Error('Failed to deserialize a user')));
+    .then((user: any) => cb(null, user))
+    .catch((e: any) => cb(new Error('Failed to deserialize a user')));
 });
 
 app.use(
   cors({
     // Since the client and API might be on different subdomains, we need to explicitly allow
     // *.smashbits.dev.
-    origin: [process.env.BASE_CLIENT_URL, /\.smashbits\.dev$/],
+    origin: [...(process.env.BASE_CLIENT_URL || []), /\.smashbits\.dev$/],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true, // allow session cookie from browser to pass through
   }),
@@ -92,7 +86,8 @@ app.get('/bits', (req, res) => {
 
 app.post('/bits', (req, res) => {
   if (!req.user) {
-    res.status(401).setHeader('WWW-Authenticate', 'Bearer').send();
+    res.status(401).setHeader('WWW-Authenticate', 'Bearer');
+    res.send();
     return;
   }
   res.setHeader('Access-Control-Expose-Headers', 'location');
@@ -121,6 +116,11 @@ app.get('/bits/:bitId/comments', (req, res) => {
 app.get(
   '/login/twitter',
   (req, res, next) => {
+    if (!req.session) {
+      res.status(401).setHeader('WWW-Authenticate', 'Bearer');
+      res.send();
+      return;
+    }
     // Success should redirect to the original client base URL.
     req.session.returnTo = new URI(req.get('Referrer'))
       .path('')
