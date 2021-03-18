@@ -1,7 +1,7 @@
 import * as uuid from 'uuid';
 import User from './User';
 
-export function queryUser({ id, twitterId } = {}) {
+export function queryUser({ id = '', twitterId = '' } = {}) {
   if (id) {
     return User.findOne({ id }).exec();
   }
