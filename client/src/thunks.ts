@@ -201,6 +201,7 @@ export const thunkFetchProfile: AppThunkActionCreator = () => {
 export const thunkChangeSort: AppThunkActionCreator = (sort: SortOption) => {
   return async (dispatch, getState) => {
     dispatch(changeSort(sort));
+    dispatch(setOffset(0));
     history.push(buildUriFromState(getState()));
     dispatch(thunkFetchBits());
   };
