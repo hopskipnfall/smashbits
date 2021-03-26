@@ -8,7 +8,6 @@
     "noImplicitAny": true, // disallow implicit any type
     "moduleResolution": "node",
     "preserveConstEnums": true
-    // "rootDir": "./",
   },
   "include": [".eslintrc.js"]
 }

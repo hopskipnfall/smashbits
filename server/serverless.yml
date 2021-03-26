@@ -1,12 +1,16 @@
+org: smashbits
+app: smashbits
 service: smashbits
 
 plugins:
-  - serverless-plugin-typescript
+  - serverless-webpack
   - serverless-domain-manager
   - serverless-offline # serverless-offline needs to be last in the list
 
-# Enable auto-packing of external modules
 custom:
+  webpack:
+    webpackConfig: ./webpack.config.js
+    includeModules: true
   customDomain:
     domainName: api.smashbits.dev
     basePath: ''
