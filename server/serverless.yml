@@ -25,7 +25,7 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev # Default stage when deploying is dev
+  stage: dev # Default stage when deploying
   region: us-east-1
   environment:
     STORE_URI: ${param:STORE_URI, ${file(./secret/config.${self:custom.stage}.yml):storeUri}}
