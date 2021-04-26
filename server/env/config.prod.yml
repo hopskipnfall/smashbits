@@ -1,2 +1,2 @@
-baseClientUrl: http://localhost:8080
-baseServerUrl: http://localhost:3001
+baseClientUrl: https://smashbits.dev
+baseServerUrl: https://api.smashbits.dev

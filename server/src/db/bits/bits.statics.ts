@@ -8,7 +8,11 @@
 
 import { Model } from 'mongoose';
 import * as uuid from 'uuid';
-import { SORT_PARAM_DATE, SORT_PARAM_SCORE } from '../../shared/query_params';
+import {
+  SORT_PARAM_NEWEST,
+  SORT_PARAM_OLDEST,
+  SORT_PARAM_SCORE,
+} from '../../shared/query_params';
 import { Bit, BitDocument } from './bits.schema';
 
 const DEFAULT_PAGE_SIZE = 25;
@@ -50,7 +54,7 @@ const buildFilters = (
 /** Searches bits table. */
 export function queryBits(
   this: AbbreviatedModel,
-  sort = SORT_PARAM_DATE,
+  sort = SORT_PARAM_NEWEST,
   offset = 0,
   limit = DEFAULT_PAGE_SIZE,
   mainChars: string[] = [],
@@ -72,7 +76,10 @@ export function queryBits(
         score: { $subtract: ['$upvotes', '$downvotes'] },
       });
       break;
-    case SORT_PARAM_DATE:
+    case SORT_PARAM_OLDEST:
+      sortParams = { dateCreated: 1 };
+      break;
+    case SORT_PARAM_NEWEST:
     default:
       sortParams = { dateCreated: -1 };
       break;

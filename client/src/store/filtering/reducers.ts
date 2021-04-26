@@ -39,7 +39,7 @@ export function filteringReducer(
         ...(action.characters && { mainCharacters: action.characters }),
       };
     case SET_OFFSET:
-      return { ...state, ...(action.offset && { offset: action.offset }) };
+      return { ...state, ...{ offset: action.offset } };
     case SET_STAGES:
       return { ...state, ...(action.stageIds && { stages: action.stageIds }) };
     case SET_LABELS:

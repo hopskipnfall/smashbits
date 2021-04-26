@@ -8,13 +8,14 @@ plugins:
   - serverless-offline # serverless-offline needs to be last in the list
 
 custom:
+  stage: ${opt:stage, self:provider.stage}
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
   customDomain:
     domainName: api.smashbits.dev
     basePath: ''
-    stage: ${self:provider.stage}
+    stage: ${self:custom.stage}
     certificateName: '*.smashbits.dev'
     createRoute53Record: true
   serverless-offline:
@@ -24,15 +25,20 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
-  stage: dev
+  stage: dev # Default stage when deploying
   region: us-east-1
   environment:
-    STORE_URI: ${file(./secret/config.${self:provider.stage}.yml):storeUri}
-    BASE_SERVER_URL: ${file(./env/config.${self:provider.stage}.yml):baseServerUrl}
-    BASE_CLIENT_URL: ${file(./env/config.${self:provider.stage}.yml):baseClientUrl}
-    TWITTER_API_KEY: ${file(./secret/config.${self:provider.stage}.yml):twitterApiKey}
-    TWITTER_API_SECRET_KEY: ${file(./secret/config.${self:provider.stage}.yml):twitterApiSecretKey}
-    SESSION_SECRET: ${file(./secret/config.${self:provider.stage}.yml):sessionSecret}
+    STORE_URI: ${param:STORE_URI, ${file(./secret/config.${self:custom.stage}.yml):storeUri}}
+    BASE_SERVER_URL: ${param:BASE_SERVER_URL,
+        ${file(./env/config.${self:custom.stage}.yml):baseServerUrl}}
+    BASE_CLIENT_URL: ${param:BASE_CLIENT_URL,
+        ${file(./env/config.${self:custom.stage}.yml):baseClientUrl}}
+    TWITTER_API_KEY: ${param:TWITTER_API_KEY,
+        ${file(./secret/config.${self:custom.stage}.yml):twitterApiKey}}
+    TWITTER_API_SECRET_KEY: ${param:TWITTER_API_SECRET_KEY,
+        ${file(./secret/config.${self:custom.stage}.yml):twitterApiSecretKey}}
+    SESSION_SECRET: ${param:SESSION_SECRET,
+        ${file(./secret/config.${self:custom.stage}.yml):sessionSecret}}
 
 functions:
   app:
