@@ -7,7 +7,11 @@ import {
   getTagFilters,
 } from './shared/query_util';
 
-const SORTS = [query.SORT_PARAM_DATE, query.SORT_PARAM_SCORE];
+const SORTS = [
+  query.SORT_PARAM_NEWEST,
+  query.SORT_PARAM_OLDEST,
+  query.SORT_PARAM_SCORE,
+];
 
 export function getBit(req) {
   return BitsModel.findOne({ postId: req.params.bitId });
@@ -17,7 +21,7 @@ const normalize = (string) => string.trim().toLowerCase();
 
 const paramToSort = (param) => {
   const normalized = normalize(jsStringEscape(param));
-  return SORTS.includes(normalized) ? normalized : query.SORT_PARAM_DATE;
+  return SORTS.includes(normalized) ? normalized : query.SORT_PARAM_NEWEST;
 };
 
 export function getBits(req) {
