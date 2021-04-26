@@ -101,6 +101,7 @@ export const thunkSetMainChars: AppThunkActionCreator = (
 ) => {
   return async (dispatch, getState) => {
     dispatch(setMainCharacters(characters));
+    dispatch(setOffset(0));
     history.push(buildUriFromState(getState()));
     dispatch(thunkFetchBits());
   };
@@ -121,6 +122,7 @@ export const thunkSetVsChars: AppThunkActionCreator = (
 ) => {
   return async (dispatch, getState) => {
     dispatch(setVsCharacters(characters));
+    dispatch(setOffset(0));
     history.push(buildUriFromState(getState()));
     dispatch(thunkFetchBits());
   };
@@ -139,6 +141,7 @@ export const thunkToggleStage: AppThunkActionCreator = (stageId: Stage) => {
 export const thunkSetStages: AppThunkActionCreator = (stageIds: Set<Stage>) => {
   return async (dispatch, getState) => {
     dispatch(setStages(stageIds));
+    dispatch(setOffset(0));
     history.push(buildUriFromState(getState()));
     dispatch(thunkFetchBits());
   };
@@ -157,6 +160,7 @@ export const thunkToggleLabel: AppThunkActionCreator = (labelId: Label) => {
 export const thunkSetLabels: AppThunkActionCreator = (labels: Set<Label>) => {
   return async (dispatch, getState) => {
     dispatch(setLabels(labels));
+    dispatch(setOffset(0));
     history.push(buildUriFromState(getState()));
     dispatch(thunkFetchBits());
   };
@@ -201,6 +205,7 @@ export const thunkFetchProfile: AppThunkActionCreator = () => {
 export const thunkChangeSort: AppThunkActionCreator = (sort: SortOption) => {
   return async (dispatch, getState) => {
     dispatch(changeSort(sort));
+    dispatch(setOffset(0));
     history.push(buildUriFromState(getState()));
     dispatch(thunkFetchBits());
   };
