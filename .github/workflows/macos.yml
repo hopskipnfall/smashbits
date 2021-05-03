@@ -50,7 +50,6 @@ jobs:
 
       - name: Install Server Dependencies
         run: cd server; npm install; cd -
-        cd client; npm install; cd -
 
       - name: Install Client Dependencies
         run: cd client; npm install; cd -
