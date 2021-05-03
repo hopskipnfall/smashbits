@@ -5,7 +5,7 @@
 # smashbits
 
 ```
-// TODO: Short description of the product.
+// TODO: Write a description of the product.
 ```
 
 ## Getting Started
