@@ -45,6 +45,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Globally install node-gyp
+        run: npm install --global node-gyp
+
       - name: Install Root Dependencies
         run: npm install
 
