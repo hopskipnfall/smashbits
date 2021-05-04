@@ -1,9 +1,11 @@
-[![Travis Build Status][build-badge]][build]
+[![Linux Build][linux-build-badge]][linux-build]
+[![MacOS Build][macos-build-badge]][macos-build]
+[![Windows Build][windows-build-badge]][windows-build]
 
 # smashbits
 
 ```
-// TODO: Short description of the product.
+// TODO: Write a description of the product.
 ```
 
 ## Getting Started
@@ -27,5 +29,9 @@ For local development with fake data (no server communication at all), edit `cli
 
 See [the Cookbook](https://github.com/hopskipnfall/smashbits/wiki/Cookbook) for full documentation.
 
-[build-badge]: https://travis-ci.org/hopskipnfall/smashbits.svg?branch=master&style=style=flat-square
-[build]: https://travis-ci.org/hopskipnfall/smashbits
+[linux-build-badge]: https://github.com/hopskipnfall/remix-updater/workflows/Linux%20Build/badge.svg
+[linux-build]: https://github.com/hopskipnfall/remix-updater/actions?query=workflow%3A%22Linux+Build%22
+[macos-build-badge]: https://github.com/hopskipnfall/remix-updater/workflows/MacOS%20Build/badge.svg
+[macos-build]: https://github.com/hopskipnfall/remix-updater/actions?query=workflow%3A%22MacOS+Build%22
+[windows-build-badge]: https://github.com/hopskipnfall/remix-updater/workflows/Windows%20Build/badge.svg
+[windows-build]: https://github.com/hopskipnfall/remix-updater/actions?query=workflow%3A%22Windows+Build%22
