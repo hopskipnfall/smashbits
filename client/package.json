@@ -11,7 +11,7 @@
     "dotenv-webpack": "^1.8.0",
     "jquery": "^3.5.1",
     "linkifyjs": "^2.1.9",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "popper.js": "^1.16.0",
     "react": "^16.3.1",
     "react-anchorme": "^2.1.0",
