@@ -12,8 +12,13 @@ custom:
   webpack:
     webpackConfig: ./webpack.config.js
     includeModules: true
+  apiDomain:
+    dev:
+      domainName: dev-api.smashbits.dev
+    prod:
+      domainName: api.smashbits.dev
   customDomain:
-    domainName: api.smashbits.dev
+    domainName: ${self:custom.apiDomain.${self:custom.stage}.domainName}
     basePath: ''
     stage: ${self:custom.stage}
     certificateName: '*.smashbits.dev'
@@ -55,8 +60,10 @@ functions:
     handler: index.handler
     events:
       - http: POST /bits
-      - http: 'POST /bits/{proxy+}'
-    cors: true
+      - http:
+        path: '/bits/{proxy+}'
+        method: post
+        cors: true
   getProfile:
     handler: index.handler
     events:
