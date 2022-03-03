@@ -65,7 +65,7 @@
     "redux": "^3.7.2",
     "serverless-http": "^1.5.2",
     "source-map-support": "^0.5.19",
-    "urijs": "^1.19.7",
+    "urijs": "^1.19.9",
     "uuid": "^3.2.1"
   }
 }
