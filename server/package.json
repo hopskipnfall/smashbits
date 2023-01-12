@@ -42,7 +42,7 @@
     "babel-preset-stage-3": "^6.24.1",
     "chai": "^3.5.0",
     "chai-immutable": "^1.6.0",
-    "mocha": "^3.5.0",
+    "mocha": "^10.2.0",
     "serverless-domain-manager": "^5.1.0",
     "serverless-offline": "^6.9.0",
     "serverless-webpack": "^5.3.5",
