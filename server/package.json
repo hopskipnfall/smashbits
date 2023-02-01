@@ -59,7 +59,7 @@
     "express-session": "^1.17.0",
     "helmet": "^4.4.1",
     "js-string-escape": "^1.0.1",
-    "mongoose": "^5.0.16",
+    "mongoose": "^5.13.15",
     "passport": "^0.4.1",
     "passport-twitter": "^1.0.4",
     "redux": "^3.7.2",
