@@ -153,4 +153,18 @@ app.get('/profile', (req, res) => {
   }
 });
 
+app.post('/bits/:bitId/vote', (req, res) => {
+  if (!req.user) {
+    res.status(401).setHeader('WWW-Authenticate', 'Bearer');
+    res.send();
+    return;
+  }
+  res.setHeader('Content-Type', 'application/json');
+  // TODO: Sanitize input.
+  const vote = Number(req.body.vote);
+  changeVote(req)
+    .then((result) => res.status(200).send())
+    .catch((error) => res.status(500).send(error));
+});
+
 export const handler = serverless(app);

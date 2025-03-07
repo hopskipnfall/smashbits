@@ -70,6 +70,21 @@ export function apiFetchBit(bitId: string) {
   return fetchPromise;
 }
 
+export function apiChangeVote(bitId: string, vote: number): Promise<void> {
+  let fetchPromise;
+  if (USE_FAKE_CLIENT) {
+    fetchPromise = fakeApiClient.changeVote(bitId, vote);
+  } else {
+    fetchPromise = safeFetch(new URI(BASE_URI).segment(['/bits',bitId,'vote']).toString(), {
+      method: 'POST',
+      mode: 'cors',
+    }).catch((error) => {
+        console.log('Error changing vote', error);
+        throw error;
+      });
+  }
+  return fetchPromise;
+}
 // export function fetchComments(bitId: string, dispatch: Function) {
 //   let fetchPromise;
 //   if (USE_FAKE_CLIENT) {

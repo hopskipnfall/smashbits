@@ -87,3 +87,10 @@ const escapeMedia = (singleMedia) => ({
 export function getComments(reqParams) {
   // return queryComments(reqParams.bitId);
 }
+
+export async function changeVote(req){
+  const bitId = req.params.bitId
+  const vote = req.body.vote
+  const bit = await BitsModel.findOne({ postId: bitId })
+  await bit.setVote(vote);
+}

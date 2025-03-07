@@ -188,7 +188,9 @@ export const thunkChangeVote: AppThunkActionCreator = (
   return async (dispatch, getState) => {
     dispatch(changeVote(bitId, vote));
 
-    // TODO: Make an API call.
+    apiChangeVote(bitId, vote).then(()=>{
+      console.log("vote changed")
+    });
   };
 };
 

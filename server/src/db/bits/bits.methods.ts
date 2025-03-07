@@ -9,6 +9,11 @@ export async function setVote(
   this: BitDocument,
   vote: -1 | 0 | 1,
 ): Promise<BitDocument> {
-  // TODO: Fill this in.
-  return this;
+    if (vote === 1) {
+        this.upvotes +=1;
+    }
+    if(vote === -1){
+        this.downvotes +=1;
+    }
+    return this.save();
 }
